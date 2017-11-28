@@ -11,7 +11,7 @@
 #'
 #' @section Methods:
 #' \describe{
-#'  \item{\code{new(xml,value)}}{
+#'  \item{\code{new(xml)}}{
 #'    This method is used to instantiate an ISODomainConsistency
 #'  }
 #'  \item{\code{addResult(result)}}{
@@ -19,10 +19,13 @@
 #'  }
 #' }
 #' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISODomainConsistency <- R6Class("ISODomainConsistency",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "DQ_DomainConsistency",
     xmlNamespacePrefix = "GMD"
@@ -30,11 +33,7 @@ ISODomainConsistency <- R6Class("ISODomainConsistency",
   public = list(
     result = list(),
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = "DQ_DomainConsistency",
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #addResult

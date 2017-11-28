@@ -37,6 +37,9 @@
 #'   geomObject1$setGeometricObjectCount(5L)
 #'   md$addGeometricObjects(geomObject1)
 #'   xml <- md$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -52,11 +55,7 @@ ISOVectorSpatialRepresentation <- R6Class("ISOVectorSpatialRepresentation",
     #+ geometricObjects [0..*]: ISOGeometricObjects
     geometricObjects = list(),
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setTopologyLevel

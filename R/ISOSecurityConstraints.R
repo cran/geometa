@@ -42,6 +42,9 @@
 #'    md$setHandlingDescription("description")
 #'    
 #'    xml <- md$encode()
+#'    
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -61,11 +64,7 @@ ISOSecurityConstraints <- R6Class("ISOSecurityConstraints",
      #+ handlingDescription [0..1]: character
      handlingDescription = NULL,
      initialize = function(xml = NULL){
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-       )
+       super$initialize(xml = xml)
      },
      
      #setClassification

@@ -1,11 +1,11 @@
-#' ISOMetadataElement
+#' ISOMetadata
 #'
 #' @docType class
 #' @importFrom R6 R6Class
 #' @import XML
 #' @export
 #' @keywords ISO metadata element
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Metadata Element
+#' @return Object of \code{\link{R6Class}} for modelling an ISO Metadata
 #' @format \code{\link{R6Class}} object.
 #'
 #' @field fileIdentifier
@@ -13,6 +13,7 @@
 #' @field characterSet
 #' @field parentIdentifier
 #' @field hierarchyLevel
+#' @field hierarchyLevelName
 #' @field contact
 #' @field dateStamp
 #' @field metadataStandardName
@@ -20,7 +21,9 @@
 #' @field dataSetURI
 #' @field spatialRepresentationInfo
 #' @field referenceSystemInfo
+#' @field metadataExtensionInfo
 #' @field identificationInfo
+#' @field contentInfo
 #' @field distributionInfo
 #' @field dataQualityInfo
 #' @field metadataMaintenance
@@ -50,6 +53,12 @@
 #'  }
 #'  \item{\code{delHierarchyLevel(level)}}{
 #'    Deletes the hierarchy level
+#'  }
+#'  \item{\code{addHierarchyLevelName(levelName)}}{
+#'    Adds the hierarchy level name
+#'  }
+#'  \item{\code{delHierarchyLevelName(levelName)}}{
+#'    Deletes the hierarchy level name
 #'  }
 #'  \item{\code{addContact(contact)}}{
 #'    Adds a contact as object of class \code{ISOResponsibleParty}
@@ -87,6 +96,12 @@
 #'  \item{\code{delReferenceSystemInfo(referenceSystemInfo)}}{
 #'    Deletes a reference system
 #'  }
+#'  \item{\code{addMetadataExtensionInfo(extensionInfo)}}{
+#'    Adds extension info, object of class \code{ISOMetadataExtensionInformation}
+#'  }
+#'  \item{\code{delMetadataExtensionInfo(extensionInfo)}}{
+#'    Deletes extension info, object of class \code{ISOMetadataExtensionInformation}
+#'  }
 #'  \item{\code{addIdentificationInfo(identificationInfo)}}{
 #'    Adds a data identification
 #'  }
@@ -95,6 +110,14 @@
 #'  }
 #'  \item{\code{delIdentificationInfo(identificationInfo)}}{
 #'    Deletes a data identification
+#'  }
+#'  \item{\code{addContentInfo(contentInfo)}}{
+#'    Adds a content info, either an object of class \code{ISOCoverageDescription} 
+#'    for coverage data, or \code{ISOFeatureCatalogueDescription} for vector data.
+#'  }
+#'  \item{\code{delContentInfo(contentInfo)}}{
+#'    Deletes a content info, either an object of class \code{ISOCoverageDescription} 
+#'    for coverage data, or \code{ISOFeatureCatalogueDescription} for vector data.
 #'  }
 #'  \item{\code{setDistributionInfo(distributionInfo)}}{
 #'    Sets the distribution
@@ -326,21 +349,43 @@
 #'    
 #'    md$setDataQualityInfo(dq)
 #'    
+#'    #Content Information
+#'    #-------------------------
+#'    #add a feature catalogue description
+#'    fcd <- ISOFeatureCatalogueDescription$new()
+#'    fcd$setComplianceCode(FALSE)
+#'    fcd$addLanguage("eng")
+#'    fcd$setIncludedWithDataset(FALSE)
+#'    cit = ISOCitation$new()
+#'    contact = ISOContact$new()
+#'    fcLink <- ISOOnlineResource$new()
+#'    fcLink$setLinkage("http://somelink/featurecatalogue")
+#'    contact$setOnlineResource(fcLink)
+#'    rp = ISOResponsibleParty$new()
+#'    rp$setContactInfo(contact)
+#'    cit$setCitedResponsibleParty(rp)
+#'    fcd$addFeatureCatalogueCitation(cit)
+#'    md$addContentInfo(fcd)
+#'    
 #'    #XML representation of the ISOMetadata
 #'    xml <- md$encode()
 #'    
 #'    #example 2 - READ: Create an ISO metadata reading from XML
 #'    ######################################################
 #'    require(XML)
-#'    xmlfile <- system.file("extdata", "metadata.xml", package = "geometa")
+#'    xmlfile <- system.file("extdata/examples", "metadata.xml", package = "geometa")
 #'    xml <- xmlParse(xmlfile)
 #'    md <- ISOMetadata$new(xml = xml)
+#' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOMetadata <- R6Class("ISOMetadata",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
+    document = TRUE,
     xmlElement = "MD_Metadata",
     xmlNamespacePrefix = "GMD"
   ),
@@ -355,6 +400,8 @@ ISOMetadata <- R6Class("ISOMetadata",
      parentIdentifier = NULL,
      #+ hierarchyLevel [0..*] : ISOHierarchyLevel = "dataset"
      hierarchyLevel = list(),
+     #+ hierarchyLevelName [0..*] : character
+     hierarchyLevelName = list(),
      #+ contact [1..*] : ISOResponsibleParty
      contact = list(),
      #+ dateStamp : POSIXct/POSIXt
@@ -369,8 +416,12 @@ ISOMetadata <- R6Class("ISOMetadata",
      spatialRepresentationInfo = list(),
      #+ referenceSystemInfo [0..*]: ISOReferenceSystem
      referenceSystemInfo = list(),
-     #+ identificationInfo [1..*]: ISODataIdentification
+     #+ metadataExtensionInfo [0..*]: ISOMetadataExtensionInformation
+     metadataExtensionInfo = list(),
+     #+ identificationInfo [1..*]: ISOIdentification
      identificationInfo = list(),
+     #+ contentInfo [0..*]
+     contentInfo = list(),
      #+ distributionInfo [0..1] : ISODistribution
      distributionInfo = NULL,
      #+ dataQualityInfo [0..*]: ISODataQuality
@@ -380,14 +431,10 @@ ISOMetadata <- R6Class("ISOMetadata",
      
      #unsupported sets (to implement)
      #----------------
-     #+ contentInformation [0..*]
-     contentInformation = list(), #TODO
      #+ portrayalCatalogueInfo [0..*]
      portrayalCatalogueInfo = list(), #TODO
      #+ applicationSchemaInfo [0..*]
      applicationSchemaInformation = list(), #TODO
-     #+ metadataExtensionInfo [0..*]
-     metadataExtensionInfo = list(), #TODO
      
      initialize = function(xml = NULL){
        
@@ -404,12 +451,7 @@ ISOMetadata <- R6Class("ISOMetadata",
            xml <- xmlChildren(xmlChildren(xml)[[1]])[[1]]
          }
        }
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix),
-         defaults = defaults
-       )
+       super$initialize(xml = xml, defaults = defaults)
      },
      
      #MD_Metadata
@@ -454,13 +496,29 @@ ISOMetadata <- R6Class("ISOMetadata",
        self$hierarchyLevel <- list()
        self$addHierarchyLevel(level)
      },
-     
+
      #delHierarchyLevel
      delHierarchyLevel = function(level){
        if(!is(level, "ISOHierarchyLevel")){
          level <- ISOHierarchyLevel$new(value = level)
        }
        return(self$delListElement("hierarchyLevel", level))
+     },
+    
+     #addHierarchyLevelName
+     addHierarchyLevelName = function(levelName){
+       if(!is(levelName, "character")){
+         levelName <- as.character(levelName)
+       }
+       return(self$addListElement("hierarchyLevelName", levelName))
+     },
+
+     #delHierarchyLevelName
+     delHierarchyLevelName = function(levelName){
+       if(!is(levelName, "character")){
+         levelName <- as.character(levelName)
+       }
+       return(self$delListElement("hierarchyLevelName", levelName))
      },
      
      #addContact
@@ -552,13 +610,32 @@ ISOMetadata <- R6Class("ISOMetadata",
        return(self$delListElement("referenceSystemInfo", referenceSystemInfo))
      },
      
+     #MD_MetadataExtensionInformation
+     #--------------------------------------------------------------------------
+     
+     #addMetadataExtensionInfo
+     addMetadataExtensionInfo = function(metadataExtensionInfo){
+       if(!is(metadataExtensionInfo, "ISOMetadataExtensionInformation")){
+         stop("The argument should be a 'ISOMetadataExtensionInformation' object")  
+       }
+       return(self$addListElement("metadataExtensionInfo", metadataExtensionInfo))
+     },
+     
+     #delMetadataExtensionInfo
+     delMetadataExtensionInfo = function(metadataExtensionInfo){
+       if(!is(metadataExtensionInfo, "ISOMetadataExtensionInformation")){
+         stop("The argument should be a 'ISOMetadataExtensionInformation' object")  
+       }
+       return(self$delListElement("metadataExtensionInfo", metadataExtensionInfo))
+     },
+     
      #MD_Identification
      #--------------------------------------------------------------------------
      
      #addIdentificationInfo
      addIdentificationInfo = function(identificationInfo){
-       if(!is(identificationInfo,"ISODataIdentification")){
-         stop("The argument should be a 'ISODataIdentification' object")
+       if(!inherits(identificationInfo,"ISOIdentification")){
+         stop("The argument should be an object of class 'ISODataIdentification' or 'ISOServiceIdentification")
        }
        return(self$addListElement("identificationInfo", identificationInfo))
      },
@@ -571,8 +648,8 @@ ISOMetadata <- R6Class("ISOMetadata",
      
      #delIdentificationInfo
      delIdentificationInfo = function(identificationInfo){
-       if(!is(identificationInfo,"ISODataIdentification")){
-         stop("The argument should be a 'ISODataIdentification' object")
+       if(!inherits(identificationInfo,"ISOIdentification")){
+         stop("The argument should be an object of class 'ISODataIdentification' or 'ISOServiceIdentification")
        }
        return(self$delListElement("identificationInfo", identificationInfo))
      },
@@ -622,6 +699,25 @@ ISOMetadata <- R6Class("ISOMetadata",
          stop("The argument should be a 'ISOMaintenanceInformation' object")
        }
        self$metadataMaintenance <- metadataMaintenance
+     },
+     
+     #MD_ContentInformation
+     #--------------------------------------------------------------------------     
+     
+     #addContentInfo
+     addContentInfo = function(contentInfo){
+       if(!is(contentInfo,"ISOContentInformation")){
+         stop("The argument should be a 'ISOContentInformation' object")
+       }
+       return(self$addListElement("contentInfo", contentInfo))
+     },
+     
+     #delContentInfo
+     delContentInfo = function(contentInfo){
+       if(!is(contentInfo,"ISOContentInformation")){
+         stop("The argument should be a 'ISOContentInformation' object")
+       }
+       return(self$delListElement("contentInfo", contentInfo))
      }
      
   )                        

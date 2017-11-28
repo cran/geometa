@@ -43,11 +43,14 @@
 #'  md$setCountry("France")
 #'  md$setEmail("someone@@theorg.org")
 #'  xml <- md$encode()
+#'  
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOAddress <- R6Class("ISOAddress",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "CI_Address",
     xmlNamespacePrefix = "GMD"
@@ -59,11 +62,7 @@ ISOAddress <- R6Class("ISOAddress",
     country = NULL,
     electronicMailAddress = NULL,
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setDeliveryPoint

@@ -12,7 +12,7 @@
 #'
 #' @section Methods:
 #' \describe{
-#'  \item{\code{new(xml, prefix, code, codeSpace)}}{
+#'  \item{\code{new(xml, code, codeSpace)}}{
 #'    This method is used to instantiate an ISOIdentifier
 #'  }
 #'  \item{\code{setAuthority(authority)}}{
@@ -22,12 +22,15 @@
 #' 
 #' @note Abstract ISO class
 #' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOIdentifier <- R6Class("ISOIdentifier",
-   inherit = ISOMetadataElement,
+   inherit = ISOAbstractObject,
    private = list(
-     xmlElement = c("MD_Identifier", "RS_Identifier"),
+     xmlElement = "Identifier",
      xmlNamespacePrefix = "GMD"
    ),
    public = list(
@@ -35,12 +38,8 @@ ISOIdentifier <- R6Class("ISOIdentifier",
      authority = NULL,
      #+ code[1..1]: character
      code = NULL,
-     initialize = function(xml = NULL, prefix, code){
-       super$initialize(
-         xml = xml,
-         element = paste(prefix, "Identifier", sep = "_"),
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-       )
+     initialize = function(xml = NULL, code){
+       super$initialize(xml = xml)
        if(is.null(xml)){
          self$code <- as.character(code)
        }

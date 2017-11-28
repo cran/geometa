@@ -45,10 +45,13 @@
 #'  }
 #' }
 #' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOExtent <- R6Class("ISOExtent",
-   inherit = ISOMetadataElement,
+   inherit = ISOAbstractObject,
    private = list(
       xmlElement = "EX_Extent",
       xmlNamespacePrefix = "GMD"
@@ -61,11 +64,7 @@ ISOExtent <- R6Class("ISOExtent",
      #+ verticialElement [0..*]: ISOVerticalElement
      verticalElement = list(),
      initialize = function(xml = NULL){
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-       )
+       super$initialize(xml = xml)
      },
      
      #addGeographicElement

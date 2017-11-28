@@ -22,7 +22,7 @@ ISOTopicCategory
 \section{Methods}{
 
 \describe{
- \item{\code{new(xml,value)}}{
+ \item{\code{new(xml,value, description)}}{
    This method is used to instantiate an ISOTopicCategory
  }
 }
@@ -36,6 +36,9 @@ ISOTopicCategory
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
+}
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
 }
 \keyword{ISO}
 \keyword{category}

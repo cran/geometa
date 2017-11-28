@@ -52,7 +52,7 @@ test_that("encoding",{
   d$setDateType("publication")
   ct$addDate(d)
   ct$setEdition("1.0")
-  ct$setEditionDate(d)
+  ct$setEditionDate(ISOdate(2015,1,1))
   ct$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
   ct$setPresentationForm("mapDigital")
   ct$setCitedResponsibleParty(rp)
@@ -112,6 +112,6 @@ test_that("encoding",{
   md2 <- ISODataIdentification$new(xml = xml)
   xml2 <- md2$encode()
   
-  expect_true(ISOMetadataElement$compare(md, md2))
+  expect_true(ISOAbstractObject$compare(md, md2))
   
 })

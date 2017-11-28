@@ -21,7 +21,7 @@ test_that("encoding",{
   time <- ISOTemporalExtent$new()
   start <- ISOdate(2000, 1, 12, 12, 59, 45)
   end <- ISOdate(2010, 8, 22, 13, 12, 43)
-  tp <- ISOTimePeriod$new(beginPosition = start, endPosition = end)
+  tp <- GMLTimePeriod$new(beginPosition = start, endPosition = end)
   time$setTimePeriod(tp)
   extent$setTemporalElement(time)
   
@@ -29,9 +29,6 @@ test_that("encoding",{
   vert <- ISOVerticalExtent$new()
   vert$setMinimumValue(0)
   vert$setMaximumValue(19)
-  uom <- ISOUomLength$new()
-  uom$setUomName("Meter")
-  uom$setUomSymbol("m")
   extent$setVerticalElement(vert)
   
   xml <- extent$encode()
@@ -41,6 +38,6 @@ test_that("encoding",{
   extent2 <- ISOExtent$new(xml = xml)
   xml2 <- extent2$encode()
   
-  expect_true(ISOMetadataElement$compare(extent, extent2))
+  expect_true(ISOAbstractObject$compare(extent, extent2))
   
 })

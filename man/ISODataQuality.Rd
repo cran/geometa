@@ -26,7 +26,7 @@ ISODataQuality
 \section{Methods}{
 
 \describe{
- \item{\code{new(xml,value)}}{
+ \item{\code{new(xml)}}{
    This method is used to instantiate an ISODataQuality
  }
  \item{\code{setScope(scope)}}{
@@ -75,6 +75,9 @@ ISODataQuality
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
+}
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
 }
 \keyword{ISO}
 \keyword{data}

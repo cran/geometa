@@ -19,6 +19,9 @@
 #' @examples 
 #'   md <- ISOMetaIdentifier$new(code = "identifier")
 #'   xml <- md$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -30,7 +33,7 @@ ISOMetaIdentifier <- R6Class("ISOMetaIdentifier",
    ),
    public = list(
      initialize = function(xml = NULL, code){
-       super$initialize(xml = xml, prefix = "MD", code = code)
+       super$initialize(xml = xml, code = code)
      }
    )                        
 )

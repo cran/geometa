@@ -27,7 +27,7 @@ Abstract ISO class
 \section{Methods}{
 
 \describe{
- \item{\code{new(xml, prefix, code, codeSpace)}}{
+ \item{\code{new(xml, code, codeSpace)}}{
    This method is used to instantiate an ISOIdentifier
  }
  \item{\code{setAuthority(authority)}}{
@@ -37,6 +37,9 @@ Abstract ISO class
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
+}
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
 }
 \keyword{ISO}
 \keyword{identifier}

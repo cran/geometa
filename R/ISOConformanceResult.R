@@ -38,11 +38,14 @@
 #'  md$setExplanation("some explanation about the conformance")
 #'  md$setPass(TRUE)
 #'  xml <- md$encode()
+#'  
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOConformanceResult <- R6Class("ISOConformanceResult",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
       xmlElement = "DQ_ConformanceResult",
       xmlNamespacePrefix = "GMD"
@@ -52,11 +55,7 @@ ISOConformanceResult <- R6Class("ISOConformanceResult",
     explanation = NULL,
     pass = NULL,
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setSpecification

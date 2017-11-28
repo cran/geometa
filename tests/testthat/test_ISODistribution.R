@@ -22,6 +22,16 @@ test_that("encoding",{
     dto$addOnlineResource(or)
   }
   md$setDigitalTransferOptions(dto)
+  
+  for(i in 1:3){
+    format <- ISOFormat$new()
+    format$setName(sprintf("name %s",i))
+    format$setVersion("1.0")
+    format$setAmendmentNumber("2")
+    format$setSpecification("specification")
+    md$addFormat(format)
+  }
+  
   xml <- md$encode()
   expect_is(xml, "XMLInternalNode")
   
@@ -29,6 +39,6 @@ test_that("encoding",{
   md2 <- ISODistribution$new(xml = xml)
   xml2 <- md2$encode()
   
-  expect_true(ISOMetadataElement$compare(md, md2))
+  expect_true(ISOAbstractObject$compare(md, md2))
   
 })

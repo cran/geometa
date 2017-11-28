@@ -11,7 +11,7 @@
 #'
 #' @section Methods:
 #' \describe{
-#'  \item{\code{new(xml,value)}}{
+#'  \item{\code{new(xml,value, description)}}{
 #'    This method is used to instantiate an ISODateType
 #'  }
 #' }
@@ -22,22 +22,26 @@
 #'   
 #'   #creation datetype
 #'   creation <- ISODateType$new(value = "creation")
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISODateType <- R6Class("ISODateType",
-   inherit = ISOMetadataCodelistElement,
+   inherit = ISOCodeListValue,
    private = list(
      xmlElement = "CI_DateTypeCode",
      xmlNamespacePrefix = "GMD"
    ),
    public = list(
-     initialize = function(xml = NULL, value){
-       super$initialize(xml = xml, id = "CI_DateTypeCode", value = value, setValue = FALSE)
+     initialize = function(xml = NULL, value, description = NULL){
+       super$initialize(xml = xml, id = "CI_DateTypeCode", value = value,
+                        description = description, setValue = FALSE)
      }
    )                        
 )
 
 ISODateType$values <- function(labels = FALSE){
-  return(ISOMetadataCodelistElement$values(ISODateType, labels))
+  return(ISOCodeListValue$values(ISODateType, labels))
 }

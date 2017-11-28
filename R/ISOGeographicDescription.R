@@ -16,6 +16,14 @@
 #'  }
 #' }
 #' 
+#' @examples 
+#'   md <- ISOGeographicDescription$new()
+#'   md$setGeographicIdentifier(ISOMetaIdentifier$new(code = "identifier"))
+#'   xml <- md$encode()
+#' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOGeographicDescription <- R6Class("ISOGeographicDescription",
@@ -28,11 +36,7 @@ ISOGeographicDescription <- R6Class("ISOGeographicDescription",
     #+ geographicIdentifier [1..1]: character
     geographicIdentifier = NULL,
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setGeographicIdentifier

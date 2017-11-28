@@ -22,13 +22,23 @@ ISOGeometricObjectType
 \section{Methods}{
 
 \describe{
- \item{\code{new(xml,value)}}{
+ \item{\code{new(xml,value, description)}}{
    This method is used to instantiate an ISOGeometricObjectType
  }
 }
 }
+\examples{
+#possible values
+  values <- ISOGeometricObjectType$values(labels = TRUE)
+
+  #point type
+  pt <- ISOGeometricObjectType$new(value = "point")
+}
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
+}
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
 }
 \keyword{ISO}
 \keyword{geometric}

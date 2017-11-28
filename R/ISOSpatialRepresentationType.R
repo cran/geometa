@@ -11,27 +11,37 @@
 #'
 #' @section Methods:
 #' \describe{
-#'  \item{\code{new(xml,value)}}{
+#'  \item{\code{new(xml,value, description)}}{
 #'    This method is used to instantiate an ISOSpatialRepresentationType
 #'  }
 #' }
 #' 
+#' @examples 
+#'   #possible values
+#'   values <- ISOSpatialRepresentationType$values(labels = TRUE)
+#'   
+#'   #vector example
+#'   vectorRep <- ISORestriction$new(value = "vector")
+#' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOSpatialRepresentationType <- R6Class("ISOSpatialRepresentationType",
-   inherit = ISOMetadataCodelistElement,
+   inherit = ISOCodeListValue,
    private = list(
      xmlElement = "MD_SpatialRepresentationTypeCode",
      xmlNamespacePrefix = "GMD"
    ),
    public = list(
-     initialize = function(xml = NULL, value){
-       super$initialize(xml = xml, id = private$xmlElement, value = value,
+     initialize = function(xml = NULL, value, description){
+       super$initialize(xml = xml, id = private$xmlElement, value = value, description = description,
                         setValue = FALSE, addCodeSpaceAttr = FALSE)
      }
    )                        
 )
 
 ISOSpatialRepresentationType$values <- function(labels = FALSE){
-  return(ISOMetadataCodelistElement$values(ISOSpatialRepresentationType, labels))
+  return(ISOCodeListValue$values(ISOSpatialRepresentationType, labels))
 }

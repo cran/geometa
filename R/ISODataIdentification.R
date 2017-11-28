@@ -218,7 +218,7 @@
 #'    d$setDateType("publication")
 #'    ct$addDate(d)
 #'    ct$setEdition("1.0")
-#'    ct$setEditionDate(d)
+#'    ct$setEditionDate(ISOdate(2015, 1, 1, 1))
 #'    ct$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
 #'    ct$setPresentationForm("mapDigital")
 #'    ct$setCitedResponsibleParty(rp)
@@ -269,6 +269,9 @@
 #'    md$setSupplementalInformation("some additional information")
 #'    
 #'    xml <- md$encode()
+#'    
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -299,12 +302,7 @@ ISODataIdentification <- R6Class("ISODataIdentification",
          characterSet = ISOCharacterSet$new(value = "utf8")
        )
        
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix),
-         defaults = defaults
-       )
+       super$initialize(xml = xml, defaults = defaults)
      },
      
      #addSpatialRepresentationType

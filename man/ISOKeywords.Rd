@@ -42,7 +42,8 @@ ISOKeywords
 }
 }
 \examples{
-md <- ISOKeywords$new()
+#a basic keyword set
+  md <- ISOKeywords$new()
   md$addKeyword("keyword1")
   md$addKeyword("keyword2")
   md$setKeywordType("theme")
@@ -50,9 +51,27 @@ md <- ISOKeywords$new()
   th$setTitle("General")
   md$setThesaurusName(th)
   xml <- md$encode()
+
+  #a keyword set with anchors
+  md <- ISOKeywords$new()
+  kwd1 <- ISOAnchor$new(
+    name = "keyword1",
+    href = "http://myvocabulary.geometa/keyword1"
+  )
+  md$addKeyword(kwd1)
+  kwd2 <- ISOAnchor$new(
+    name = "keyword2",
+    href = "http://myvocabulary.geometa/keyword2"
+  )
+  md$addKeyword(kwd2)
+  md$setKeywordType("theme")
+  xml <- md$encode()
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
+}
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
 }
 \keyword{ISO}
 \keyword{keywords}

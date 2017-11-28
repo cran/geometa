@@ -97,6 +97,12 @@ ISOIdentification
  \item{\code{delGraphicOverview(graphicOverview)}}{
    Deletes an object of class \code{ISOBrowseGraphic}
  }
+ \item{\code{addFormat(format)}}{
+   Adds a resource format, object of class \code{ISOFormat}
+ }
+ \item{\code{delFormat(format)}}{
+   Deletes a resource format, object of class \code{ISOFormat}
+ }
  \item{\code{addKeywords(keywords)}}{
    Adds a set of keywords as object of class \code{ISOKeywords}
  }
@@ -123,6 +129,9 @@ ISOIdentification
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 }
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
+}
 \keyword{ISO}
-\keyword{didentification}
+\keyword{identification}
 

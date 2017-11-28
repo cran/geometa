@@ -18,7 +18,7 @@
 #'    This method is used to instantiate an ISOOnlineResource
 #'  }
 #'  \item{\code{setLinkage(linkage)}}{
-#'    Sets the linkage (URL)
+#'    Sets the linkage (URL), an object of class \code{character} or \code{ISOUrl}
 #'  }
 #'  \item{\code{setProtocol(protocol)}}{
 #'    Sets the protocol
@@ -38,32 +38,37 @@
 #'   md$setDescription("description")
 #'   md$setProtocol("protocol")
 #'   xml <- md$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOOnlineResource <- R6Class("ISOOnlineResource",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "CI_OnlineResource",
     xmlNamespacePrefix = "GMD"
   ),
   public = list(
-    linkage = NULL,
+    linkage = NA,
     protocol = NULL,
     name = NULL,
     description = NULL,
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setLinkage
     setLinkage = function(linkage){
-      if(!is(linkage, "character")) linkage <- as.character(linkage)
-      self$linkage <- linkage
+      if(!is.null(linkage)){
+        if(!is.na(linkage)){ 
+          if(!is(linkage, "ISOURL")){
+            linkage <- ISOURL$new(value = as.character(linkage))
+          }
+          self$linkage <- linkage
+        }
+      }
     },
     
     #setName

@@ -22,8 +22,20 @@ ISODistribution
 \section{Methods}{
 
 \describe{
- \item{\code{new(xml,value)}}{
+ \item{\code{new(xml)}}{
    This method is used to instantiate an ISODistribution
+ }
+ \item{\code{addFormat(format)}}{
+   Adds a distribution format, object of class \code{ISOFormat}
+ }
+ \item{\code{delFormat(format)}}{
+   Deletes a distribution format, object of class \code{ISOFormat}
+ }
+ \item{\code{addDistributor(distributor)}}{
+   Adds a distributor, object of class \code{ISODistributor}
+ }
+ \item{\code{delDistributor(distributor)}}{
+   Deletes a distributor, object of class \code{ISODistributor}
  }
  \item{\code{setDigitalTransferOptions(options)}}{
    Sets the digital transfer options
@@ -48,6 +60,9 @@ md <- ISODistribution$new()
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
+}
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
 }
 \keyword{ISO}
 \keyword{distribution}

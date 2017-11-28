@@ -3,16 +3,16 @@
 \docType{class}
 \name{ISOMetadata}
 \alias{ISOMetadata}
-\title{ISOMetadataElement}
+\title{ISOMetadata}
 \format{\code{\link{R6Class}} object.}
 \usage{
 ISOMetadata
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO Metadata Element
+Object of \code{\link{R6Class}} for modelling an ISO Metadata
 }
 \description{
-ISOMetadataElement
+ISOMetadata
 }
 \section{Fields}{
 
@@ -26,6 +26,8 @@ ISOMetadataElement
 \item{\code{parentIdentifier}}{}
 
 \item{\code{hierarchyLevel}}{}
+
+\item{\code{hierarchyLevelName}}{}
 
 \item{\code{contact}}{}
 
@@ -41,7 +43,11 @@ ISOMetadataElement
 
 \item{\code{referenceSystemInfo}}{}
 
+\item{\code{metadataExtensionInfo}}{}
+
 \item{\code{identificationInfo}}{}
+
+\item{\code{contentInfo}}{}
 
 \item{\code{distributionInfo}}{}
 
@@ -75,6 +81,12 @@ ISOMetadataElement
  }
  \item{\code{delHierarchyLevel(level)}}{
    Deletes the hierarchy level
+ }
+ \item{\code{addHierarchyLevelName(levelName)}}{
+   Adds the hierarchy level name
+ }
+ \item{\code{delHierarchyLevelName(levelName)}}{
+   Deletes the hierarchy level name
  }
  \item{\code{addContact(contact)}}{
    Adds a contact as object of class \code{ISOResponsibleParty}
@@ -112,6 +124,12 @@ ISOMetadataElement
  \item{\code{delReferenceSystemInfo(referenceSystemInfo)}}{
    Deletes a reference system
  }
+ \item{\code{addMetadataExtensionInfo(extensionInfo)}}{
+   Adds extension info, object of class \code{ISOMetadataExtensionInformation}
+ }
+ \item{\code{delMetadataExtensionInfo(extensionInfo)}}{
+   Deletes extension info, object of class \code{ISOMetadataExtensionInformation}
+ }
  \item{\code{addIdentificationInfo(identificationInfo)}}{
    Adds a data identification
  }
@@ -120,6 +138,14 @@ ISOMetadataElement
  }
  \item{\code{delIdentificationInfo(identificationInfo)}}{
    Deletes a data identification
+ }
+ \item{\code{addContentInfo(contentInfo)}}{
+   Adds a content info, either an object of class \code{ISOCoverageDescription}
+   for coverage data, or \code{ISOFeatureCatalogueDescription} for vector data.
+ }
+ \item{\code{delContentInfo(contentInfo)}}{
+   Deletes a content info, either an object of class \code{ISOCoverageDescription}
+   for coverage data, or \code{ISOFeatureCatalogueDescription} for vector data.
  }
  \item{\code{setDistributionInfo(distributionInfo)}}{
    Sets the distribution
@@ -351,18 +377,39 @@ ISOMetadataElement
 
    md$setDataQualityInfo(dq)
 
+   #Content Information
+   #-------------------------
+   #add a feature catalogue description
+   fcd <- ISOFeatureCatalogueDescription$new()
+   fcd$setComplianceCode(FALSE)
+   fcd$addLanguage("eng")
+   fcd$setIncludedWithDataset(FALSE)
+   cit = ISOCitation$new()
+   contact = ISOContact$new()
+   fcLink <- ISOOnlineResource$new()
+   fcLink$setLinkage("http://somelink/featurecatalogue")
+   contact$setOnlineResource(fcLink)
+   rp = ISOResponsibleParty$new()
+   rp$setContactInfo(contact)
+   cit$setCitedResponsibleParty(rp)
+   fcd$addFeatureCatalogueCitation(cit)
+   md$addContentInfo(fcd)
+
    #XML representation of the ISOMetadata
    xml <- md$encode()
 
    #example 2 - READ: Create an ISO metadata reading from XML
    ######################################################
    require(XML)
-   xmlfile <- system.file("extdata", "metadata.xml", package = "geometa")
+   xmlfile <- system.file("extdata/examples", "metadata.xml", package = "geometa")
    xml <- xmlParse(xmlfile)
    md <- ISOMetadata$new(xml = xml)
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
+}
+\references{
+ISO 19115:2003 - Geographic information -- Metadata
 }
 \keyword{ISO}
 \keyword{element}

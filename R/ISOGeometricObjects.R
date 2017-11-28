@@ -23,10 +23,19 @@
 #'  }
 #' }
 #' 
+#' @examples 
+#'   md <- ISOGeometricObjects$new()
+#'   md$setGeometricObjectType("surface")
+#'   md$setGeometricObjectCount(5L)
+#'   xml <- md$encode()
+#' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOGeometricObjects <- R6Class("ISOGeometricObjects",
-   inherit = ISOMetadataElement,
+   inherit = ISOAbstractObject,
    private = list(
      xmlElement = "MD_GeometricObjects",
      xmlNamespacePrefix = "GMD"
@@ -35,11 +44,7 @@ ISOGeometricObjects <- R6Class("ISOGeometricObjects",
      geometricObjectType = NULL,
      geometricObjectCount = NULL,
      initialize = function(xml = NULL){
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-       )
+       super$initialize(xml = xml)
      },
      
      #setGeometricObjectType

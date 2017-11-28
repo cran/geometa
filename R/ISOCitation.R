@@ -53,12 +53,8 @@
 #'  #create ISOCitation
 #'  md <- ISOCitation$new()
 #'  md$setTitle("sometitle")
-#'  d <- ISODate$new()
-#'  d$setDate(ISOdate(2015, 1, 1, 1))
-#'  d$setDateType("publication")
-#'  md$addDate(d)
 #'  md$setEdition("1.0")
-#'  md$setEditionDate(d)
+#'  md$setEditionDate(ISOdate(2015,1,1))
 #'  md$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
 #'  md$setPresentationForm("mapDigital")
 #'  
@@ -87,11 +83,14 @@
 #'  rp$setContactInfo(contact)
 #'  md$setCitedResponsibleParty(rp)
 #'  xml <- md$encode()
+#'  
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOCitation<- R6Class("ISOCitation",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "CI_Citation",
     xmlNamespacePrefix = "GMD"
@@ -106,11 +105,7 @@ ISOCitation<- R6Class("ISOCitation",
     citedResponsibleParty = NULL,
     presentationForm = NULL,
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setTitle
@@ -138,8 +133,8 @@ ISOCitation<- R6Class("ISOCitation",
     
     #setEditionDate
     setEditionDate = function(editionDate){
-      if(!is(editionDate, "Date") && !is(editionDate, "ISODate")){ 
-        stop("The argument should be either a 'Date' or 'ISODate' object")
+      if(!is(editionDate, "Date") && !all(class(editionDate) == c("POSIXct","POSIXt"))){ 
+        stop("The argument should be either a 'Date' or 'POSIXct'/'POSIXt' object")
       }
       self$editionDate <- editionDate
     },

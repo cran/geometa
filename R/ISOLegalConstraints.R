@@ -56,6 +56,9 @@
 #'   md$addUseConstraint("license")
 #'   
 #'   xml <- md$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -73,11 +76,7 @@ ISOLegalConstraints <- R6Class("ISOLegalConstraints",
     #+ otherConstraints [0..*]: character
     otherConstraints = list(),
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #addAccessConstraint

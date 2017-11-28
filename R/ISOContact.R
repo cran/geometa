@@ -45,11 +45,14 @@
 #'  res$setName("somename")
 #'  md$setOnlineResource(res)
 #'  xml <- md$encode()
+#'  
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOContact <- R6Class("ISOContact",
-   inherit = ISOMetadataElement,
+   inherit = ISOAbstractObject,
    private = list(
      xmlElement = "CI_Contact",
      xmlNamespacePrefix = "GMD"
@@ -59,11 +62,7 @@ ISOContact <- R6Class("ISOContact",
      address = NULL,
      onlineResource = NULL,
      initialize = function(xml = NULL){
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-       )
+       super$initialize(xml = xml)
      },
      
      #setPhone

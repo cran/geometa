@@ -18,10 +18,13 @@
 #' 
 #' @note Class used by geometa internal XML decoder/encoder
 #' 
+#' @references
+#'  ISO/TS 19103:2005 Geographic information -- Conceptual schema language
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOBaseReal <- R6Class("ISOBaseReal",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "Real",
     xmlNamespacePrefix = "GCO"
@@ -29,11 +32,7 @@ ISOBaseReal <- R6Class("ISOBaseReal",
   public = list(
     value = NA,
     initialize = function(xml = NULL, value){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
       if(is.null(xml)){
         if(!is(value, "double")){
           value <- as.double(value)

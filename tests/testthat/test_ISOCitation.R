@@ -17,9 +17,12 @@ test_that("encoding",{
   d$setDate(ISOdate(2015, 1, 1, 1))
   d$setDateType("publication")
   md$addDate(d)
+  expect_error(md$addDate("wrong date type"))
   md$setEdition("1.0")
-  md$setEditionDate(d)
+  md$setEditionDate(ISOdate(2015, 1, 1, 1))
+  expect_error(md$setEditionDate("wrong date type"))
   md$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
+  expect_error(md$setIdentifier("wrong identifier type"))
   md$setPresentationForm("mapDigital")
   
   #adding a cited responsible party
@@ -46,6 +49,7 @@ test_that("encoding",{
   contact$setOnlineResource(res)
   rp$setContactInfo(contact)
   md$setCitedResponsibleParty(rp)
+  expect_error(md$setCitedResponsibleParty("wrong party type"))
   
   expect_is(md, "ISOCitation")
   xml <- md$encode()
@@ -55,6 +59,6 @@ test_that("encoding",{
   md2 <- ISOCitation$new(xml = xml)
   xml2 <- md2$encode()
   
-  expect_true(ISOMetadataElement$compare(md, md2))
+  expect_true(ISOAbstractObject$compare(md, md2))
   
 })

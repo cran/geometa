@@ -19,6 +19,13 @@
 #'  }
 #' }
 #' 
+#' @examples
+#'   md <- ISOGeographicBoundingBox$new(minx = -180, miny = -90, maxx = 180, maxy = 90)
+#'   xml <- md$encode()
+#' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata 
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOGeographicBoundingBox <- R6Class("ISOGeographicBoundingBox",
@@ -33,11 +40,7 @@ ISOGeographicBoundingBox <- R6Class("ISOGeographicBoundingBox",
      southBoundLatitude = NULL,
      northBoundLatitude = NULL,
      initialize = function(xml = NULL, minx, miny, maxx, maxy, bbox = NULL){
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-       )
+       super$initialize(xml = xml)
        if(is.null(xml)){
          if(!is.null(bbox)){
            if(!is(bbox, "matrix") || !all.equal(dim(bbox), c(2,2))){

@@ -30,6 +30,7 @@
 #' }
 #' 
 #' @examples
+#'   #a basic keyword set
 #'   md <- ISOKeywords$new()
 #'   md$addKeyword("keyword1")
 #'   md$addKeyword("keyword2")
@@ -38,11 +39,29 @@
 #'   th$setTitle("General")
 #'   md$setThesaurusName(th)
 #'   xml <- md$encode()
+#'   
+#'   #a keyword set with anchors
+#'   md <- ISOKeywords$new()
+#'   kwd1 <- ISOAnchor$new(
+#'     name = "keyword1",
+#'     href = "http://myvocabulary.geometa/keyword1"
+#'   )
+#'   md$addKeyword(kwd1)
+#'   kwd2 <- ISOAnchor$new(
+#'     name = "keyword2",
+#'     href = "http://myvocabulary.geometa/keyword2"
+#'   )
+#'   md$addKeyword(kwd2)
+#'   md$setKeywordType("theme")
+#'   xml <- md$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOKeywords <- R6Class("ISOKeywords",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "MD_Keywords",
     xmlNamespacePrefix = "GMD"
@@ -52,34 +71,26 @@ ISOKeywords <- R6Class("ISOKeywords",
     type = NULL,
     thesaurusName = NULL,
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #addKeyword
     addKeyword = function(keyword){
-      startNb = length(self$keyword)
-      if(length(which(self$keyword == keyword)) == 0){
-        self$keyword = c(self$keyword, keyword)
-      }
-      endNb = length(self$keyword)
-      return(endNb == startNb+1)
+      if(is.null(keyword)) return(FALSE);
+      if(is(keyword, "character")) if(is.na(keyword)) return(FALSE);
+      return(self$addListElement("keyword", keyword))
     },
     
     #delKeyword
     delKeyword = function(keyword){
-      startNb = length(self$keyword)
-      self$keyword = self$keyword[which(self$keyword != keyword)]
-      endNb = length(self$keyword)
-      return(endNb == startNb-1)
+      if(is.null(keyword)) return(FALSE);
+      if(is(keyword, "character")) if(is.na(keyword)) return(FALSE);
+      return(self$delListElement("keyword", keyword))
     },
     
     #setKeywordType
     setKeywordType = function(keywordType){
-      if(is(keywordType, "ISOKeywordType")){
+      if(!is(keywordType, "ISOKeywordType")){
         keywordType <- ISOKeywordType$new(value = keywordType)
       }
       self$type <- keywordType

@@ -14,17 +14,22 @@
 #'  }
 #' }
 #' 
+#' @note abstract class
+#' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
+#' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOSpatialRepresentation <- R6Class("ISOSpatialRepresentation",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "MD_SpatialRepresentation",
     xmlNamespacePrefix = "GMD"
   ),
   public = list(
-    initialize = function(xml = NULL, element, namespace, defaults = list()){
-      super$initialize(xml, element, namespace, defaults)
+    initialize = function(xml = NULL, defaults = list()){
+      super$initialize(xml, defaults = defaults)
     }    
   )                        
 )

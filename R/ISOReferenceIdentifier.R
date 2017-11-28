@@ -23,6 +23,9 @@
 #' @examples 
 #'   md <- ISOReferenceIdentifier$new(code = "4326", codeSpace = "EPSG")
 #'   xml <- md$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -38,7 +41,7 @@ ISOReferenceIdentifier <- R6Class("ISOReferenceIdentifier",
      #+ version [0..1]: character
      version = NULL,
      initialize = function(xml = NULL, code, codeSpace = NULL){
-       super$initialize(xml = xml, prefix = "RS", code = code)
+       super$initialize(xml = xml, code = code)
        if(!is.null(codeSpace)) self$setCodeSpace(codeSpace)
      },
      

@@ -262,13 +262,40 @@ test_that("encoding/decoding",{
   
   md$setDataQualityInfo(dq)
   
+  #Content Information
+  #-------------------------
+  #add a feature catalogue description
+  fcd <- ISOFeatureCatalogueDescription$new()
+  fcd$setComplianceCode(FALSE)
+  fcd$addLanguage("eng")
+  fcd$setIncludedWithDataset(FALSE)
+  cit = ISOCitation$new()
+  cit$setTitle("title")
+  cit$setAlternateTitle("alternate title")
+  d <- ISODate$new()
+  d$setDate(ISOdate(2015,1,1))
+  d$setDateType("creation")
+  cit$addDate(d)
+  contact = ISOContact$new()
+  fcLink <- ISOOnlineResource$new()
+  fcLink$setLinkage("http://somelink/featurecatalogue")
+  contact$setOnlineResource(fcLink)
+  rp = ISOResponsibleParty$new()
+  rp$setRole("publisher")
+  rp$setContactInfo(contact)
+  cit$setCitedResponsibleParty(rp)
+  fcd$addFeatureCatalogueCitation(cit)
+  
+  md$addContentInfo(fcd)
+  
+  
   xml <- md$encode()
-  expect_is(xml, "XMLInternalNode")
+  expect_is(xml, "XMLInternalDocument")
   
   #decoding
   md2 <- ISOMetadata$new(xml = xml)
   xml2 <- md2$encode()
   
-  expect_true(ISOMetadataElement$compare(md, md2))
+  expect_true(ISOAbstractObject$compare(md, md2))
   
 })

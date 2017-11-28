@@ -24,13 +24,16 @@
 #'    te <- ISOTemporalExtent$new()
 #'    start <- ISOdate(2000, 1, 12, 12, 59, 45)
 #'    end <- ISOdate(2010, 8, 22, 13, 12, 43)
-#'    tp <- ISOTimePeriod$new(beginPosition = start, endPosition = end)
+#'    tp <- GMLTimePeriod$new(beginPosition = start, endPosition = end)
 #'    te$setTimePeriod(tp)
+#' 
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOTemporalExtent <- R6Class("ISOTemporalExtent",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "EX_TemporalExtent",
     xmlNamespacePrefix = "GMD"
@@ -38,11 +41,7 @@ ISOTemporalExtent <- R6Class("ISOTemporalExtent",
   public = list(
     extent = NULL,
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setTimeInstant
@@ -53,8 +52,8 @@ ISOTemporalExtent <- R6Class("ISOTemporalExtent",
     
     #setTimePeriod
     setTimePeriod = function(timePeriod){
-      if(!is(timePeriod, "ISOTimePeriod")){
-        stop("Value should be an object of class 'ISOTimePeriod'")
+      if(!is(timePeriod, "GMLTimePeriod")){
+        stop("Value should be an object of class 'GMLTimePeriod'")
       }
       self$extent = timePeriod
     }

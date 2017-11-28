@@ -23,11 +23,14 @@
 #'   md <- ISOScope$new()
 #'   md$setLevel("dataset")
 #'   xml <- md$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOScope <- R6Class("ISOScope",
-   inherit = ISOMetadataElement,
+   inherit = ISOAbstractObject,
    private = list(
      xmlElement = "DQ_Scope",
      xmlNamespacePrefix = "GMD"
@@ -35,11 +38,7 @@ ISOScope <- R6Class("ISOScope",
    public = list(
      level = NULL,
      initialize = function(xml = NULL){
-       super$initialize(
-         xml = xml,
-         element = private$xmlElement,
-         namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-       )
+       super$initialize(xml = xml)
      },
      
      #setLevel

@@ -18,16 +18,15 @@
 #'   ve <- ISOVerticalExtent$new()
 #'   ve$setMinimumValue(0)
 #'   ve$setMaximumValue(19)
-#'   uom <- ISOUomLength$new()
-#'   uom$setUomName("Meter")
-#'   uom$setUomSymbol("m")
-#'   ve$setUnitOfMeasure(uom)
 #'   xml <- ve$encode()
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOVerticalExtent <- R6Class("ISOVerticalExtent",
-  inherit = ISOMetadataElement,
+  inherit = ISOAbstractObject,
   private = list(
     xmlElement = "EX_VerticalExtent",
     xmlNamespacePrefix = "GMD"
@@ -41,11 +40,7 @@ ISOVerticalExtent <- R6Class("ISOVerticalExtent",
     unitOfMeasure = NULL,
     #+ verticalCRS [1..1]: TODO
     initialize = function(xml = NULL){
-      super$initialize(
-        xml = xml,
-        element = private$xmlElement,
-        namespace = getISOMetadataNamespace(private$xmlNamespacePrefix)
-      )
+      super$initialize(xml = xml)
     },
     
     #setMinimumValue
@@ -56,14 +51,6 @@ ISOVerticalExtent <- R6Class("ISOVerticalExtent",
     #setMaximumValue
     setMaximumValue = function(maximumValue){
       self$maximumValue = maximumValue
-    },
-    
-    #setUnitOfMeasure
-    setUnitOfMeasure = function(unitOfMeasure){
-      if(!is(unitOfMeasure, "ISOUomLength")){
-        stop("The unit of measure should be an object of class 'ISOUomLength")
-      }
-      self$unitOfMeasure = unitOfMeasure
     }
    
   )                                          

@@ -11,7 +11,7 @@
 #'
 #' @section Methods:
 #' \describe{
-#'  \item{\code{new(xml,value)}}{
+#'  \item{\code{new(xml,value, description)}}{
 #'    This method is used to instantiate an ISOStatus
 #'  }
 #' }
@@ -22,23 +22,26 @@
 #'   
 #'   #pending status
 #'   pending <- ISOStatus$new(value = "pending")
+#'   
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOStatus<- R6Class("ISOStatus",
-   inherit = ISOMetadataCodelistElement,
+   inherit = ISOCodeListValue,
    private = list(
      xmlElement = "MD_ProgressCode",
      xmlNamespacePrefix = "GMD"
    ),
    public = list(
-     initialize = function(xml = NULL, value){
-       super$initialize(xml = xml, id = private$xmlElement, value = value,
+     initialize = function(xml = NULL, value, description = NULL){
+       super$initialize(xml = xml, id = private$xmlElement, value = value, description = description,
                         setValue = FALSE, addCodeSpaceAttr = FALSE)
      }
    )                        
 )
 
 ISOStatus$values <- function(labels = FALSE){
-  return(ISOMetadataCodelistElement$values(ISOStatus, labels))
+  return(ISOCodeListValue$values(ISOStatus, labels))
 }
