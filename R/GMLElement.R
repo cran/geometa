@@ -22,7 +22,7 @@
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 GMLElement <- R6Class("GMLElement",
-    inherit = GMLAbstractGML,
+    inherit = GMLAbstractObject,
     lock_objects = FALSE,
     private = list(
       xmlElement = "Element",
@@ -30,7 +30,7 @@ GMLElement <- R6Class("GMLElement",
     ),
     public = list(
       initialize = function(xml = NULL, element = NULL, attrs = list(), defaults = list()){
-        super$initialize(xml = xml, element = element, attrs = attrs, defaults = defaults)
+        super$initialize(xml = xml, element = element, attrs = attrs, defaults = defaults, wrap = FALSE)
       },
       
       decode = function(xml){
@@ -45,10 +45,10 @@ GMLElement <- R6Class("GMLElement",
         #set attrs if any
         self$attrs <- as.list(xmlAttrs(xml, TRUE, FALSE))
         
-        
         fieldValue <- xmlValue(xml, recursive = FALSE)
         if(length(fieldValue)>0){
           #set value if any
+          if(fieldValue %in% c("true","false")) fieldValue <- as.logical(fieldValue)
           fieldValue <- private$toComplexTypes(fieldValue)
           if(!is.na(fieldValue)) self$setValue(fieldValue)
         }else{

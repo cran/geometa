@@ -298,6 +298,28 @@
 #'    kwds$setThesaurusName(th)
 #'    ident$addKeywords(kwds)
 #'    
+#'    #add an INSPIRE spatial data theme?
+#'    inspire_kwd <- ISOKeywords$new()
+#'    anc1 <- ISOAnchor$new(
+#'      name = "Environmental monitoring facilities",
+#'      href = "http://inspire.ec.europa.eu/theme/ef"
+#'    )
+#'    inspire_kwd$addKeyword(anc1)
+#'    inspire_kwd$setKeywordType("theme")
+#'    th <- ISOCitation$new()
+#'    th$setTitle(
+#'      ISOAnchor$new(
+#'        name = "GEMET - INSPIRE themes, version 1.0",
+#'        href="http://www.eionet.europa.eu/gemet/inspire_themes"
+#'      )
+#'    )
+#'    inspire_date <- ISODate$new()
+#'    inspire_date$setDate("2008-06-01")
+#'    inspire_date$setDateType("publication")
+#'    th$addDate(inspire_date)
+#'    inspire_kwd$setThesaurusName(th)
+#'    ident$addKeywords(inspire_kwd)
+#'    
 #'    #supplementalInformation
 #'    ident$setSupplementalInformation("some additional information")
 #'    
@@ -320,18 +342,20 @@
 #'    distrib$setDigitalTransferOptions(dto)
 #'    md$setDistributionInfo(distrib)
 #'    
-#'    #Data Quality
+#'    #create dataQuality object with a 'dataset' scope
 #'    dq <- ISODataQuality$new()
 #'    scope <- ISOScope$new()
 #'    scope$setLevel("dataset")
 #'    dq$setScope(scope)
-#'    
-#'    #add report
+#'   
+#'    #add data quality reports...
+#'   
+#'    #add a report the data quality
 #'    dc <- ISODomainConsistency$new()
 #'    result <- ISOConformanceResult$new()
 #'    spec <- ISOCitation$new()
-#'    spec$setTitle("specification title")
-#'    spec$setAlternateTitle("specification alternate title")
+#'    spec$setTitle("Data Quality check")
+#'    spec$setAlternateTitle("This is is some data quality check report")
 #'    d <- ISODate$new()
 #'    d$setDate(ISOdate(2015, 1, 1, 1))
 #'    d$setDateType("publication")
@@ -341,6 +365,45 @@
 #'    result$setPass(TRUE)
 #'    dc$addResult(result)
 #'    dq$addReport(dc)
+#'   
+#'    #add INSPIRE reports?
+#'    #INSPIRE - interoperability of spatial data sets and services
+#'    dc_inspire1 <- ISODomainConsistency$new()
+#'    cr_inspire1 <- ISOConformanceResult$new()
+#'    cr_inspire_spec1 <- ISOCitation$new()
+#'    cr_title1 <- paste(
+#'      "Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC",
+#'      "of the European Parliament and of the Council as regards interoperability of spatial data",
+#'      "sets and services"
+#'    )
+#'    cr_inspire_spec1$setTitle(cr_title1)
+#'    cr_inspire1$setExplanation("See the referenced specification")
+#'    cr_inspire_date1 <- ISODate$new()
+#'    cr_inspire_date1$setDate(ISOdate(2010,12,8))
+#'    cr_inspire_date1$setDateType("publication")
+#'    cr_inspire_spec1$addDate(cr_inspire_date1)
+#'    cr_inspire1$setSpecification(cr_inspire_spec1)
+#'    cr_inspire1$setPass(TRUE)
+#'    dc_inspire1$addResult(cr_inspire1)
+#'    dq$addReport(dc_inspire1)
+#'    #INSPIRE - metadata
+#'    dc_inspire2 <- ISODomainConsistency$new()
+#'    cr_inspire2 <- ISOConformanceResult$new()
+#'    cr_inspire_spec2 <- ISOCitation$new()
+#'    cr_title2 <- paste(
+#'      "COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC",
+#'      "of the European Parliament and of the Council as regards metadata"
+#'    )
+#'    cr_inspire_spec2$setTitle(cr_title2)
+#'    cr_inspire2$setExplanation("See the referenced specification")
+#'    cr_inspire_date2 <- ISODate$new()
+#'    cr_inspire_date2$setDate(ISOdate(2008,12,4))
+#'    cr_inspire_date2$setDateType("publication")
+#'    cr_inspire_spec2$addDate(cr_inspire_date2)
+#'    cr_inspire2$setSpecification(cr_inspire_spec2)
+#'    cr_inspire2$setPass(TRUE)
+#'    dc_inspire2$addResult(cr_inspire2)
+#'    dq$addReport(dc_inspire2)
 #'    
 #'    #add lineage
 #'    lineage <- ISOLineage$new()
@@ -372,10 +435,12 @@
 #'    
 #'    #example 2 - READ: Create an ISO metadata reading from XML
 #'    ######################################################
+#'    \donttest{
 #'    require(XML)
 #'    xmlfile <- system.file("extdata/examples", "metadata.xml", package = "geometa")
 #'    xml <- xmlParse(xmlfile)
 #'    md <- ISOMetadata$new(xml = xml)
+#'    }
 #' 
 #' @references 
 #'   ISO 19115:2003 - Geographic information -- Metadata
@@ -507,17 +572,11 @@ ISOMetadata <- R6Class("ISOMetadata",
     
      #addHierarchyLevelName
      addHierarchyLevelName = function(levelName){
-       if(!is(levelName, "character")){
-         levelName <- as.character(levelName)
-       }
        return(self$addListElement("hierarchyLevelName", levelName))
      },
 
      #delHierarchyLevelName
      delHierarchyLevelName = function(levelName){
-       if(!is(levelName, "character")){
-         levelName <- as.character(levelName)
-       }
        return(self$delListElement("hierarchyLevelName", levelName))
      },
      

@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.org/eblondel/geometa.svg?branch=master)](https://travis-ci.org/eblondel/geometa)
 [![codecov.io](http://codecov.io/github/eblondel/geometa/coverage.svg?branch=master)](http://codecov.io/github/eblondel/geometa?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geometa)](https://cran.r-project.org/package=geometa)
-[![Github_Status_Badge](https://img.shields.io/badge/Github-0.2--0-blue.svg)](https://github.com/eblondel/geometa)
+[![Github_Status_Badge](https://img.shields.io/badge/Github-0.3--0-blue.svg)](https://github.com/eblondel/geometa)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1184892.svg)](https://doi.org/10.5281/zenodo.1184892)
 
 **Tools for Reading and Writing ISO/OGC Geographic Metadata**
 
@@ -11,23 +12,28 @@
 
 Please check the [online documentation](https://github.com/eblondel/geometa/wiki) for more details!
 
+## Citation
+
+We thank in advance people that use ``geometa`` for citing it in their work / publication(s). For this, please use the citation provided at this link [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1184892.svg)](https://doi.org/10.5281/zenodo.1184892)
+
 ## Metadata standards coverage status
 
-Current Focus:
-* ISO 19115-1:**_2003_** Geographic information -- Metadata -- Part 1: Fundamentals
-* ISO 19119:**_2005_** Geographic information -- Service MEtadata
-* ISO 19110:**_2005_** Geographic Information -- Methodology for Feature Cataloguing
-* ISO 19136:**_2007_** Geographic information -- Geography Markup Language (GML), partial support (classes needed for ISO 19115)
-* ISO 19139:**_2007_** XML with **Encoding**, **Decoding** and **Validation** support
+Some specific ISO classes may be still missing, and will be added iteratively, according to needs, hence the "Partial" status highlighted for the different standards. This applies particularly to GML classes (ISO 19136) that may be needed in some ISO 19115 and 19110 classes. In case of a missing class, [create a ticket](https://github.com/eblondel/geometa/issues/new).
 
-Notes:
-* on encoding/decoding: Some specific ISO classes may be still missing, and will be added iteratively, according to needs. This applies particularly to GML classes (ISO 19136) that may be needed in some ISO 19115 and 19110 classes
-* on validation: validation is perfomed using XML schema validation based on [ISO/OGC schemas](http://schemas.opengis.net/iso/19139/20070417/)
+Standard identifier:year|Standard description|Status
+------------------------|-------------|------
+ISO 19115-1:2003|Geographic information -- Metadata -- Part 1: Fundamentals|Partial
+ISO 19115-1:2014|Geographic information -- Metadata -- Part 1: Fundamentals|Not supported
+ISO 19115-2:2009|Geographic information -- Metadata -- Part 2: Extensions for imagery and gridded data|Not supported
+ISO/TS 19115-3:2016|Geographic information -- Metadata -- Part 3: XML schema implementation for fundamental concepts|Not supported
+ISO 19119:2005|Geographic information -- Service Metadata|Partial
+ISO 19110:2005|Geographic Information -- Methodology for Feature Cataloguing|Partial
+ISO 19136:2007|Geographic information -- Geography Markup Language (GML 3.2.1)|Partial
+ISO 19139:2007|XML Implemntation with **Encoding**, **Decoding** and **Validation**|Full
 
-Not yet supported:
-* ISO 19115-1:**_2014_** - Geographic information -- Metadata -- Part 1: Fundamentals
-* ISO 19115-2:**_2009_** - Geographic information -- Metadata -- Part 2: Extensions for imagery and gridded data
-* ISO/TS 19115-3:**_2016_** - Geographic information -- Metadata -- Part 3: XML schema implementation for fundamental concepts
+## Metadata validation
+
+Default validation is perfomed using XML schema validation based on [ISO/OGC schemas](http://schemas.opengis.net/iso/19139/20070417/). geometa allows specifying a custom schema (e.g. ISO 19139 profile) in case default validation is not enough.
 
 ## Development perspectives
 

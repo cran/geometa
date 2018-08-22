@@ -3,6 +3,8 @@
 #' @docType class
 #' @importFrom utils packageDescription
 #' @importFrom R6 R6Class
+#' @importFrom methods is
+#' @import XML
 #' @export
 #' @keywords ISO metadata element
 #' @return Object of \code{\link{R6Class}} for modelling an ISO Metadata Element
@@ -41,16 +43,25 @@
 #'  \item{\code{decode(xml)}}{
 #'    Decodes a ISOMetadata* R6 object from XML representation
 #'  }
-#'  \item{\code{encode(addNS, validate, strict)}}{
+#'  \item{\code{encode(addNS, validate, strict, resetSerialID, setSerialID, encoding)}}{
 #'    Encodes a ISOMetadata* R6 object to XML representation. By default, namespace
 #'    definition will be added to XML root (\code{addNS = TRUE}), and validation
 #'    of object will be performed (\code{validate = TRUE}) prior to its XML encoding.
 #'    The argument \code{strict} allows to stop the encoding in case object is not
-#'    valid, with a default value set to \code{FALSE}.
+#'    valid, with a default value set to \code{FALSE}. The argument \code{setSerialID}
+#'    is used by \pkg{geometa} to generate automatically serial IDs associated to
+#'    XML elements, in particular for GML, default value is \code{TRUE} (recommended value).
+#'    The argument \code{resetSerialID} is used by \pkg{geometa} for reseting mandatory IDs
+#'    associated to XML elements, such as GML objects, default value is \code{TRUE} 
+#'    (recommended value).
 #'  }
 #'  \item{\code{validate(xml, strict)}}{
 #'    Validates the encoded XML against ISO 19139 XML schemas. If \code{strict} is
 #'    \code{TRUE}, a error will be raised. Default is \code{FALSE}. 
+#'  }
+#'  \item{\code{save(file)}}{
+#'    Saves the current metadata object XML representation to a file. This utility
+#'    ensures proper indentation of XML file produced.
 #'  }
 #'  \item{\code{getNamespaceDefinition(recursive)}}{
 #'    Gets the namespace definition of the current ISO* class. By default, only
@@ -64,6 +75,11 @@
 #'  }
 #'  \item{\code{wrapBaseElement(field, fieldObj)}}{
 #'    Wraps a base element type
+#'  }
+#'  \item{\code{setIsNull(isNull, reason)}}{
+#'    Sets the object as null object for the XML. In case \code{isNull} is \code{TRUE},
+#'    a reason should be specified among values 'inapplicable', 'missing', 'template',
+#'    'unknown', 'withheld'. By default, the reason is set 'missing'.
 #'  }
 #'  \item{\code{contains(field, metadataElement)}}{
 #'    Indicates of the present class object contains an metadata element object
@@ -121,7 +137,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     document = FALSE,
     system_fields = c("wrap", "valueDescription",
                       "element", "namespace", "defaults", "attrs", "printAttrs",
-                      "codelistId", "measureType"),
+                      "codelistId", "measureType", "isNull"),
     logger = function(type, text){
       cat(sprintf("[geometa][%s] %s \n", type, text))
     },
@@ -132,7 +148,8 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       isCompliant <- ifelse(is.na(compliant),"NOT TESTED", ifelse(compliant, "YES", "NO"))
       compliance <- paste0("\tISO 19139 XML compliance: ", isCompliant)
       createdOn <- paste0("\tCreation date/time: ", format(Sys.time(), "%Y-%m-%dT%H:%M:%S"))
-      author <- paste0("\tContact: ", geometa$Author)
+      geometaAuthor <- unlist(strsplit(as.character(eval(parse(text=geometa$Authors)))," \\["))[1]
+      author <- paste0("\tContact: ", geometaAuthor)
       infoPage <- paste0("\tURL: ", geometa$URL)
       bugReport <- paste0("\tBugReports: ", geometa$BugReports)
       txt <- paste(txt, "<!-- ", sep="\n")
@@ -150,19 +167,23 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     },
     toComplexTypes = function(value){
       newvalue <- value
-      if(regexpr(pattern = "(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})", value)>0){
+      #datetime types
+      if(regexpr(pattern = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})$", value)>0){
         newvalue <- as.POSIXct(strptime(value, "%Y-%m-%dT%H:%M:%S"), tz = "GMT")
-      }else if(regexpr(pattern = "(\\d{4})-(\\d{2})-(\\d{2})", value)>0){
+      }else if(regexpr(pattern = "^(\\d{4})-(\\d{2})-(\\d{2})$", value)>0){
         newvalue <- as.Date(as.POSIXct(strptime(value, "%Y-%m-%d"), tz = "GMT"))
       }
+      
       return(newvalue)
     },
     fromComplexTypes = function(value){
+      #datetime types
       if(suppressWarnings(all(class(value)==c("POSIXct","POSIXt")))){
         value <- format(value,"%Y-%m-%dT%H:%M:%S")
       }else if(class(value)[1] == "Date"){
         value <- format(value,"%Y-%m-%d")
       }
+      
       return(value)
     }
   ),
@@ -183,6 +204,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     attrs = list(),
     printAttrs = list(),
     value = NULL,
+    isNull = FALSE,
     initialize = function(xml = NULL, element = NULL, namespace = NULL,
                           attrs = list(), defaults = list(),
                           wrap = TRUE){
@@ -252,6 +274,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", item))
               }
             }
+          }else if (is(fieldObj,"matrix")){
+            m <- paste(apply(fieldObj, 1L, function(x){paste(x[1], x[2])}),collapse=" ")
+            cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", m))
           }else{
             cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", fieldObj))
           }
@@ -333,13 +358,25 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
             self[[fieldName]] <- fieldValue
           }
         }else{
+          if(is.null(nsPrefix)) nsPrefix <- ""
           if(nsPrefix == "gml"){
-            gmlElem <- GMLElement$new(element = fieldName)
-            gmlElem$decode(xml = childElement)
-            if(is(self[[fieldName]], "list")){
-              self[[fieldName]] <- c(self[[fieldName]], gmlElem)
+            if(inherits(self,"GMLAbstractRing")|
+               inherits(self,"GMLAbstractGeometricPrimitive")){
+              value <- xmlValue(child)
+              if(value=="") value <- NA
+              if(!is.na(value)){
+                values <- as.numeric(unlist(strsplit(value," ")))
+                m.values <- matrix(values, length(values)/2, 2, byrow = TRUE)
+                self[[fieldName]] <- m.values
+              }
             }else{
-              self[[fieldName]] <- gmlElem
+              gmlElem <- GMLElement$new(element = fieldName)
+              gmlElem$decode(xml = childElement)
+              if(is(self[[fieldName]], "list")){
+                self[[fieldName]] <- c(self[[fieldName]], gmlElem)
+              }else{
+                self[[fieldName]] <- gmlElem
+              }
             }
           }else{
             value <- xmlValue(child)
@@ -352,12 +389,35 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       }
       
       #inherit attributes if any
-      self$attrs <- as.list(xmlAttrs(xml, TRUE, FALSE))
+      xmlattrs <- NULL
+      if(!self$isDocument()) xmlattrs <- xmlAttrs(xml, TRUE, FALSE)
+      if(is(self, "ISOFeatureCatalogue")){
+        xmlattrs <- xmlAttrs(xml, TRUE, FALSE)
+        if("uuid" %in% names(xmlattrs)){
+          xmlattrs <- xmlattrs[names(xmlattrs)=="uuid"]
+        }
+      }
+      self$attrs <- as.list(xmlattrs)
+      if("gco:nilReason" %in% names(xmlattrs)) self$isNull <- TRUE
     },
     
     #encode
-    encode = function(addNS = TRUE, validate = TRUE, strict = FALSE){
-
+    encode = function(addNS = TRUE, validate = TRUE, strict = FALSE,
+                      resetSerialID = TRUE, setSerialID = TRUE,
+                      encoding = "UTF-8"){
+      
+      #management of GML ids
+      if(resetSerialID) .geometa.gml$serialId <- 1L
+      if(setSerialID){
+        if(inherits(self, "GMLAbstractGML")){
+          if(is.null(self$attrs[["gml:id"]])){
+            serialId <- paste0("ID",.geometa.gml$serialId)
+            self$setId(serialId,TRUE)
+            .geometa.gml$serialId <- .geometa.gml$serialId+1
+          }
+        }
+      }
+      
       #list of fields to encode as XML
       fields <- rev(names(self))
       
@@ -366,6 +426,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       rootXMLAttrs <- list()
       if("attrs" %in% fields){
         rootXMLAttrs <- self[["attrs"]]
+        rootXMLAttrs <- rootXMLAttrs[!is.na(rootXMLAttrs)]
       }
       
       #fields
@@ -375,29 +436,36 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       })]
       
       if(self$isDocument()){
-        rootNamespaces <- sapply(ISOMetadataNamespace$all(), function(x){x$getDefinition()})
+        rootNamespaces <- sapply(getISOMetadataNamespaces(), function(x){x$getDefinition()})
         rootXML <- xmlOutputDOM(
           tag = self$element,
           nameSpace = self$namespace$id,
           nsURI = rootNamespaces
         )
       }else{
+        wrapperAttrs <- NULL
+        if(self$isNull){
+          wrapperAttrs <- self$attrs
+          if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
+        }
         if(addNS){
           nsdefs <- self$getNamespaceDefinition(recursive = TRUE)
           rootXML <- xmlOutputDOM(
             tag = self$element,
             nameSpace = self$namespace$id,
-            nsURI = nsdefs
+            nsURI = nsdefs,
+            attrs = wrapperAttrs
           )
         }else{
           rootXML <- xmlOutputDOM(
             tag = self$element,
-            nameSpace = self$namespace$id
+            nameSpace = self$namespace$id,
+            attrs = wrapperAttrs
           )
         }
       }
       
-      for(field in fields){
+      if(!self$isNull) for(field in fields){
         fieldObj <- self[[field]]
         
         #default values management
@@ -418,7 +486,8 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         namespaceId <- names(ns)
         if(!is.null(fieldObj)){
           if(is(fieldObj, "ISOAbstractObject")){
-            fieldObjXml <- fieldObj$encode(addNS = FALSE, validate = FALSE)
+            fieldObjXml <- fieldObj$encode(addNS = FALSE, validate = FALSE,
+                                           resetSerialID = FALSE, setSerialID = setSerialID)
             if(is(fieldObj, "ISOElementSequence")){
               fieldObjXml.children <- xmlChildren(fieldObjXml)
               if(self$wrap){
@@ -438,13 +507,20 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               #  return(which(fieldObjNames == name) < which(fieldObjNames == ".__enclos_env__"))
               #})]
             }else{
-              if(self$wrap){
+              if(fieldObj$wrap){
+                wrapperAttrs <- NULL
+                if(fieldObj$isNull){
+                  wrapperAttrs <- fieldObj$attrs
+                  if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
+                }
                 wrapperNode <- xmlOutputDOM(
                   tag = field,
-                  nameSpace = namespaceId
+                  nameSpace = namespaceId,
+                  attrs = wrapperAttrs
                 )
-                wrapperNode$addNode(fieldObjXml)
+                if(!fieldObj$isNull) wrapperNode$addNode(fieldObjXml)
                 rootXML$addNode(wrapperNode$value())
+                
               }else{
                 rootXML$addNode(fieldObjXml)
               }
@@ -457,13 +533,22 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               }else{
                 nodeValue <- self$wrapBaseElement(field, item)
               }
-              nodeValueXml <- nodeValue$encode(addNS = FALSE, validate = FALSE)
+              nodeValueXml <- nodeValue$encode(addNS = FALSE, validate = FALSE,
+                                               resetSerialID = FALSE, setSerialID = setSerialID)
               if(is(item, "ISOElementSequence")){
                 nodeValueXml.children <- xmlChildren(nodeValueXml)
+                #if(self$wrap){
                 if(nodeValue$wrap){
-                  wrapperNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId)
-                  for(child in nodeValueXml.children){
-                    wrapperNode$addNode(child)
+                  wrapperAttrs <- NULL
+                  if(nodeValue$isNull){
+                    wrapperAttrs <- nodeValue$attrs
+                    if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
+                  }
+                  wrapperNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId, attrs = wrapperAttrs)
+                  if(!nodeValue$isNull){
+                    for(child in nodeValueXml.children){
+                      wrapperNode$addNode(child)
+                    }
                   }
                   rootXML$addNode(wrapperNode$value())
                 }else{
@@ -473,28 +558,48 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 }
               }else{
                 if(nodeValue$wrap){
+                  wrapperAttrs <- NULL
+                  if(nodeValue$isNull){
+                    wrapperAttrs <- nodeValue$attrs
+                    if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
+                  }
                   wrapperNode <- xmlOutputDOM(
                     tag = field,
-                    nameSpace = namespaceId
+                    nameSpace = namespaceId,
+                    attrs = wrapperAttrs
                   )
-                  wrapperNode$addNode(nodeValueXml)
+                  if(!nodeValue$isNull) wrapperNode$addNode(nodeValueXml)
                   rootXML$addNode(wrapperNode$value())
                 }else{
                   rootXML$addNode(nodeValueXml)
                 }
               }
             }
-          }else{
-            if(length(fieldObj)==0) fieldObj <- NA
-            if(is.na(fieldObj)){
+          }else if(is(fieldObj, "matrix")){
+            matrix_NA <- all(is.na(fieldObj))
+            if(matrix_NA){
               emptyNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId)
               rootXML$addNode(emptyNode$value())
             }else{
+              wrapperNode <- xmlOutputDOM(tag = field, nameSpace = namespaceId)
+              mts <- paste(apply(fieldObj, 1L, function(x){paste(x[1], x[2])}),collapse=" ")
+              wrapperNode$addNode(xmlTextNode(mts))
+              rootXML$addNode(wrapperNode$value())
+            }
+          }else{
+            if(length(fieldObj)==0) fieldObj <- NA
+            if(is.na(fieldObj)){
+              emptyNodeAttrs <- c("gco:nilReason" = "missing")
+              emptyNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId, attrs = emptyNodeAttrs)
+              rootXML$addNode(emptyNode$value())
+            }else{
               if(field == "value"){
+                if(is.logical(fieldObj)) fieldObj <- tolower(as.character(is.logical(fieldObj)))
                 fieldObj <- private$fromComplexTypes(fieldObj)
                 rootXML$addNode(xmlTextNode(fieldObj))
               }else{
                 dataObj <- self$wrapBaseElement(field, fieldObj)
+                #TODO TODO TODO
                 if(!is.null(dataObj)){
                   if(dataObj$wrap){
                     #general case of gco wrapper element
@@ -502,10 +607,12 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                       tag = field,
                       nameSpace = namespaceId
                     )
-                    wrapperNode$addNode(dataObj$encode(addNS = FALSE, validate = FALSE))
+                    wrapperNode$addNode(dataObj$encode(addNS = FALSE, validate = FALSE,
+                                                       resetSerialID = FALSE, setSerialID = setSerialID))
                     rootXML$addNode(wrapperNode$value())
                   }else{
-                    rootXML$addNode(dataObj$encode(addNS = FALSE, validate = FALSE))
+                    rootXML$addNode(dataObj$encode(addNS = FALSE, validate = FALSE,
+                                                   resetSerialID = FALSE, setSerialID = setSerialID))
                   }
                 }
               }
@@ -514,7 +621,10 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         }
       }
       out <- rootXML$value()
-      out <- as(out, "XMLInternalNode")
+      out <- paste0(capture.output(out), collapse="") #to character
+      out <- iconv(out, to = "UTF-8")
+      out <- xmlParse(out, encoding = Encoding(out), error = function (msg, ...) {})
+      out <- as(out, "XMLInternalNode") #to XMLInternalNode
       if(length(rootXMLAttrs)>0){
         suppressWarnings(xmlAttrs(out) <- rootXMLAttrs)
       }
@@ -529,7 +639,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       if(self$isDocument()){
         outbuf <- xmlOutputBuffer("", header = private$xmlHeader(compliant))
         outbuf$add(as(out, "character"))
-        out <- xmlParse(outbuf$value())
+        out <- xmlParse(outbuf$value(), encoding = encoding)
       }
       
       return(out)
@@ -552,7 +662,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       }
       
       #proceed with schema xml schema validation
-      xsd <- getISOSchemas()
+      xsd <- getISOMetadataSchemas()
       if(is(xml, "XMLInternalNode")) xml <- xmlDoc(xml)
       report <- xmlSchemaValidate(xsd, xml)
       
@@ -575,6 +685,11 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         self$INFO(sprintf("Object '%s' is VALID according to ISO 19139 XML schemas!", self$getClassName()))
       }
       return(isValid)
+    },
+    
+    #save
+    save = function(file){
+      return(cat(XML::saveXML(self$encode()), file = file))
     },
     
     #Util & internal methods
@@ -711,6 +826,22 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(dataObj)
     },
     
+    #setIsNull
+    setIsNull = function(isNull, reason = "missing"){
+      if(isNull){
+        allowedReasons <- c("inapplicable", "missing", "template", "unknown", "withheld")
+        if(!(reason %in% allowedReasons)){
+          stop(sprintf("The reason should be a value among [%s]", paste(allowedReasons, collapse=",")))
+        }
+      }
+      self$isNull <- isNull
+      if(self$isNull){
+        self$setAttr("gco:nilReason", reason)
+      }else{
+        self$attrs <- self$attrs[names(self$attrs)!="gco:nilReason"]
+      }
+    },
+    
     #contains
     contains = function(field, metadataElement){
       out = FALSE
@@ -815,16 +946,33 @@ ISOAbstractObject$getISOClassByNode = function(node){
   if(length(nodeElementNames)>1){
     nodeElementName <- nodeElementNames[2]
   }
-  list_of_classes <- rev(ls("package:geometa"))
-  list_of_classes <- list_of_classes[regexpr("^ISO.+", list_of_classes)>0 | regexpr("^GML.+", list_of_classes)>0]
+  list_of_classes <- c(rev(ls("package:geometa")), rev(ls()))
   for(classname in list_of_classes){
-    class <- eval(parse(text=classname))
-    if(length(class$private_fields)>0
-       && !is.null(class$private_fields$xmlElement)
-       && !is.null(class$private_fields$xmlNamespacePrefix)){
+    clazz <- try(eval(parse(text=classname)))
+    geometa_inherits <- FALSE
+    if(class(clazz)[1]=="R6ClassGenerator"){
+      superclazz <- clazz
+      while(!geometa_inherits){
+        clazz_fields <- names(superclazz)
+        if(!is.null(clazz_fields)) if(length(clazz_fields)>0) if("parent_env" %in% clazz_fields){
+          if(environmentName(superclazz$parent_env)=="geometa"){
+            geometa_inherits <- TRUE
+            break
+          }else{
+            if("get_inherit" %in% clazz_fields){
+              superclazz <- superclazz$get_inherit()
+            }
+          }
+        }
+      }
+    }
+    if(!geometa_inherits) next
+    if(length(clazz$private_fields)>0
+       && !is.null(clazz$private_fields$xmlElement)
+       && !is.null(clazz$private_fields$xmlNamespacePrefix)){
 
-      if(nodeElementName %in% class$private_fields$xmlElement){
-        outClass <- class
+      if(nodeElementName %in% clazz$private_fields$xmlElement){
+        outClass <- clazz
         break
       }
     }
@@ -835,7 +983,8 @@ ISOAbstractObject$getISOClassByNode = function(node){
 ISOAbstractObject$compare = function(metadataElement1, metadataElement2){
   text1 <- NULL
   if(is(metadataElement1, "ISOAbstractObject")){
-    xml1 <-metadataElement1$encode(addNS = TRUE, validate = FALSE)
+    xml1 <-metadataElement1$encode(addNS = TRUE, validate = FALSE,
+                                   resetSerialID = FALSE, setSerialID = FALSE)
     if(metadataElement1$isDocument()){
       content1 <- as(xml1, "character")
       content1 <- gsub("<!--.*?-->", "", content1)
@@ -849,7 +998,7 @@ ISOAbstractObject$compare = function(metadataElement1, metadataElement2){
   }
   text2 <- NULL
   if(is(metadataElement2, "ISOAbstractObject")){
-    xml2 <- metadataElement2$encode(addNS = TRUE, validate = FALSE)
+    xml2 <- metadataElement2$encode(addNS = TRUE, validate = FALSE, setSerialID = FALSE)
     if(metadataElement2$isDocument()){
       content2 <- as(xml2, "character")
       content2 <- gsub("<!--.*?-->", "", content2)
@@ -862,28 +1011,4 @@ ISOAbstractObject$compare = function(metadataElement1, metadataElement2){
     text2 <- as.character(metadataElement2)
   }
   return(text1 == text2)
-}
-
-#ISO 19139 schemas fetcher / getter
-#===============================================================================
-
-#fetchISOSchemas
-fetchISOSchemas <- function(){
-  packageStartupMessage("Loading ISO 19139 XML schemas...")
-  schemaPath <- "extdata/schemas"
-  namespace <- "gmd"
-  schemas <- tryCatch(
-    XML::xmlParse(
-      system.file(paste(schemaPath, namespace, sep="/"), paste0(namespace,".xsd"),
-                  package = "geometa", mustWork = TRUE),
-      isSchema = TRUE, xinclude = TRUE,
-      error = function (msg, code, domain, line, col, level, filename, class = "XMLError"){}
-    )
-  )
-  .geometa.iso$schemas <- schemas
-}
-
-#getISOSchemas
-getISOSchemas <- function(){
-  return(.geometa.iso$schemas)
 }

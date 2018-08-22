@@ -16,7 +16,9 @@
 #'    \code{addCodeListAttrs = TRUE}, to add codelist atributes to root XML. The 
 #'    parameter \code{addCodeSpaceAttr = TRUE} by default, and ignored if the valueof
 #'    \code{addCodeLisAttrs} is set to \code{FALSE}. The argument \code{setValue}
-#'    sets the value as node text (defaut is \code{TRUE}).
+#'    sets the value as node text (defaut is \code{TRUE}). The argument \code{setValueDescription}
+#'    allows to force having description set as value, default is \code{FALSE} in which case
+#'    the name will be preferred, and in case no name is provided, code value will be used.
 #'    
 #'  }
 #'  \item{\code{getAcceptedValues()}}{
@@ -44,7 +46,8 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
      initialize = function(xml = NULL, id, value, description = NULL,
                            addCodeListAttrs = TRUE,
                            addCodeSpaceAttr = TRUE,
-                           setValue = TRUE){
+                           setValue = TRUE,
+                           setValueDescription = FALSE){
        super$initialize(xml = xml)
        if(!is.null(xml)){
          value <- xmlGetAttr(xml, "codeListValue") #codeListValue should be as attribute
@@ -59,13 +62,16 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
        self$codelistId = cl
        clEntry <- cl$entries[cl$entries$value == value,]
        clValue <- ""
+       clName <- NA
        clDescription <- ""
        clCodeSpace <- ""
        if(nrow(clEntry)==0){
          warning(sprintf("No ISO '%s' codelist entry for value '%s'", id, value))
          clValue <- value
+         clCodeSpace <- cl$codeSpace
          if(!is.null(description)){
            setValue <- TRUE
+           clName <- description
            clDescription <- description
            self$valueDescription <- clDescription
          }
@@ -73,14 +79,18 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
          clCodeSpace <- cl$codeSpace
          clEntry <- clEntry[1L,]
          clValue <- clEntry$value
-         clDescription <- clEntry$description
+         clName <- clEntry$name
+         clDescription <- ifelse(!is.na(clName), clEntry$name, clEntry$description)
+         if(setValueDescription) clDescription <- clEntry$description
          self$valueDescription <- clDescription
        }
        
+       isLocalFile <- !grepl("^http", cl$refFile) & !grepl("^https", cl$refFile)
+       clUrl <- paste(cl$refFile, id, sep="#")
+       if(isLocalFile) clUrl <- paste(getGeometaOption("codelistUrl"), clUrl, sep="/")
        if(id == "LanguageCode"){
-         clUrl <- .geometa.iso$languageUrl
-       }else{
-         clUrl <- sprintf("%s/Codelist/%s#%s", .geometa.iso$schemaBaseUrl, cl$refFile, id)
+         langUrlOp <- getGeometaOption("languageUrl")
+         if(!is.null(langUrlOp)) clUrl <- langUrlOp
        }
        
        if(addCodeListAttrs){
@@ -92,7 +102,8 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
            self$attrs <- c(self$attrs, codeSpace = clCodeSpace)
          }
          if(setValue){
-           self$value <-clDescription
+           self$value <- ifelse(!is.na(clName), clName, clValue)
+           if(setValueDescription) self$value <- clDescription
          }
        }else{
          self$value <- clValue 
@@ -115,7 +126,7 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
 
 ISOCodeListValue$values = function(class, labels = FALSE){
   fields <- "value"
-  if(labels) fields <- c(fields, "description")
+  if(labels) fields <- c(fields, "name", "description")
   element <- class$private_fields$xmlElement
   if(element == "MD_ScopeCode") element <- "MX_ScopeCode"
   return(getISOCodelist(element)$entries[,fields])

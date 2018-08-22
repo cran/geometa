@@ -1,14 +1,25 @@
 .onLoad <- function (libname, pkgname) { # nocov start
+  #options
+  assign(".geometa.options", new.env(), envir= asNamespace(pkgname))
+  .geometa.options$languageUrl = "http://www.loc.gov/standards/iso639-2/"
+  .geometa.options$schemaBaseUrl = "http://www.isotc211.org/2005/resources"
+  .geometa.options$codelistUrl <- paste(.geometa.options$schemaBaseUrl, "Codelist", sep="/")
+  .geometa.options$internalCodelists <- TRUE
+  
+  #hidden objects
   assign(".geometa.iso", new.env(), envir= asNamespace(pkgname))
   
-  #schema base URL
-  .geometa.iso$languageUrl <- "http://www.loc.gov/standards/iso639-2/"
-  .geometa.iso$schemaBaseUrl <- "http://www.isotc211.org/2005/resources"
+  #set ISO metadata namespaces
+  setISOMetadataNamespaces()
   
-  #fetch ISO codelists
-  fetchISOCodelists()
+  #set ISO schemas
+  setISOMetadataSchemas()
   
-  #fetch ISO schemas
-  fetchISOSchemas()
+  #set ISO codelists
+  setISOCodelists()
+  
+  #Auto serial GML Id variable
+  assign(".geometa.gml", new.env(), envir = asNamespace(pkgname))
+  .geometa.gml$serialId <- 1L
   
 } # nocov end
