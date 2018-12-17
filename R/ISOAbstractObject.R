@@ -5,6 +5,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom methods is
 #' @import XML
+#' @import httr
 #' @export
 #' @keywords ISO metadata element
 #' @return Object of \code{\link{R6Class}} for modelling an ISO Metadata Element
@@ -137,7 +138,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     document = FALSE,
     system_fields = c("wrap", "valueDescription",
                       "element", "namespace", "defaults", "attrs", "printAttrs",
-                      "codelistId", "measureType", "isNull"),
+                      "codelistId", "measureType", "isNull", "anyElement"),
     logger = function(type, text){
       cat(sprintf("[geometa][%s] %s \n", type, text))
     },
@@ -205,6 +206,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     printAttrs = list(),
     value = NULL,
     isNull = FALSE,
+    anyElement = FALSE,
     initialize = function(xml = NULL, element = NULL, namespace = NULL,
                           attrs = list(), defaults = list(),
                           wrap = TRUE){
@@ -230,7 +232,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       
       #fields
       fields <- fields[!sapply(fields, function(x){
-        (class(self[[x]]) %in% c("environment", "function")) ||
+        (class(self[[x]])[1] %in% c("environment", "function")) ||
         (x %in% private$system_fields)
       })]
       
@@ -270,12 +272,39 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                   clDes <- item$codelistId$entries[item$codelistId$entries$value == clVal,"description"]
                   cat(paste0(": ", clVal, " {",clDes,"}"))
                 }
+              }else if(is(item, "matrix")){
+                m <- paste(apply(item, 1L, function(x){
+                  x <- lapply(x, function(el){
+                    if(is.na(suppressWarnings(as.numeric(el))) & !all(sapply(item,class)=="character")){
+                      el <- paste0("\"",el,"\"")
+                    }else{
+                      if(!is.na(suppressWarnings(as.numeric(el)))){
+                        el <- as.numeric(el)
+                      }
+                    }
+                    return(el)
+                  })
+                  return(paste(x, collapse = " "))
+                }), collapse = " ")
+                cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", m))
               }else{
                 cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", item))
               }
             }
           }else if (is(fieldObj,"matrix")){
-            m <- paste(apply(fieldObj, 1L, function(x){paste(x[1], x[2])}),collapse=" ")
+            m <- paste(apply(fieldObj, 1L, function(x){
+              x <- lapply(x, function(el){
+                if(is.na(suppressWarnings(as.numeric(el)))& !all(sapply(fieldObj,class)=="character")){
+                  el <- paste0("\"",el,"\"")
+                }else{
+                  if(!is.na(suppressWarnings(as.numeric(el)))){
+                    el <- as.numeric(el)
+                  }
+                }
+                return(el)
+              })
+              return(paste(x, collapse = " "))
+            }), collapse = " ")
             cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", m))
           }else{
             cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", fieldObj))
@@ -303,13 +332,19 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         }
         
         if(!is(self, "ISOElementSequence")) {
-          if(!(fieldName %in% names(self)) & fieldName != "text") next
+          if(!(fieldName %in% names(self)) & fieldName != "text" & !self$anyElement) next
         }
           
         fieldClass <- NULL
         if(!is(child, "XMLInternalTextNode")){
           fieldClass <- ISOAbstractObject$getISOClassByNode(child)
           nsPrefix <- names(xmlNamespace(child))
+          if(is.null(nsPrefix)){
+            #try to grab from ns prefix
+            childName <- xmlName(child, full = TRUE)
+            preftag <- unlist(strsplit(as(childName, "character"),":"))[1]
+            if(preftag!=childName) nsPrefix <- substring(preftag, 2, nchar(preftag))
+          }
           if(is.null(fieldClass)){
             children <- xmlChildren(child, encoding = private$encoding)
             if(length(children)>0){
@@ -323,7 +358,17 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 #more than one child, consider it as sequence
                 fieldClass <- ISOElementSequence
               }
-              
+            }else{
+              #if xlink:href attr available attempt to
+              #href <- xmlGetAttr(child, "xlink:href")
+              #if(!is.null(href)){
+              #  self$INFO(sprintf("Fetching child element from xlink:href attribute '%s'", href))
+              #  childXML <- try(XML::xmlParse(href))
+              #  if(!is(childXML,"try-error")){
+              #    child <- XML::xmlRoot(childXML)
+              #    fieldClass <- ISOAbstractObject$getISOClassByNode(child)
+              #  }
+              #}
             }
           }
         }
@@ -359,18 +404,62 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
           }
         }else{
           if(is.null(nsPrefix)) nsPrefix <- ""
-          if(nsPrefix == "gml"){
-            if(inherits(self,"GMLAbstractRing")|
-               inherits(self,"GMLAbstractGeometricPrimitive")){
+          if(startsWith(nsPrefix,"gml") |inherits(self, "GMLAbstractObject")){
+            if(is(self[[fieldName]], "matrix") & 
+              (inherits(self,"GMLAbstractRing")|
+               inherits(self,"GMLAbstractGeometricPrimitive")|
+               inherits(self,"GMLEnvelope")|
+               inherits(self,"GMLGeneralGridAxis"))){
               value <- xmlValue(child)
               if(value=="") value <- NA
               if(!is.na(value)){
-                values <- as.numeric(unlist(strsplit(value," ")))
-                m.values <- matrix(values, length(values)/2, 2, byrow = TRUE)
-                self[[fieldName]] <- m.values
+                value_split <- unlist(strsplit(value," "))
+                coercable <- !suppressWarnings(is.na(as.numeric(value_split)))
+                values <- lapply(1:length(value_split), function(i){
+                  out <- value_split[i]
+                  if(coercable[i]) out <- as.numeric(out)
+                  return(out)
+                })
+                if(all(!is.na(values)) & length(values)>1){
+                  values <- lapply(values, function(x){if(is.character(x)){x <- gsub("\"","",x)};x})
+                  if(is(self,"GMLEnvelope")){
+                    m.values <- t(matrix(values))
+                  }else{
+                    dimension <- xmlGetAttr(xml, "srsDimension")
+                    if(!is.null(dimension)) dimension <- as.integer(dimension)
+                    if(is.null(dimension)){
+                      dimension <- 1
+                      if(inherits(self,"GMLAbstractGeometricPrimitive")){
+                        if(is(self, "GMLPoint")){
+                          dimension <- length(values)
+                        }else{
+                          self$WARN("No 'srsDimension' on geometry object. Impossible to decode coordinates!")
+                        }
+                      }
+                    }
+                    m.values <- matrix(values, length(values)/dimension, dimension, byrow = TRUE)
+                  }
+                  if(is(self[[fieldName]], "list")){
+                    self[[fieldName]] <- c(self[[fieldName]], m.values)
+                  }else{
+                    self[[fieldName]] <- m.values
+                  }
+                }
+              }else{
+                xmlNamespacePrefix <- "GML"
+                if(startsWith(nsPrefix,"gml")) xmlNamespacePrefix <- toupper(nsPrefix)
+                gmlElem <- GMLElement$new(element = fieldName, xmlNamespacePrefix = xmlNamespacePrefix)
+                gmlElem$decode(xml = childElement)
+                if(is(self[[fieldName]], "list")){
+                  self[[fieldName]] <- c(self[[fieldName]], gmlElem)
+                }else{
+                  self[[fieldName]] <- gmlElem
+                }
               }
             }else{
-              gmlElem <- GMLElement$new(element = fieldName)
+              xmlNamespacePrefix <- "GML"
+              if(startsWith(nsPrefix,"gml")) xmlNamespacePrefix <- toupper(nsPrefix)
+              gmlElem <- GMLElement$new(element = fieldName, xmlNamespacePrefix = xmlNamespacePrefix)
               gmlElem$decode(xml = childElement)
               if(is(self[[fieldName]], "list")){
                 self[[fieldName]] <- c(self[[fieldName]], gmlElem)
@@ -378,6 +467,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 self[[fieldName]] <- gmlElem
               }
             }
+            
           }else{
             value <- xmlValue(child)
             if(value=="") value <- NA
@@ -431,7 +521,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       
       #fields
       fields <- fields[!sapply(fields, function(x){
-        (class(self[[x]]) %in% c("environment", "function")) ||
+        (class(self[[x]])[1] %in% c("environment", "function")) ||
         (x %in% private$system_fields)
       })]
       
@@ -528,50 +618,82 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
           }else if(is(fieldObj, "list")){
             for(item in fieldObj){
               nodeValue <- NULL
-              if(is(item, "ISOAbstractObject")){
-                nodeValue <- item
-              }else{
-                nodeValue <- self$wrapBaseElement(field, item)
-              }
-              nodeValueXml <- nodeValue$encode(addNS = FALSE, validate = FALSE,
-                                               resetSerialID = FALSE, setSerialID = setSerialID)
-              if(is(item, "ISOElementSequence")){
-                nodeValueXml.children <- xmlChildren(nodeValueXml)
-                #if(self$wrap){
-                if(nodeValue$wrap){
-                  wrapperAttrs <- NULL
-                  if(nodeValue$isNull){
-                    wrapperAttrs <- nodeValue$attrs
-                    if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
-                  }
-                  wrapperNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId, attrs = wrapperAttrs)
-                  if(!nodeValue$isNull){
-                    for(child in nodeValueXml.children){
-                      wrapperNode$addNode(child)
-                    }
-                  }
-                  rootXML$addNode(wrapperNode$value())
+              if(is(item, "matrix")){
+                matrix_NA <- all(is.na(item))
+                if(matrix_NA){
+                  emptyNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId)
+                  rootXML$addNode(emptyNode$value())
                 }else{
-                  for(child in nodeValueXml.children){
-                    rootXML$addNode(child)
+                  mts <- paste(apply(item, 1L, function(x){
+                    x <- lapply(x, function(el){
+                      if(!is.na(suppressWarnings(as.numeric(el)))){
+                        el <- as.numeric(el)
+                      }
+                      return(el)
+                    })
+                    x <- lapply(x, function(el){
+                      if(is.na(suppressWarnings(as.numeric(el))) & !all(sapply(x,class)=="character")){
+                        el <- paste0("\"",el,"\"")
+                      }
+                      return(el)
+                    })
+                    return(paste(x, collapse = " "))
+                  }), collapse = " ")
+                  txtNode <- xmlTextNode(mts)
+                  if(field == "value"){
+                    rootXML$addNode(txtNode)
+                  }else{
+                    wrapperNode <- xmlOutputDOM(tag = field, nameSpace = namespaceId)
+                    wrapperNode$addNode(txtNode)
+                    rootXML$addNode(wrapperNode$value())
                   }
                 }
               }else{
-                if(nodeValue$wrap){
-                  wrapperAttrs <- NULL
-                  if(nodeValue$isNull){
-                    wrapperAttrs <- nodeValue$attrs
-                    if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
-                  }
-                  wrapperNode <- xmlOutputDOM(
-                    tag = field,
-                    nameSpace = namespaceId,
-                    attrs = wrapperAttrs
-                  )
-                  if(!nodeValue$isNull) wrapperNode$addNode(nodeValueXml)
-                  rootXML$addNode(wrapperNode$value())
+                if(is(item, "ISOAbstractObject")){
+                  nodeValue <- item
                 }else{
-                  rootXML$addNode(nodeValueXml)
+                  nodeValue <- self$wrapBaseElement(field, item)
+                }
+                nodeValueXml <- nodeValue$encode(addNS = FALSE, validate = FALSE,
+                                                 resetSerialID = FALSE, setSerialID = setSerialID)
+                if(is(item, "ISOElementSequence")){
+                  nodeValueXml.children <- xmlChildren(nodeValueXml)
+                  #if(self$wrap){
+                  if(nodeValue$wrap){
+                    wrapperAttrs <- NULL
+                    if(nodeValue$isNull){
+                      wrapperAttrs <- nodeValue$attrs
+                      if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
+                    }
+                    wrapperNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId, attrs = wrapperAttrs)
+                    if(!nodeValue$isNull){
+                      for(child in nodeValueXml.children){
+                        wrapperNode$addNode(child)
+                      }
+                    }
+                    rootXML$addNode(wrapperNode$value())
+                  }else{
+                    for(child in nodeValueXml.children){
+                      rootXML$addNode(child)
+                    }
+                  }
+                }else{
+                  if(nodeValue$wrap){
+                    wrapperAttrs <- NULL
+                    if(nodeValue$isNull){
+                      wrapperAttrs <- nodeValue$attrs
+                      if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
+                    }
+                    wrapperNode <- xmlOutputDOM(
+                      tag = field,
+                      nameSpace = namespaceId,
+                      attrs = wrapperAttrs
+                    )
+                    if(!nodeValue$isNull) wrapperNode$addNode(nodeValueXml)
+                    rootXML$addNode(wrapperNode$value())
+                  }else{
+                    rootXML$addNode(nodeValueXml)
+                  }
                 }
               }
             }
@@ -581,10 +703,29 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               emptyNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId)
               rootXML$addNode(emptyNode$value())
             }else{
-              wrapperNode <- xmlOutputDOM(tag = field, nameSpace = namespaceId)
-              mts <- paste(apply(fieldObj, 1L, function(x){paste(x[1], x[2])}),collapse=" ")
-              wrapperNode$addNode(xmlTextNode(mts))
-              rootXML$addNode(wrapperNode$value())
+              mts <- paste(apply(fieldObj, 1L, function(x){
+                x <- lapply(x, function(el){
+                  if(!is.na(suppressWarnings(as.numeric(el)))){
+                    el <- as.numeric(el)
+                  }
+                  return(el)
+                })
+                x <- lapply(x, function(el){
+                  if(is.na(suppressWarnings(as.numeric(el))) & !all(sapply(x,class)=="character")){
+                    el <- paste0("\"",el,"\"")
+                  }
+                  return(el)
+                })
+                return(paste(x, collapse = " "))
+              }), collapse = " ")
+              txtNode <- xmlTextNode(mts)
+              if(field == "value"){
+                rootXML$addNode(txtNode)
+              }else{
+                wrapperNode <- xmlOutputDOM(tag = field, nameSpace = namespaceId)
+                wrapperNode$addNode(txtNode)
+                rootXML$addNode(wrapperNode$value())
+              }
             }
           }else{
             if(length(fieldObj)==0) fieldObj <- NA
@@ -703,7 +844,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         #list of fields
         fields <- rev(names(self))
         fields <- fields[!sapply(fields, function(x){
-          (class(self[[x]]) %in% c("environment", "function")) ||
+          (class(self[[x]])[1] %in% c("environment", "function")) ||
             (x %in% private$system_fields)
         })]
         
@@ -745,7 +886,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                   if(is(xObj.item, "ISOAbstractObject")){
                     nsdef.item <- xObj.item$getNamespaceDefinition(recursive = recursive)
                   }else{
-                    nsdef.item <- ISOMetadataNamespace$GCO$getDefinition() 
+                    if(!is(xObj.item, "matrix")) nsdef.item <- ISOMetadataNamespace$GCO$getDefinition() 
                   }
                   for(item in names(nsdef.item)){
                     nsd <- nsdef.item[[item]]
@@ -757,7 +898,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                   }
                 }))
               }else{
-                if(names(selfNsdef)[1] != "gml"){
+                if(!startsWith(names(selfNsdef)[1],"gml")){
                   nsdef <- ISOMetadataNamespace$GCO$getDefinition()
                 }
               }
@@ -789,7 +930,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
           }
         }
       }))
-      
+      nsdefs <- nsdefs[!duplicated(names(nsdefs))]
       return(nsdefs)
     },
     
@@ -883,7 +1024,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     #setId
     setId = function(id, addNS = FALSE){
       attrKey <- "id"
-      if(addNS) attrKey <- paste(tolower(private$xmlNamespacePrefix), attrKey, sep=":")
+      prefix <- tolower(private$xmlNamespacePrefix)
+      if(startsWith(prefix, "gml")) prefix <- "gml"
+      if(addNS) attrKey <- paste(prefix, attrKey, sep=":")
       self$attrs[[attrKey]] <- id
     },
     
@@ -946,11 +1089,15 @@ ISOAbstractObject$getISOClassByNode = function(node){
   if(length(nodeElementNames)>1){
     nodeElementName <- nodeElementNames[2]
   }
-  list_of_classes <- c(rev(ls("package:geometa")), rev(ls()))
+  list_of_classes <- unlist(sapply(search(), ls))
+  list_of_classes <- list_of_classes[sapply(list_of_classes, function(x){
+    clazz <- invisible(try(eval(parse(text=x)),silent=TRUE))
+    return(class(clazz)[1]=="R6ClassGenerator")
+  })]
   for(classname in list_of_classes){
     clazz <- try(eval(parse(text=classname)))
-    geometa_inherits <- FALSE
-    if(class(clazz)[1]=="R6ClassGenerator"){
+    if(nodeElementName %in% clazz$private_fields$xmlElement){
+      geometa_inherits <- FALSE
       superclazz <- clazz
       while(!geometa_inherits){
         clazz_fields <- names(superclazz)
@@ -965,13 +1112,10 @@ ISOAbstractObject$getISOClassByNode = function(node){
           }
         }
       }
-    }
-    if(!geometa_inherits) next
-    if(length(clazz$private_fields)>0
-       && !is.null(clazz$private_fields$xmlElement)
-       && !is.null(clazz$private_fields$xmlNamespacePrefix)){
-
-      if(nodeElementName %in% clazz$private_fields$xmlElement){
+      if(!geometa_inherits) next
+      if(length(clazz$private_fields)>0
+         && !is.null(clazz$private_fields$xmlElement)
+         && !is.null(clazz$private_fields$xmlNamespacePrefix)){
         outClass <- clazz
         break
       }

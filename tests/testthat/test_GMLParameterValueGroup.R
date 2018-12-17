@@ -7,9 +7,13 @@ require(geometa, quietly = TRUE)
 require(testthat)
 require(XML)
 
-context("GMLParameterGroup")
+context("GMLParameterValueGroup")
 
 test_that("encoding",{
+  
+  testthat::skip_on_cran()
+  testthat::skip_on_travis()
+  
   #encoding
   pv1 <- GMLParameterValue$new()
   pv1$setValue(1.0, "m")

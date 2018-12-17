@@ -7,9 +7,11 @@ require(geometa, quietly = TRUE)
 require(sf)
 require(testthat)
 
-context("ISOAbstractRing")
+context("GMLAbstractRing")
 
 test_that("GMLLinearRing",{
+  testthat::skip_on_cran()
+  testthat::skip_on_travis()
   #encoding
   md <- GMLLinearRing$new(m = rbind(c(0,0),c(1,1),c(2,2),c(0,0)))
   xml <- md$encode()
