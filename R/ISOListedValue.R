@@ -7,24 +7,30 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOListedValue
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field code
+#' @field label [\code{\link{character}}] label
+#' @field code [\code{\link{character}}] code
+#' @field definition [\code{\link{character}}] definition
+#' @field definitionReference [\code{\link{ISODefinitionReference}}] definition reference
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an ISOListedValue
+#'    This method is used to instantiate an \code{\link{ISOListedValue}}
 #'  }
-#'  \item{\code{setLabel(label)}}{
-#'    Sets the label
+#'  \item{\code{setLabel(label, locales)}}{
+#'    Sets the label. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
-#'  \item{\code{setCode(code)}}{
-#'    Sets the code
+#'  \item{\code{setCode(code, locales)}}{
+#'    Sets the code. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
-#'  \item{\code{setDefinition(definition)}}{
-#'    Sets the definition
+#'  \item{\code{setDefinition(definition, locales)}}{
+#'    Sets the definition. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
 #'  \item{\code{setDefinitionReference(definitionReference)}}{
-#'    Sets the definition reference
+#'    Sets the definition reference, object of class \code{\link{ISODefinitionReference}}
 #'  }
 #' }
 #' 
@@ -62,18 +68,27 @@ ISOListedValue <- R6Class("ISOListedValue",
      },
      
      #setLabel
-     setLabel = function(label){
+     setLabel = function(label, locales = NULL){
        self$label = label
+       if(!is.null(locales)){
+         self$label <- self$createLocalisedProperty(label, locales)
+       }
      },
      
      #setCode
-     setCode = function(code){
+     setCode = function(code, locales = NULL){
        self$code <- code
+       if(!is.null(locales)){
+         self$code <- self$createLocalisedProperty(code, locales)
+       }
      },
      
      #setDefinition
-     setDefinition = function(definition){
+     setDefinition = function(definition, locales = NULL){
        self$definition <- definition
+       if(!is.null(locales)){
+         self$definition <- self$createLocalisedProperty(definition, locales)
+       }
      },
      
      #setDefinitionReference

@@ -7,8 +7,8 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISORangeDimension
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field sequenceIdentifier
-#' @field descriptor
+#' @field sequenceIdentifier [\code{\link{ISOMemberName}}] sequence identifier
+#' @field descriptor [\code{\link{character}}] description
 #' 
 #' @section Methods:
 #' \describe{
@@ -18,8 +18,9 @@
 #'  \item{\code{setSequenceIdentifier(memberName)}}{
 #'    Sets the sequence identifier, object of class \code{ISOMemberName}
 #'  }
-#'  \item{\code{setDescriptor(descriptor)}}{
-#'    Sets the descriptor, object of class \code{character}
+#'  \item{\code{setDescriptor(descriptor ,locales)}}{
+#'    Sets the descriptor, object of class \code{character}. Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
 #' }
 #' 
@@ -57,8 +58,11 @@ ISORangeDimension <- R6Class("ISORangeDimension",
       },
       
       #setDescriptor
-      setDescriptor = function(descriptor){
+      setDescriptor = function(descriptor, locales = NULL){
         self$descriptor <- descriptor
+        if(!is.null(locales)){
+          self$descriptor <- self$createLocalisedProperty(descriptor, locales)
+        }
       }
     )                        
 )

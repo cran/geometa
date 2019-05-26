@@ -17,26 +17,35 @@ ISOStandardOrderProcess
 \section{Fields}{
 
 \describe{
-\item{\code{turnaround}}{}
+\item{\code{fees}}{[\code{\link{character}}]}
+
+\item{\code{plannedAvailableDateTime}}{[\code{\link{POSIXt}}] the datetime}
+
+\item{\code{orderingInstructions}}{[\code{\link{character}}] ordering instructions}
+
+\item{\code{turnaround}}{[\code{\link{character}}] turnaround}
 }}
 
 \section{Methods}{
 
 \describe{
  \item{\code{new(xml)}}{
-   This method is used to instantiate an ISOStandardOrderProcess
+   This method is used to instantiate an \code{\link{ISOStandardOrderProcess}}
  }
- \item{\code{setFees(fees)}}{
-   Sets fees, object of class \code{character}
+ \item{\code{setFees(fees, locales)}}{
+   Sets fees, object of class \code{character}. Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
  \item{\code{setPlannedAvailableDateTime(dateTime)}}{
    Sets planned available datetime, object of class \code{c('POSIXct','POSIXlt')}
  }
- \item{\code{setOrderingInstructions(instructions)}}{
-   Sets ordering instructions, object of class \code{character}
+ \item{\code{setOrderingInstructions(instructions, locales)}}{
+   Sets ordering instructions, object of class \code{character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
  }
- \item{\code{setTurnaround(turnaround)}}{
-   Sets turnaround, object of class \code{character}
+ \item{\code{setTurnaround(turnaround, locales)}}{
+   Sets turnaround, object of class \code{character}. Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
 }
 }

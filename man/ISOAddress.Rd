@@ -17,29 +17,42 @@ ISOAddress
 \section{Fields}{
 
 \describe{
-\item{\code{electronicMailAddress}}{}
+\item{\code{deliveryPoint}}{[\code{\link{character}}]}
+
+\item{\code{city}}{[\code{\link{character}}]}
+
+\item{\code{postalCode}}{[\code{\link{character}}]}
+
+\item{\code{country}}{[\code{\link{ISOCountry}}]}
+
+\item{\code{electronicMailAddress}}{[\code{\link{character}}]}
 }}
 
 \section{Methods}{
 
 \describe{
  \item{\code{new(xml)}}{
-   This method is used to instantiate an ISOAddress
+   This method is used to instantiate an \code{\link{ISOAddress}}
  }
- \item{\code{setDeliveryPoint(deliveryPoint)}}{
-   Sets the delivery point
+ \item{\code{setDeliveryPoint(deliveryPoint, locales)}}{
+   Sets the delivery point. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
- \item{\code{setCity(city)}}{
-   Sets the city
+ \item{\code{setCity(city, locales)}}{
+   Sets the city. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
- \item{\code{setPostalCode(postalCode)}}{
-   Sets the postal code
+ \item{\code{setPostalCode(postalCode, locales)}}{
+   Sets the postal code. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
- \item{\code{setCountry(country)}}{
-   Sets the country
+ \item{\code{setCountry(country, locales)}}{
+   Sets the country. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
- \item{\code{setEmail(email)}}{
-   Sets the electronic Mail address
+ \item{\code{setEmail(email, locales)}}{
+   Sets the electronic Mail address. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
 }
 }

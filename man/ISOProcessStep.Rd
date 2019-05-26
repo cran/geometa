@@ -17,32 +17,40 @@ ISOProcessStep
 \section{Fields}{
 
 \describe{
-\item{\code{processor}}{}
+\item{\code{description}}{[\code{\link{character}}] process step description}
+
+\item{\code{rationale}}{[\code{\link{character}}] rationale}
+
+\item{\code{dateTime}}{[\code{\link{POSIXt}}] dateTime of the process ste}
+
+\item{\code{processor}}{[\code{\link{ISOResponsibleParty}}] party responsible of the process step}
 }}
 
 \section{Methods}{
 
 \describe{
  \item{\code{new(xml)}}{
-   This method is used to instantiate an ISOProcessStep
+   This method is used to instantiate an \code{\link{ISOProcessStep}}
  }
- \item{\code{setDescription(description)}}{
-   Sets the process step description
+ \item{\code{setDescription(description, locales)}}{
+   Sets the process step description. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
- \item{\code{setRationale(rationale)}}{
-   Sets the process step rationale
+ \item{\code{setRationale(rationale, locales)}}{
+   Sets the process step rationale. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
  \item{\code{setDateTime(dateTime)}}{
    Sets the date time
  }
  \item{addProcessor(processor)}{
-   Adds a processor (object of class \code{ISOResponsibleParty})
+   Adds a processor (object of class \code{\link{ISOResponsibleParty}})
  }
  \item{delProcessor(processor)}{
   Deletes a processor
  }
  \item{addSource(source)}{
-   Adds a source (object of class \code{ISOSource})
+   Adds a source (object of class \code{\link{ISOSource}})
  }
  \item{delSource(source)}{
   Deletes a source

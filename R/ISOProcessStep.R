@@ -7,33 +7,35 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO ProcessStep
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field description
-#' @field rationale
-#' @field dateTime
-#' @field processor
+#' @field description [\code{\link{character}}] process step description
+#' @field rationale [\code{\link{character}}] rationale
+#' @field dateTime [\code{\link{POSIXt}}] dateTime of the process ste
+#' @field processor [\code{\link{ISOResponsibleParty}}] party responsible of the process step
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an ISOProcessStep
+#'    This method is used to instantiate an \code{\link{ISOProcessStep}}
 #'  }
-#'  \item{\code{setDescription(description)}}{
-#'    Sets the process step description
+#'  \item{\code{setDescription(description, locales)}}{
+#'    Sets the process step description. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
-#'  \item{\code{setRationale(rationale)}}{
-#'    Sets the process step rationale
+#'  \item{\code{setRationale(rationale, locales)}}{
+#'    Sets the process step rationale. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
 #'  \item{\code{setDateTime(dateTime)}}{
 #'    Sets the date time
 #'  }
 #'  \item{addProcessor(processor)}{
-#'    Adds a processor (object of class \code{ISOResponsibleParty})
+#'    Adds a processor (object of class \code{\link{ISOResponsibleParty}})
 #'  }
 #'  \item{delProcessor(processor)}{
 #'   Deletes a processor
 #'  }
 #'  \item{addSource(source)}{
-#'    Adds a source (object of class \code{ISOSource})
+#'    Adds a source (object of class \code{\link{ISOSource}})
 #'  }
 #'  \item{delSource(source)}{
 #'   Deletes a source
@@ -79,13 +81,19 @@ ISOProcessStep <- R6Class("ISOProcessStep",
      },
      
      #setDescription
-     setDescription = function(description){
+     setDescription = function(description, locales = NULL){
        self$description <- as.character(description)
+       if(!is.null(locales)){
+         self$description <- self$createLocalisedProperty(description, locales)
+       }
      },
      
      #setRationale
-     setRationale = function(rationale){
+     setRationale = function(rationale, locales = NULL){
        self$rationale <- as.character(rationale)
+       if(!is.null(locales)){
+         self$rationale <- self$createLocalisedProperty(rationale, locales)
+       }
      },
      
      #setDateTime

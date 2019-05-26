@@ -7,17 +7,17 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO FeatureType
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field typeName
-#' @field definition
-#' @field code
-#' @field isAbstract
-#' @field aliases
-#' @field inheritsFrom
-#' @field inheritsTo
-#' @field featureCatalogue
-#' @field constrainedBy
-#' @field definitionReference
-#' @field carrierOfCharacteristics
+#' @field typeName [\code{\link{ISOLocalName}}]
+#' @field definition [\code{\link{character}}]
+#' @field code [\code{\link{character}}]
+#' @field isAbstract [\code{\link{logical}}]
+#' @field aliases [\code{\link{ISOLocalName}}]
+#' @field inheritsFrom [\code{\link{ISOInheritanceRelation}}]
+#' @field inheritsTo [\code{\link{ISOInheritanceRelation}}]
+#' @field featureCatalogue [\code{\link{ISOFeatureCatalogue}}]
+#' @field constrainedBy [\code{\link{ISOConstraints}}]
+#' @field definitionReference [\code{\link{ISODefinitionReference}}]
+#' @field carrierOfCharacteristics [\code{\link{ISOCarrierOfCharacteristics}}]
 #'
 #' @section Methods:
 #' \describe{
@@ -27,11 +27,13 @@
 #'  \item{\code{setTypeName(typeName)}}{
 #'    Sets the type name. Object of class \code{ISOLocalName} or \code{"character"}
 #'  }
-#'  \item{\code{setDefinition(definition)}}{
-#'    Sets the definition
+#'  \item{\code{setDefinition(definition, locales)}}{
+#'    Sets the definition. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
-#'  \item{\code{setCode(code)}}{
-#'    Sets the code
+#'  \item{\code{setCode(code, locales)}}{
+#'    Sets the code. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
 #'  \item{\code{setIsAbstract(isAbstract)}}{
 #'    Sets TRUE/FALSE if the feature type is abstract or not
@@ -41,6 +43,18 @@
 #'  }
 #'  \item{\code{delAlias(alias)}}{
 #'    Deletes alias name
+#'  }
+#'  \item{\code{addInheritsFrom(rel)}}{
+#'    Adds a relation (from) as object of class \code{ISOInheritanceRelation}
+#'  }
+#'  \item{\code{delInheritsFrom(rel)}}{
+#'    Deletes a relation (from) as object of class \code{ISOInheritanceRelation}
+#'  }
+#'  \item{\code{addInheritsTo(rel)}}{
+#'    Adds a relation (to) as object of class \code{ISOInheritanceRelation}
+#'  }
+#'  \item{\code{delInheritsTo(rel)}}{
+#'    Deletes a relation (to) as object of class \code{ISOInheritanceRelation}
 #'  }
 #'  \item{\code{setFeatureCatalogue(fc)}}{
 #'    Sets a feature catalogue, object of class \code{ISOFeatureCatalogue}
@@ -133,9 +147,9 @@ ISOFeatureType <- R6Class("ISOFeatureType",
      isAbstract = FALSE,
      #+ aliases [0..*]: ISOLocalName
      aliases = list(),
-     #+ inheritsFrom [0..*]: ?
+     #+ inheritsFrom [0..*]: ISOInheritanceRelation
      inheritsFrom = list(),
-     #+ inheritsTo [0..*]: ?
+     #+ inheritsTo [0..*]: ISOInheritanceRelation
      inheritsTo = list(),
      #+ featureCatalogue: ISOFeatureCatalogue
      featureCatalogue = NA,
@@ -157,13 +171,19 @@ ISOFeatureType <- R6Class("ISOFeatureType",
      },
      
      #setDefinition
-     setDefinition = function(definition){
+     setDefinition = function(definition, locales = NULL){
        self$definition <- definition
+       if(!is.null(locales)){
+         self$definition <- self$createLocalisedProperty(definition, locales)
+       }
      },
      
      #setCode
-     setCode = function(code){
+     setCode = function(code, locales = NULL){
        self$code = code
+       if(!is.null(locales)){
+         self$code <- self$createLocalisedProperty(code, locales)
+       }
      },
      
      #setIsAbstract
@@ -191,20 +211,32 @@ ISOFeatureType <- R6Class("ISOFeatureType",
        return(self$delListElement("aliases", alias))
      },
      
-     addInheritsFrom = function(){
-       stop("Method not yet supported in geometa!")
+     addInheritsFrom = function(rel){
+       if(!is(rel, "ISOInheritanceRelation")){
+         stop("Argument value should be an object of class 'ISOInheritanceRelation'")
+       }
+       return(self$addListElement("inheritsFrom", rel))
      },
      
-     delInheritsFrom = function(){
-       stop("Method not yet supported in geometa!")
+     delInheritsFrom = function(rel){
+       if(!is(rel, "ISOInheritanceRelation")){
+         stop("Argument value should be an object of class 'ISOInheritanceRelation'")
+       }
+       return(self$delListElement("inheritsFrom", rel))
      },
      
-     addInheritsTo = function(){
-       stop("Method not yet supported in geometa!")
+     addInheritsTo = function(rel){
+       if(!is(rel, "ISOInheritanceRelation")){
+         stop("Argument value should be an object of class 'ISOInheritanceRelation'")
+       }
+       return(self$addListElement("inheritsTo", rel))
      },
      
-     delInheritsTo = function(){
-       stop("Method not yet supported in geometa!")
+     delInheritsTo = function(rel){
+       if(!is(rel, "ISOInheritanceRelation")){
+         stop("Argument value should be an object of class 'ISOInheritanceRelation'")
+       }
+       return(self$delListElement("inheritsTo", rel))
      },
      
      #setFeatureCatalogue
@@ -241,16 +273,16 @@ ISOFeatureType <- R6Class("ISOFeatureType",
      
      #addCharacteristic
      addCharacteristic = function(characteristic){
-       if(!is(characteristic, "ISOCarrierOfCharacteristics")){
-         stop("The argument should be an object of class extending 'ISOCarrierOfCharacteristics'")
+       if(!is(characteristic, "ISOAbstractCarrierOfCharacteristics")){
+         stop("The argument should be an object of class extending 'ISOAbstractCarrierOfCharacteristics'")
        }
        return(self$addListElement("carrierOfCharacteristics", characteristic))
      },
      
      #delCharacteristic
      delCharacteristic = function(characteristic){
-       if(!is(characteristic, "ISOPropertyType")){
-         stop("The argument should be an object of class extending 'ISOCarrierOfCharacteristics'")
+       if(!is(characteristic, "ISOAbstractCarrierOfCharacteristics")){
+         stop("The argument should be an object of class extending 'ISOAbstractCarrierOfCharacteristics'")
        }
        return(self$delListElement("carrierOfCharacteristics", characteristic))
      }

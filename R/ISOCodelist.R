@@ -7,17 +7,17 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO codelist
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field id
-#' @field refFile
-#' @field codeSpace
-#' @field identifier
-#' @field description
-#' @field entries
+#' @field id [\code{\link{character}}] codelist id
+#' @field refFile [\code{\link{character}}] reference XML file
+#' @field codeSpace [\code{\link{character}}] codelist codeSpace
+#' @field identifier [\code{\link{character}}] codelist identifier
+#' @field description [\code{\link{character}}] codelist description
+#' @field entries [\code{\link{data.frame}}] the list of codelist entries
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(refFile, id)}}{
-#'    This method is used to instantiate an ISOCodelist
+#'    This method is used to instantiate an \code{\link{ISOCodelist}}
 #'  }
 #' }
 #' 
@@ -91,6 +91,7 @@ ISOCodelist <- R6Class("ISOCodelist",
             clDictXML <<- XML::xmlDoc(x)
           }
         }))
+        if(is.null(clDictXML)) return(NULL)
         
         #codelist identification
         idXML <- XML::getNodeSet(clDictXML, "//gml:identifier",
@@ -138,6 +139,7 @@ setISOCodelists <- function(){
     ISOCodelist$new(gmxCL, "CI_PresentationFormCode"),
     ISOCodelist$new(gmxCL, "CI_RoleCode"),
     ISOCodelist$new(gmxCL, "CI_OnLineFunctionCode"),
+    ISOCodelist$new(ML_gmxCL, "Country"),
     ISOCodelist$new(gmxCL, "DCPList"),
     ISOCodelist$new(gmxCL, "DQ_EvaluationMethodTypeCode"),
     ISOCodelist$new(gmxCL, "DS_AssociationTypeCode"),
@@ -150,10 +152,15 @@ setISOCodelists <- function(){
     ISOCodelist$new(gmxCL, "MD_CoverageContentTypeCode"),
     ISOCodelist$new(gmxCL, "MD_DatatypeCode"),
     ISOCodelist$new(gmxCL, "MD_DimensionNameTypeCode"),
+    ISOCodelist$new(gmxCL, "MD_DistributionUnits"),
     ISOCodelist$new(gmxCL, "MD_GeometricObjectTypeCode"),
     ISOCodelist$new(gmxCL, "MD_KeywordTypeCode"),
+    ISOCodelist$new(gmxCL, "MD_ImagingConditionCode"),
     ISOCodelist$new(gmxCL, "MD_MaintenanceFrequencyCode"),
+    ISOCodelist$new(gmxCL, "MD_MediumFormatCode"),
+    ISOCodelist$new(gmxCL, "MD_MediumNameCode"),
     ISOCodelist$new(gmxCL, "MD_ObligationCode"),
+    ISOCodelist$new(gmxCL, "MD_PixelOrientationCode"),
     ISOCodelist$new(gmxCL, "MD_ProgressCode"),
     ISOCodelist$new(gmxCL, "MD_RestrictionCode"),
     ISOCodelist$new(gmxCL, "MD_SpatialRepresentationTypeCode"),

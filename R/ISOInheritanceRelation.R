@@ -7,31 +7,33 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOInheritanceRelation
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field name
-#' @field description
-#' @field uniqueInstance
-#' @field subtype
-#' @field supertype
+#' @field name [\code{\link{character}}] name
+#' @field description [\code{\link{character}}] description
+#' @field uniqueInstance [\code{\link{logical}}]
+#' @field subtype [\code{\link{ISOFeatureType}}] subtype
+#' @field supertype [\code{\link{ISOFeatureType}}] supertype
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml, defaults)}}{
-#'    This method is used to instantiate an ISOInheritanceRelation
+#'    This method is used to instantiate an \code{\link{ISOInheritanceRelation}}
 #'  }
-#'  \item{\code{setName(name)}}{
-#'    Set name of inheritance relation
+#'  \item{\code{setName(name, locales)}}{
+#'    Set name of inheritance relation. Locale names can be specified
+#'     as \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{setDescription(description)}}{
-#'    Set description of inheritance relation
+#'  \item{\code{setDescription(description, locales)}}{
+#'    Set description of inheritance relation. Locale names can be specified
+#'     as \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{setUniqueInstance(uniqueInstance)}}{
 #'    Set \code{TRUE} if it's a unique instance, \code{FALSE} otherwise
 #'  }
 #'  \item{\code{setSubtype(featureType)}}{
-#'    Set subtype, object of class \code{ISOFeatureType}
+#'    Set subtype, object of class \code{\link{ISOFeatureType}}
 #'  }
 #'  \item{\code{setSupertype(featureType)}}{
-#'    Set supertype, object of class \code{ISOFeatureType}
+#'    Set supertype, object of class \code{\link{ISOFeatureType}}
 #'  }
 #' }
 #'  
@@ -60,13 +62,19 @@ ISOInheritanceRelation <- R6Class("ISOInheritanceRelation",
      supertype = NULL,
      
      #setName
-     setName = function(name){
+     setName = function(name, locales = NULL){
        self$name <- as.character(name)
+       if(!is.null(locales)){
+         self$name <- self$createLocalisedProperty(name, locales)
+       }
      },
      
      #setDescription
-     setDescription = function(description){
+     setDescription = function(description, locales = NULL){
        self$description <- as.character(description)
+       if(!is.null(locales)){
+         self$description <- self$createLocalisedProperty(description, locales)
+       }
      },
      
      #setUniqueInstance

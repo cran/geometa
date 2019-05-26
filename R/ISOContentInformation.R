@@ -10,7 +10,7 @@
 #' @section Abstract Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an ISOContentInformation
+#'    This method is used to instantiate an \code{\link{ISOContentInformation}}
 #'  }
 #' }
 #' 
@@ -24,7 +24,7 @@
 ISOContentInformation <- R6Class("ISOContentInformation",
   inherit = ISOAbstractObject,
   private = list(
-    xmlElement = "MD_ContentInformation",
+    xmlElement = "AbstractMD_ContentInformation",
     xmlNamespacePrefix = "GMD"
   ),
   public = list(

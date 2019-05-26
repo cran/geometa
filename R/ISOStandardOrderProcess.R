@@ -7,27 +7,30 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO StandardOrderProcess
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field fees
-#' @field plannedAvailableDateTime
-#' @field orderingInstructions
-#' @field turnaround
+#' @field fees [\code{\link{character}}]
+#' @field plannedAvailableDateTime [\code{\link{POSIXt}}] the datetime
+#' @field orderingInstructions [\code{\link{character}}] ordering instructions
+#' @field turnaround [\code{\link{character}}] turnaround
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an ISOStandardOrderProcess
+#'    This method is used to instantiate an \code{\link{ISOStandardOrderProcess}}
 #'  }
-#'  \item{\code{setFees(fees)}}{
-#'    Sets fees, object of class \code{character}
+#'  \item{\code{setFees(fees, locales)}}{
+#'    Sets fees, object of class \code{character}. Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{setPlannedAvailableDateTime(dateTime)}}{
 #'    Sets planned available datetime, object of class \code{c('POSIXct','POSIXlt')}
 #'  }
-#'  \item{\code{setOrderingInstructions(instructions)}}{
-#'    Sets ordering instructions, object of class \code{character}
+#'  \item{\code{setOrderingInstructions(instructions, locales)}}{
+#'    Sets ordering instructions, object of class \code{character}. Locale names 
+#'    can be specified as \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{setTurnaround(turnaround)}}{
-#'    Sets turnaround, object of class \code{character}
+#'  \item{\code{setTurnaround(turnaround, locales)}}{
+#'    Sets turnaround, object of class \code{character}. Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
 #' }
 #' 
@@ -66,8 +69,11 @@ ISOStandardOrderProcess <- R6Class("ISOStandardOrderProcess",
      },
      
      #setFees
-     setFees = function(fees){
+     setFees = function(fees, locales = NULL){
        self$fees <- as.character(fees)
+       if(!is.null(locales)){
+         self$fees <- self$createLocalisedProperty(fees, locales)
+       }
      },
      
      #setPlannedAvailableDateTime
@@ -79,13 +85,19 @@ ISOStandardOrderProcess <- R6Class("ISOStandardOrderProcess",
      },
      
      #setOrderingInstructions
-     setOrderingInstructions = function(instructions){
+     setOrderingInstructions = function(instructions, locales = NULL){
        self$orderingInstructions <- as.character(instructions)
+       if(!is.null(locales)){
+         self$orderingInstructions <- self$createLocalisedProperty(instructions, locales)
+       }
      },
      
      #setTurnaround
-     setTurnaround = function(turnaround){
+     setTurnaround = function(turnaround, locales = NULL){
        self$turnaround <- as.character(turnaround)
+       if(!is.null(locales)){
+         self$turnaround <- self$createLocalisedProperty(turnaround, locales)
+       }
      }
      
    )                        

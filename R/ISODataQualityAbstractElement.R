@@ -7,38 +7,43 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISODataQualityAbstractElement
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field nameOfMeasure
-#' @field measureIdentification
-#' @field measureDescription
-#' @field evaluationMethodType
-#' @field evaluationMethodDescription
-#' @field evaluationProcedure
-#' @field dateTime
-#' @field result
+#' @field nameOfMeasure [\code{\link{character}}] measure name
+#' @field measureIdentification [\code{\link{ISOMetaIdentifier}}] measure identification
+#' @field measureDescription [\code{\link{character}}] measure description
+#' @field evaluationMethodType [\code{\link{ISOEvaluationMethodType}}] measure evaluation method type
+#' @field evaluationMethodDescription [\code{\link{character}}] measure evaluation method description
+#' @field evaluationProcedure [\code{\link{character}}] evaluation procedure
+#' @field dateTime [\code{\link{POSIXt}}] dateTime
+#' @field result [\code{\link{ISOConformanceResult}}] conformance result(s)
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
 #'    This method is used to instantiate an ISODataQuality
 #'  }
-#'  \item{\code{addNameOfMeasure(name)}}{
-#'    Add name
+#'  \item{\code{addNameOfMeasure(name, locales)}}{
+#'    Add name. Locale names can be specified as \code{list} with 
+#'    the \code{locales} argument.
 #'  }
-#'  \item{\code{delNameOfMeasure(name)}}{
-#'    Deletes name
+#'  \item{\code{delNameOfMeasure(name, locales)}}{
+#'    Deletes name. Locale names can be  specified as \code{list} with 
+#'    the \code{locales} argument. Local names should match those of 
+#'    the name to be deleted, otherwise nothing will be deleted.
 #'  }
 #'  \item{\code{setMeasureIdentification(identification)}}{
 #'    Sets measure identifier, an object of class \code{ISOMetaIdentifier}
 #'  }
-#'  \item{\code{setMeasureDescription(description)}}{
-#'    Sets measure description
+#'  \item{\code{setMeasureDescription(description, locales)}}{
+#'    Sets measure description. Locale names can be specified as \code{list} with 
+#'    the \code{locales} argument.
 #'  }
 #'  \item{\code{setEvaluationMethodType(type)}}{
 #'    Sets the type of evaluation method, an object of class \code{ISOEvaluationMethodType}
 #'    or any \code{character} value among code{ISOEvaluationMethodType$values()}
 #'  }
-#'  \item{\code{setEvaluationMethodDescription(description)}}{
-#'    Sets the description of evaluation method
+#'  \item{\code{setEvaluationMethodDescription(description, loales)}}{
+#'    Sets the description of evaluation method. Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{setEvaluationMethodProcedure(procedure)}}{
 #'    Sets the procedure as an object of class \code{ISOCitation}
@@ -89,12 +94,18 @@ ISODataQualityAbstractElement <- R6Class("ISODataQualityAbstractElement",
     },
     
     #addNameOfMeasure
-    addNameOfMeasure = function(name){
+    addNameOfMeasure = function(name, locales = NULL){
+      if(!is.null(locales)){
+        name <- self$createLocalisedProperty(name, locales)
+      }
       return(self$addListElement("nameOfMeasure", name))
     },
     
     #delNameOfMeasure
-    delNameOfMeasure = function(name){
+    delNameOfMeasure = function(name, locales = NULL){
+      if(!is.null(locales)){
+        name <- self$createLocalisedProperty(name, locales)
+      }
       return(self$delListElement("nameOfMeasure", name))
     },
     
@@ -107,7 +118,10 @@ ISODataQualityAbstractElement <- R6Class("ISODataQualityAbstractElement",
     },
     
     #setMeasureDescription
-    setMeasureDescription = function(description){
+    setMeasureDescription = function(description, locales = NULL){
+      if(!is.null(locales)){
+        description <- self$createLocalisedProperty(description, locales)
+      }
       self$measureDescription <- description
     },
     
@@ -120,7 +134,10 @@ ISODataQualityAbstractElement <- R6Class("ISODataQualityAbstractElement",
     },
     
     #setEvaluationMethodDescription
-    setEvaluationMethodDescription = function(description){
+    setEvaluationMethodDescription = function(description, locales = NULL){
+      if(!is.null(locales)){
+        description <- self$createLocalisedProperty(description, locales)
+      }
       self$evaluationMethodDescription <- description
     },
     

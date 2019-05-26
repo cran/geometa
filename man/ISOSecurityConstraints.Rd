@@ -17,7 +17,13 @@ ISOSecurityConstraints
 \section{Fields}{
 
 \describe{
-\item{\code{handlingDescription}}{}
+\item{\code{classification}}{[\code{\link{ISOClassification}}] security classifciation}
+
+\item{\code{userNote}}{[\code{\link{character}}] user note}
+
+\item{\code{classificationSystem}}{[\code{\link{character}}] classification system}
+
+\item{\code{handlingDescription}}{[\code{\link{character}}] description}
 }}
 
 \section{Methods}{
@@ -27,18 +33,21 @@ ISOSecurityConstraints
    This method is used to instantiate an ISOSecurityConstraints
  }
  \item{\code{setClassification(classification)}}{
-   Adds a classification, as object of class "character" or class \code{ISOClassification}.
+   Adds a classification, as object of class "character" or class \code{\link{ISOClassification}}.
    If an object of class "character" is specified, it must match the accepted
    values given by \code{ISOClassification$values()}.
  }
- \item{\code{setUserNote(userNote)}}{
-   Sets a user note as object of class "character"
+ \item{\code{setUserNote(userNote, locales)}}{
+   Sets a user note as object of class "character". Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
- \item{\code{setClassificationSystem(classificationSystem)}}{
-   Sets a classification system as object of class "character"
+ \item{\code{setClassificationSystem(classificationSystem, locales)}}{
+   Sets a classification system as object of class "character". Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
- \item{\code{setHandlingDescription(handlingDescription)}}{
-   Sets a handling description as object of class "character"
+ \item{\code{setHandlingDescription(handlingDescription, locales)}}{
+   Sets a handling description as object of class "character". Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
 }
 }

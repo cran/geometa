@@ -7,9 +7,6 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOElementSequence
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field aName
-#' @field attributeType
-#'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml, ...)}}{
@@ -38,8 +35,13 @@ ISOElementSequence <- R6Class("ISOElementSequence",
        super$initialize(xml = xml)
        if(is.null(xml)){
          fields <- list(...)
-         for(fieldName in names(fields)){
-           self[[fieldName]] <- fields[[fieldName]]
+         if(!is.null(names(fields))){
+           #named sequence
+           for(fieldName in names(fields)){
+             self[[fieldName]] <- fields[[fieldName]]
+           }
+         }else{
+           self[["_internal_"]] <- fields
          }
        }
      }

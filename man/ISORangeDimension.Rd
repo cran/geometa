@@ -17,7 +17,9 @@ ISORangeDimension
 \section{Fields}{
 
 \describe{
-\item{\code{descriptor}}{}
+\item{\code{sequenceIdentifier}}{[\code{\link{ISOMemberName}}] sequence identifier}
+
+\item{\code{descriptor}}{[\code{\link{character}}] description}
 }}
 
 \section{Methods}{
@@ -29,8 +31,9 @@ ISORangeDimension
  \item{\code{setSequenceIdentifier(memberName)}}{
    Sets the sequence identifier, object of class \code{ISOMemberName}
  }
- \item{\code{setDescriptor(descriptor)}}{
-   Sets the descriptor, object of class \code{character}
+ \item{\code{setDescriptor(descriptor ,locales)}}{
+   Sets the descriptor, object of class \code{character}. Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
 }
 }

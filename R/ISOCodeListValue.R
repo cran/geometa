@@ -6,9 +6,12 @@
 #' @keywords ISO code element
 #' @return Object of \code{\link{R6Class}} for modelling an ISO Metadata codelist element
 #' @format \code{\link{R6Class}} object.
-#'
-#' @field value
-#'
+#' 
+#' @field codelistId [\code{\link{character}}] codelist identifier
+#' @field attrs [\code{\link{list}}] list of codelist attributes
+#' @field value [\code{\link{character}}] codelist value
+#' @field valueDescription [\code{\link{character}}] codelist value description
+#' 
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml, id, value, description, addCodeListAttrs, addCodeSpaceAttr, setValue)}}{
@@ -43,7 +46,7 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
      attrs = list(),
      value = NULL,
      valueDescription = NULL,
-     initialize = function(xml = NULL, id, value, description = NULL,
+     initialize = function(xml = NULL, id, value = NULL, description = NULL,
                            addCodeListAttrs = TRUE,
                            addCodeSpaceAttr = TRUE,
                            setValue = TRUE,
@@ -60,13 +63,39 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
          stop(sprintf("No ISO codelist for identifier '%s'", id))
        }
        self$codelistId = cl
-       clEntry <- cl$entries[cl$entries$value == value,]
+       clCodeSpace <- cl$codeSpace
+       
        clValue <- ""
        clName <- NA
        clDescription <- ""
-       clCodeSpace <- ""
-       if(nrow(clEntry)==0){
-         warning(sprintf("No ISO '%s' codelist entry for value '%s'", id, value))
+       
+       if(length(cl$entries)>0){
+         if(!is.null(value)){
+           clEntry <- cl$entries[cl$entries$value == value,]
+           if(nrow(clEntry)==0){
+             warning(sprintf("No ISO '%s' codelist entry for value '%s'", id, value))
+             clValue <- value
+             clCodeSpace <- cl$codeSpace
+             if(!is.null(description)){
+               setValue <- TRUE
+               clName <- description
+               clDescription <- description
+               self$valueDescription <- clDescription
+             }
+           }
+         }else{
+           clEntry <- cl$entries[1,]
+         }
+         
+         if(!is.null(value) & nrow(clEntry)>0){
+           clEntry <- clEntry[1L,]
+           clValue <- clEntry$value
+           clName <- clEntry$name
+           clDescription <- ifelse(!is.na(clName), clEntry$name, clEntry$description)
+           if(setValueDescription) clDescription <- clEntry$description
+           self$valueDescription <- clDescription
+         }
+       }else{
          clValue <- value
          clCodeSpace <- cl$codeSpace
          if(!is.null(description)){
@@ -75,16 +104,8 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
            clDescription <- description
            self$valueDescription <- clDescription
          }
-       }else{
-         clCodeSpace <- cl$codeSpace
-         clEntry <- clEntry[1L,]
-         clValue <- clEntry$value
-         clName <- clEntry$name
-         clDescription <- ifelse(!is.na(clName), clEntry$name, clEntry$description)
-         if(setValueDescription) clDescription <- clEntry$description
-         self$valueDescription <- clDescription
        }
-       
+           
        isLocalFile <- !grepl("^http", cl$refFile) & !grepl("^https", cl$refFile)
        clUrl <- paste(cl$refFile, id, sep="#")
        if(isLocalFile) clUrl <- paste(getGeometaOption("codelistUrl"), clUrl, sep="/")
@@ -92,6 +113,7 @@ ISOCodeListValue <- R6Class("ISOCodeListValue",
          langUrlOp <- getGeometaOption("languageUrl")
          if(!is.null(langUrlOp)) clUrl <- langUrlOp
        }
+       
        
        if(addCodeListAttrs){
          self$attrs <- list(

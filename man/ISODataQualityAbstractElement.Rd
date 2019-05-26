@@ -17,7 +17,21 @@ ISODataQualityAbstractElement
 \section{Fields}{
 
 \describe{
-\item{\code{result}}{}
+\item{\code{nameOfMeasure}}{[\code{\link{character}}] measure name}
+
+\item{\code{measureIdentification}}{[\code{\link{ISOMetaIdentifier}}] measure identification}
+
+\item{\code{measureDescription}}{[\code{\link{character}}] measure description}
+
+\item{\code{evaluationMethodType}}{[\code{\link{ISOEvaluationMethodType}}] measure evaluation method type}
+
+\item{\code{evaluationMethodDescription}}{[\code{\link{character}}] measure evaluation method description}
+
+\item{\code{evaluationProcedure}}{[\code{\link{character}}] evaluation procedure}
+
+\item{\code{dateTime}}{[\code{\link{POSIXt}}] dateTime}
+
+\item{\code{result}}{[\code{\link{ISOConformanceResult}}] conformance result(s)}
 }}
 
 \section{Methods}{
@@ -26,24 +40,29 @@ ISODataQualityAbstractElement
  \item{\code{new(xml)}}{
    This method is used to instantiate an ISODataQuality
  }
- \item{\code{addNameOfMeasure(name)}}{
-   Add name
+ \item{\code{addNameOfMeasure(name, locales)}}{
+   Add name. Locale names can be specified as \code{list} with 
+   the \code{locales} argument.
  }
- \item{\code{delNameOfMeasure(name)}}{
-   Deletes name
+ \item{\code{delNameOfMeasure(name, locales)}}{
+   Deletes name. Locale names can be  specified as \code{list} with 
+   the \code{locales} argument. Local names should match those of 
+   the name to be deleted, otherwise nothing will be deleted.
  }
  \item{\code{setMeasureIdentification(identification)}}{
    Sets measure identifier, an object of class \code{ISOMetaIdentifier}
  }
- \item{\code{setMeasureDescription(description)}}{
-   Sets measure description
+ \item{\code{setMeasureDescription(description, locales)}}{
+   Sets measure description. Locale names can be specified as \code{list} with 
+   the \code{locales} argument.
  }
  \item{\code{setEvaluationMethodType(type)}}{
    Sets the type of evaluation method, an object of class \code{ISOEvaluationMethodType}
    or any \code{character} value among code{ISOEvaluationMethodType$values()}
  }
- \item{\code{setEvaluationMethodDescription(description)}}{
-   Sets the description of evaluation method
+ \item{\code{setEvaluationMethodDescription(description, loales)}}{
+   Sets the description of evaluation method. Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
  \item{\code{setEvaluationMethodProcedure(procedure)}}{
    Sets the procedure as an object of class \code{ISOCitation}

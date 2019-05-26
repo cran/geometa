@@ -7,18 +7,21 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO ConformanceResult
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field result
+#' @field specification [\code{\link{ISOCitation}}] specification citation
+#' @field explanation [\code{\link{character}}] explanation about conformance
+#' @field pass [\code{\link{logical}}] if the conformance is passing or not
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml,value)}}{
-#'    This method is used to instantiate an ISOConformanceResult
+#'    This method is used to instantiate an \code{\link{ISOConformanceResult}}
 #'  }
 #'  \item{\code{setSpecification(specification)}}{
-#'    Sets the specification (an ISOCitation object)
+#'    Sets the specification (an \code{\link{ISOCitation}} object)
 #'  }
-#'  \item{\code{setExplanation(explanation)}}{
-#'    Sets the explanation
+#'  \item{\code{setExplanation(explanation, locales)}}{
+#'    Sets the explanation. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
 #'  }
 ##'  \item{\code{setPass(pass)}}{
 #'    Sets if passing the conformance or not (logical value)
@@ -45,7 +48,7 @@
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOConformanceResult <- R6Class("ISOConformanceResult",
-  inherit = ISOAbstractObject,
+  inherit = ISOAbstractResult,
   private = list(
       xmlElement = "DQ_ConformanceResult",
       xmlNamespacePrefix = "GMD"
@@ -67,8 +70,11 @@ ISOConformanceResult <- R6Class("ISOConformanceResult",
     },
     
     #setExplanation
-    setExplanation = function(explanation){
+    setExplanation = function(explanation, locales = NULL){
       self$explanation <- as.character(explanation)
+      if(!is.null(locales)){
+        self$explanation <- self$createLocalisedProperty(explanation, locales)
+      }
     },
     
     #setPass

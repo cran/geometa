@@ -7,12 +7,35 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO ResponsibleParty
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field value
+#' @field individualName [\code{\link{character}}] Individual name
+#' @field organisationName [\code{\link{character}}] Organization name
+#' @field positionName [\code{\link{character}}] Position name
+#' @field contactInfo [\code{\link{ISOContact}}] contact information
+#' @field role [\code{\link{ISORole}}] role
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml,value)}}{
 #'    This method is used to instantiate an ISOResponsibleParty
+#'  }
+#'  \item{\code{setIndividualName(invidualName, locales)}}{
+#'    Set the individual name. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
+#'  }
+#'  \item{\code{setOrganisationName(organisationName, locales)}}{
+#'    Set the organisation name. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
+#'  }
+#'  \item{\code{setPositionName(positionName, locales)}}{
+#'    Set the position name. Locale names can be specified as \code{list}
+#'    with the \code{locales} argument.
+#'  }
+#'  \item{\code{setContactInfo(contactInfo)}}{
+#'    Set the contact info, should be an object of class \code{\link{ISOContact}}
+#'  }
+#'  \item{\code{setRole(role)}}{
+#'    Set the role, either an object of class "character" (among values
+#'    available in \code{ISORole$values()}) or an object of class \code{\link{ISORole}}.
 #'  }
 #' }
 #' 
@@ -67,18 +90,27 @@ ISOResponsibleParty <- R6Class("ISOResponsibleParty",
     },
     
     #setIndividualName
-    setIndividualName = function(individualName){
+    setIndividualName = function(individualName, locales = NULL){
       self$individualName = individualName
+      if(!is.null(locales)){
+        self$individualName <- self$createLocalisedProperty(individualName, locales)
+      }
     },
     
     #setOrganisationName
-    setOrganisationName = function(organisationName){
+    setOrganisationName = function(organisationName, locales = NULL){
       self$organisationName = organisationName
+      if(!is.null(locales)){
+        self$organisationName <- self$createLocalisedProperty(organisationName, locales)
+      }
     },
     
     #setPositionName
-    setPositionName = function(positionName){
+    setPositionName = function(positionName, locales = NULL){
       self$positionName = positionName
+      if(!is.null(locales)){
+        self$positionName <- self$createLocalisedProperty(positionName, locales)
+      }
     },
     
     #setContactInfo

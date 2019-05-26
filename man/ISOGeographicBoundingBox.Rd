@@ -17,14 +17,32 @@ ISOGeographicBoundingBox
 \section{Fields}{
 
 \describe{
-\item{\code{northBoundLatitude}}{}
+\item{\code{westBoundLongitude}}{[\code{\link{numeric}}] west longitude}
+
+\item{\code{eastBoundLongitude}}{[\code{\link{numeric}}] east longitude}
+
+\item{\code{southBoundLatitude}}{[\code{\link{numeric}}] south latitude}
+
+\item{\code{northBoundLatitude}}{[\code{\link{numeric}}] north latitude}
 }}
 
 \section{Methods}{
 
 \describe{
  \item{\code{new(xml, minx, miny, maxx, maxy, bbox)}}{
-   This method is used to instantiate an ISOGeographicBoundingBox
+   This method is used to instantiate an \code{\link{ISOGeographicBoundingBox}}
+ }
+ \item{\code{setWestBoundLongitude(minx)}}{
+   Set the west bound longitude.
+ }
+ \item{\code{setEastBoundLongitude(minx)}}{
+   Set the west bound longitude.
+ }
+ \item{\code{setSouthBoundLatitude(miny)}}{
+   Set the south bound latitude.
+ }
+ \item{\code{setNorthBoundLatitude(maxy)}}{
+   Set the north bound latitude.
  }
 }
 }

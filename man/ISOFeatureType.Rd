@@ -17,7 +17,27 @@ ISOFeatureType
 \section{Fields}{
 
 \describe{
-\item{\code{carrierOfCharacteristics}}{}
+\item{\code{typeName}}{[\code{\link{ISOLocalName}}]}
+
+\item{\code{definition}}{[\code{\link{character}}]}
+
+\item{\code{code}}{[\code{\link{character}}]}
+
+\item{\code{isAbstract}}{[\code{\link{logical}}]}
+
+\item{\code{aliases}}{[\code{\link{ISOLocalName}}]}
+
+\item{\code{inheritsFrom}}{[\code{\link{ISOInheritanceRelation}}]}
+
+\item{\code{inheritsTo}}{[\code{\link{ISOInheritanceRelation}}]}
+
+\item{\code{featureCatalogue}}{[\code{\link{ISOFeatureCatalogue}}]}
+
+\item{\code{constrainedBy}}{[\code{\link{ISOConstraints}}]}
+
+\item{\code{definitionReference}}{[\code{\link{ISODefinitionReference}}]}
+
+\item{\code{carrierOfCharacteristics}}{[\code{\link{ISOCarrierOfCharacteristics}}]}
 }}
 
 \section{Methods}{
@@ -29,11 +49,13 @@ ISOFeatureType
  \item{\code{setTypeName(typeName)}}{
    Sets the type name. Object of class \code{ISOLocalName} or \code{"character"}
  }
- \item{\code{setDefinition(definition)}}{
-   Sets the definition
+ \item{\code{setDefinition(definition, locales)}}{
+   Sets the definition. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
- \item{\code{setCode(code)}}{
-   Sets the code
+ \item{\code{setCode(code, locales)}}{
+   Sets the code. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
  \item{\code{setIsAbstract(isAbstract)}}{
    Sets TRUE/FALSE if the feature type is abstract or not
@@ -43,6 +65,18 @@ ISOFeatureType
  }
  \item{\code{delAlias(alias)}}{
    Deletes alias name
+ }
+ \item{\code{addInheritsFrom(rel)}}{
+   Adds a relation (from) as object of class \code{ISOInheritanceRelation}
+ }
+ \item{\code{delInheritsFrom(rel)}}{
+   Deletes a relation (from) as object of class \code{ISOInheritanceRelation}
+ }
+ \item{\code{addInheritsTo(rel)}}{
+   Adds a relation (to) as object of class \code{ISOInheritanceRelation}
+ }
+ \item{\code{delInheritsTo(rel)}}{
+   Deletes a relation (to) as object of class \code{ISOInheritanceRelation}
  }
  \item{\code{setFeatureCatalogue(fc)}}{
    Sets a feature catalogue, object of class \code{ISOFeatureCatalogue}

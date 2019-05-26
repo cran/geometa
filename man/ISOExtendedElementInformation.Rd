@@ -17,37 +17,65 @@ ISOExtendedElementInformation
 \section{Fields}{
 
 \describe{
-\item{\code{source}}{}
+\item{\code{name}}{[\code{\link{character}}]}
+
+\item{\code{shortName}}{[\code{\link{character}}]}
+
+\item{\code{domainCode}}{[\code{\link{integer}}]}
+
+\item{\code{definition}}{[\code{\link{character}}]}
+
+\item{\code{obligation}}{[\code{\link{ISOObligation}}]}
+
+\item{\code{condition}}{[\code{\link{character}}]}
+
+\item{\code{dataType}}{[\code{\link{ISODateType}}]}
+
+\item{\code{maximumOccurrence}}{[\code{\link{character}}]}
+
+\item{\code{domainValue}}{[\code{\link{character}}]}
+
+\item{\code{parentEntity}}{[\code{\link{character}}]}
+
+\item{\code{rule}}{[\code{\link{character}}]}
+
+\item{\code{rationale}}{[\code{\link{character}}]}
+
+\item{\code{source}}{[\code{\link{ISOResponsibleParty}}]}
 }}
 
 \section{Methods}{
 
 \describe{
  \item{\code{new(xml)}}{
-   This method is used to instantiate an ISOExtendedElementInformation
+   This method is used to instantiate an \code{\link{ISOExtendedElementInformation}}
  }
- \item{\code{setName(name)}}{
-   Sets the element name, object of class \code{Character}
+ \item{\code{setName(name, locales)}}{
+   Sets the element name, object of class \code{Character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
  }
- \item{\code{setShortName(shortName)}}{
-   Sets the element shortname, object of class \code{character}
+ \item{\code{setShortName(shortName, locales)}}{
+   Sets the element shortname, object of class \code{character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
  }
  \item{\code{setDomainCode(domainCode)}}{
    Sets the element domain code, object of class \code{integer}
  }
- \item{\code{setDefinition(definition)}}{
-   Sets the element definition, object of class \code{character}
+ \item{\code{setDefinition(definition, locales)}}{
+   Sets the element definition, object of class \code{character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
  }
  \item{\code{setObligation(obligation)}}{
-   Sets an obligation, as object of class \code{character} or class \code{ISOObligation}. 
+   Sets an obligation, as object of class \code{character} or class \code{\link{ISOObligation}}. 
    If an object of class "character" is specified, it must match the accepted
    obligation values \code{ISOObligation$values()}.
  }
- \item{\code{setCondition(condition)}}{
-   Sets the element condition, object of class \code{character}
+ \item{\code{setCondition(condition, locales)}}{
+   Sets the element condition, object of class \code{character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
  }
  \item{\code{setDatatype(dataType)}}{
-   Sets the element datatype, as object of class \code{character} or class \code{ISODatatype}.
+   Sets the element datatype, as object of class \code{character} or class \code{\link{ISODatatype}}.
    If an object of class "character" is specified, it must match the accepted
    datatype values \code{ISODatatype$values()}.
  }
@@ -63,20 +91,25 @@ ISOExtendedElementInformation
  \item{\code{delParentEntity(parentEntity)}}{
    Deletes a parent Entity, object of class \code{character}
  }
- \item{\code{setRule(rule)}}{
-   Sets a rule, object of class \code{character}
+ \item{\code{setRule(rule, locales)}}{
+   Sets a rule, object of class \code{character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
  }
- \item{addRationale(rationale)}{
-   Adds a rationale, object of class \code{character}
+ \item{addRationale(rationale, locales)}{
+   Adds a rationale, object of class \code{character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
  }
- \item{delRationale(rationale)}{
-   Deletes a rationale, object of class \code{character}
+ \item{delRationale(rationale, locales)}{
+   Deletes a rationale, object of class \code{character}. Locale names 
+   can be specified as \code{list} with the \code{locales} argument.
+   Local names should match those of the keyword to be deleted, otherwise 
+   nothing will be deleted.
  }
  \item{addSource(source)}{
-   Adds a source, object of class \code{ISOResponsibleParty}
+   Adds a source, object of class \code{\link{ISOResponsibleParty}}
  }
  \item{delSource(source)}{
-   Deletes a source, object of class \code{ISOResponsibleParty}
+   Deletes a source, object of class \code{\link{ISOResponsibleParty}}
  }
 }
 }

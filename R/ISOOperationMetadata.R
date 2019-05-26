@@ -7,21 +7,22 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOOperationMetadata
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field operationName
-#' @field DCP
-#' @field operationDescription
-#' @field invocationName
-#' @field parameters
-#' @field connectPoint
-#' @field dependsOn
+#' @field operationName [\code{\link{character}}] operation name
+#' @field DCP [\code{\link{ISODCPList}}] DCP
+#' @field operationDescription [\code{\link{character}}] operation description
+#' @field invocationName [\code{\link{character}}] invocation name
+#' @field parameters [\code{\link{ISOParameter}}] parameter(s)
+#' @field connectPoint [\code{\link{ISOOnlineResource}}] online resources
+#' @field dependsOn [\code{\link{ISOOperationMetadata}}] dependent operation metadata
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an ISOOperationMetadata
+#'    This method is used to instantiate an \code{\link{ISOOperationMetadata}}
 #'  }
-#'  \item{\code{setOperationName(operationName)}}{
-#'    Set the operation name
+#'  \item{\code{setOperationName(operationName, locales)}}{
+#'    Set the operation name. Locale names can be specified as 
+#'    \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{addDCP(dcp)}}{
 #'    Add a DCP
@@ -29,29 +30,31 @@
 #'  \item{\code{delDCP(dcp)}}{
 #'    Deletes a DCP
 #'  }
-#'  \item{\code{setOperationDescription(operationDescription)}}{
-#'    Set the operation description
+#'  \item{\code{setOperationDescription(operationDescription, locales)}}{
+#'    Set the operation description. Locale names can be specified as 
+#'    \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{setInvocationName(invocationName)}}{
-#'    Set the invocation name
+#'  \item{\code{setInvocationName(invocationName, locales)}}{
+#'    Set the invocation name. Locale names can be specified as 
+#'    \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{addParameter(parameter)}}{
-#'    Add a parameter, object of class \code{ISOParameter}
+#'    Add a parameter, object of class \code{\link{ISOParameter}}
 #'  }
 #'  \item{\code{delParameter(parameter)}}{
-#'    Deletes a parameter, object of class \code{ISOParameter}
+#'    Deletes a parameter, object of class \code{\link{ISOParameter}}
 #'  }
 #'  \item{\code{addConnectPoint(connectPoint)}}{
-#'    Add a connect point, object of class \code{ISOOnlineResource}
+#'    Add a connect point, object of class \code{\link{ISOOnlineResource}}
 #'  }
 #'  \item{\code{delConnectPoint(connectPoint)}}{
-#'    Deletes a connect point, object of class \code{ISOOnlineResource}
+#'    Deletes a connect point, object of class \code{\link{ISOOnlineResource}}
 #'  }
 #'  \item{\code{addDependentOperationMetadata(operationMetadata)}}{
-#'    Add dependent operation metadata
+#'    Add dependent operation metadata, object of class \code{\link{ISOOperationMetadata}}
 #'  }
 #'  \item{\code{delDependentOperationMetadata(operationMetadata)}}{
-#'    Deletes dependent operation metadata
+#'    Deletes dependent operation metadata, object of class \code{\link{ISOOperationMetadata}}
 #'  }
 #' }
 #' 
@@ -92,8 +95,11 @@ ISOOperationMetadata <- R6Class("ISOOperationMetadata",
     },
     
     #setOperationName
-    setOperationName = function(operationName){
+    setOperationName = function(operationName, locales = NULL){
       self$operationName <- as.character(operationName)
+      if(!is.null(locales)){
+        self$operationName <- self$createLocalisedProperty(operationName, locales)
+      }
     },
     
     #addDCP
@@ -113,13 +119,19 @@ ISOOperationMetadata <- R6Class("ISOOperationMetadata",
     },
     
     #setOperationDescription
-    setOperationDescription = function(operationDescription){
+    setOperationDescription = function(operationDescription, locales = NULL){
       self$operationDescription <- as.character(operationDescription)
+      if(!is.null(locales)){
+        self$operationDescription <- self$createLocalisedProperty(operationDescription, locales)
+      }
     },
     
     #setInvocationName
-    setInvocationName = function(invocationName){
+    setInvocationName = function(invocationName, locales = NULL){
       self$invocationName <- as.character(invocationName)
+      if(!is.null(locales)){
+        self$invocationName <- self$createLocalisedProperty(invocationName, locales)
+      }
     },
     
     #addParameter

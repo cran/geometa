@@ -7,12 +7,10 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO SpatialRepresentationType
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field value
-#'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml,value, description)}}{
-#'    This method is used to instantiate an ISOSpatialRepresentationType
+#'    This method is used to instantiate an \code{\link{ISOSpatialRepresentationType}}
 #'  }
 #' }
 #' 
@@ -35,7 +33,7 @@ ISOSpatialRepresentationType <- R6Class("ISOSpatialRepresentationType",
      xmlNamespacePrefix = "GMD"
    ),
    public = list(
-     initialize = function(xml = NULL, value, description){
+     initialize = function(xml = NULL, value = NULL, description = NULL){
        super$initialize(xml = xml, id = private$xmlElement, value = value, description = description,
                         addCodeSpaceAttr = FALSE)
      }

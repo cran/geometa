@@ -17,20 +17,24 @@ ISOMemberName
 \section{Fields}{
 
 \describe{
-\item{\code{attributeType}}{}
+\item{\code{aName}}{[\code{\link{character}}] member name}
+
+\item{\code{attributeType}}{[\code{\link{ISOTypeName}}|\code{\link{character}}] attribute type}
 }}
 
 \section{Methods}{
 
 \describe{
  \item{\code{new(xml, aName, attributeType)}}{
-   This method is used to instantiate an ISOMemberName
+   This method is used to instantiate an \code{\link{ISOMemberName}}
  }
  \item{\code{setName(aName)}}{
-   Set the aName, object of class \code{character}
+   Set the aName, object of class \code{character}. Locale names can be specified 
+   as \code{list} with the \code{locales} argument.
  }
- \item{\code{setAttributeType(attributeType)}}{
+ \item{\code{setAttributeType(attributeType, locales)}}{
    Set the attribute type, object of class \code{ISOTypeName} or \code{character}
+   Locale names can be specified as \code{list} with the \code{locales} argument.
  }
 }
 }

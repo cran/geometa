@@ -1,12 +1,12 @@
-# test_ISOPositionalAccuracy.R
+# test_ISODataQualityPositionalAccuracy.R
 # Author: Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 #
-# Description: Unit tests for ISOPositionalAccuracy.R
+# Description: Unit tests for ISODataQualityPositionalAccuracy.R
 #=======================
 require(geometa, quietly = TRUE)
 require(testthat)
 
-context("ISOPositionalAccuracy")
+context("ISODataQualityPositionalAccuracy")
 
 test_that("ISOAbstractPositionalAccuracy",{
   testthat::skip_on_cran()

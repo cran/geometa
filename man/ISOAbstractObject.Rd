@@ -20,6 +20,23 @@ Abstract ISO Metadata class used internally by geometa
 \section{Static Methods}{
 
 \describe{
+ \item{\code{getISOStandardByPrefix(prefix)}}{
+   Inherit the ISO (and/or OGC) standard reference for a given standard prefix (e.g. GMD).
+   The object returned is a \code{data.frame} containing the specification reference
+   and title.
+ }
+ \item{\code{getISOStandard(clazz)}}{
+   Inherit the ISO (and/or OGC) standard reference for a given \pkg{geometa} class.
+   The object returned is a \code{data.frame} containing the specification reference
+   and title.
+ }
+ \item{\code{getISOClasses(extended, pretty)}}{
+   Get the list of classes supported by \pkg{geometa}. By default, \code{extended} is
+   set to \code{FALSE} (restrained to \pkg{geometa} environment). If \code{TRUE}, this
+   allows to list eventual classes loaded in your global environment and that extend
+   \pkg{geometa} classes. The argument \code{pretty} gives a the list of classes and 
+   associated ISO/OGC standard information as \code{data.frame}.
+ }
  \item{\code{getISOClassByNode(node)}}{
    Inherit the ISO class matching an XML document or node
  }
@@ -38,22 +55,13 @@ Abstract ISO Metadata class used internally by geometa
  \item{\code{new(xml, element, namespace, defaults, attrs)}}{
    This method is used to instantiate an ISOAbstractObject
  }
- \item{\code{INFO(text)}}{
-   Logger to report information. Used internally
- }
- \item{\code{WARN(text)}}{
-   Logger to report warnings. Used internally
- }
- \item{\code{ERROR(text)}}{
-   Logger to report errors. Used internally
- }
  \item{\code{print()}}{
    Provides a custom print output (as tree) of the current class
  }
  \item{\code{decode(xml)}}{
    Decodes a ISOMetadata* R6 object from XML representation
  }
- \item{\code{encode(addNS, validate, strict, resetSerialID, setSerialID, encoding)}}{
+ \item{\code{encode(addNS, validate, strict, inspire, resetSerialID, setSerialID, encoding)}}{
    Encodes a ISOMetadata* R6 object to XML representation. By default, namespace
    definition will be added to XML root (\code{addNS = TRUE}), and validation
    of object will be performed (\code{validate = TRUE}) prior to its XML encoding.
@@ -64,14 +72,20 @@ Abstract ISO Metadata class used internally by geometa
    The argument \code{resetSerialID} is used by \pkg{geometa} for reseting mandatory IDs
    associated to XML elements, such as GML objects, default value is \code{TRUE} 
    (recommended value).
+   Setting \code{inspire} to TRUE (default FALSE), the metadata will be checked with
+   the INSPIRE metadata validator (online web-service provided by INSPIRE).
  }
- \item{\code{validate(xml, strict)}}{
+ \item{\code{validate(xml, strict, inspire)}}{
    Validates the encoded XML against ISO 19139 XML schemas. If \code{strict} is
-   \code{TRUE}, a error will be raised. Default is \code{FALSE}. 
+   \code{TRUE}, a error will be raised. Default is \code{FALSE}.
+   Setting \code{inspire} to\code{TRUE} (default \code{FALSE}), the metadata will be 
+   checked with the INSPIRE metadata validator (online web-service provided by INSPIRE).
  }
- \item{\code{save(file)}}{
+ \item{\code{save(file, ...)}}{
    Saves the current metadata object XML representation to a file. This utility
-   ensures proper indentation of XML file produced.
+   ensures proper indentation of XML file produced. Additional parameters from 
+   \code{$encode()} method can be specified, such as \code{inspire} to check
+   the INSPIRE metadata validity.
  }
  \item{\code{getNamespaceDefinition(recursive)}}{
    Gets the namespace definition of the current ISO* class. By default, only
@@ -108,6 +122,9 @@ Abstract ISO Metadata class used internally by geometa
  \item{\code{setAttr(attrKey, attrValue)}}{
    Set an attribute
  }
+ \item{\code{addFieldAttrs(field, ...)}}{
+   Allows to add one more xlink attributes a field (element property)
+ }
  \item{\code{setId(id, addNS)}}{
    Set an id. By default \code{addNS} is \code{FALSE} (no namespace prefix added).
  }
@@ -132,6 +149,9 @@ Abstract ISO Metadata class used internally by geometa
  }
  \item{\code{isFieldInheritedFrom(field)}}{
    Gives the parent from which the field is inherited, otherwise return \code{NULL}.
+ }
+ \item{\code{createLocalisedProperty(text, locales)}}{
+   Creates a localised property made of a default text and a list of localised texts.
  }
 }
 }

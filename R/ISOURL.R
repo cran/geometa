@@ -7,12 +7,15 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOURL
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field value
+#' @field value [\code{\link{character}}] the url
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml,value)}}{
-#'    This method is used to instantiate an ISOURL
+#'    This method is used to instantiate an \code{\link{ISOURL}}
+#'  }
+#'  \item{\code{setUrl(url)}}{
+#'    Set the url
 #'  }
 #' }
 #' 
@@ -31,11 +34,15 @@ ISOURL <- R6Class("ISOURL",
   ),
   public = list(
     value = NA,
-    initialize = function(xml = NULL, value){
+    initialize = function(xml = NULL, value = NULL){
       super$initialize(xml = xml)
       if(is.null(xml)){
         self$value = value
       }
+    },
+    
+    setUrl = function(url){
+      self$value <- url
     }
   )                        
 )

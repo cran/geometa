@@ -6,13 +6,11 @@
 #' @keywords ISO datetype
 #' @return Object of \code{\link{R6Class}} for modelling an ISO DateType
 #' @format \code{\link{R6Class}} object.
-#'
-#' @field value
-#'
+#' 
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml,value, description)}}{
-#'    This method is used to instantiate an ISODateType
+#'    This method is used to instantiate an \code{\link{ISODateType}}
 #'  }
 #' }
 #' 
@@ -35,7 +33,7 @@ ISODateType <- R6Class("ISODateType",
      xmlNamespacePrefix = "GMD"
    ),
    public = list(
-     initialize = function(xml = NULL, value, description = NULL){
+     initialize = function(xml = NULL, value = NULL, description = NULL){
        super$initialize(xml = xml, id = "CI_DateTypeCode", value = value,
                         description = description)
      }

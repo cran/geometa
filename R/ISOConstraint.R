@@ -7,16 +7,16 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOConstraint
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field signature
-#' @field formalDefinition
+#' @field description [\code{\link{character}}]
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml, description)}}{
-#'    This method is used to instantiate an ISOConstraint
+#'    This method is used to instantiate an \code{\link{ISOConstraint}}
 #'  }
-#'  \item{\code{setDescription(description)}}{
-#'    Sets the description
+#'  \item{\code{setDescription(description, locales)}}{
+#'    Sets the description. Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
 #' }
 #'  
@@ -48,8 +48,11 @@ ISOConstraint <- R6Class("ISOConstraint",
      },
      
      #setDescription
-     setDescription = function(description){
+     setDescription = function(description, locales = NULL){
        self$description = description
+       if(!is.null(locales)){
+         self$description <- self$createLocalisedProperty(description, locales)
+       }
      }
     
    )         

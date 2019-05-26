@@ -7,19 +7,20 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOBinding
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field description
-#' @field globalProperty
+#' @field description [\code{\link{character}}] description
+#' @field globalProperty [\code{\link{ISOPropertyType}}] property type
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml, defaults)}}{
-#'    This method is used to instantiate an ISOBinding
+#'    This method is used to instantiate an \code{\link{ISOBinding}}
 #'  }
-#'  \item{\code{setDescription(description)}}{
-#'    Set description of inheritance relation
+#'  \item{\code{setDescription(description, locales)}}{
+#'    Set description of inheritance relation. Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{setPropertyType(propertyType)}}{
-#'    Set global property, object of class \code{ISOPropertyType}
+#'    Set global property, object of class \code{\link{ISOPropertyType}}
 #'  }
 #' }
 #'  
@@ -29,7 +30,7 @@
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOBinding <- R6Class("ISOBinding",
-    inherit = ISOCarrierOfCharacteristics,
+    inherit = ISOAbstractCarrierOfCharacteristics,
     private = list(
       xmlElement = "FC_Binding",
       xmlNamespacePrefix = "GFC"
@@ -42,8 +43,11 @@ ISOBinding <- R6Class("ISOBinding",
       globalProperty = NULL,
 
       #setDescription
-      setDescription = function(description){
+      setDescription = function(description, locales = NULL){
         self$description <- as.character(description)
+        if(!is.null(locales)){
+          self$description <- self$createLocalisedProperty(description, locales)
+        }
       },
 
       #setPropertyType

@@ -7,28 +7,30 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISOParameter
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field name
-#' @field direction
-#' @field description
-#' @field optionality
-#' @field repeatability
-#' @field valueType
+#' @field name [\code{\link{character}}] name
+#' @field direction [\code{\link{ISOParameterDirection}}] direction
+#' @field description [\code{\link{character}}] description
+#' @field optionality [\code{\link{logical}}] parameter optionality
+#' @field repeatability [\code{\link{logical}}] parameter repeatability
+#' @field valueType [\code{\link{ISOTypeName}}|\code{\link{character}}] value type
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an ISOParameter
+#'    This method is used to instantiate an \code{\link{ISOParameter}}
 #'  }
-#'  \item{\code{setName(name, attributeType)}}{
-#'    Sets the parameter name (\code{character}) and attributeType (\code{ISOTypeName} 
-#'    or \code{character})
+#'  \item{\code{setName(name, attributeType, locales)}}{
+#'    Sets the parameter name (\code{character}) and attributeType (\code{\link{ISOTypeName}}
+#'    or \code{character}). Locale names can be specified as \code{list} with the 
+#'    \code{locales} argument.
 #'  }
 #'  \item{\code{setDirection(direction)}}{
-#'    Sets the direction, an object of class \code{ISOParameterDirection} or any
+#'    Sets the direction, an object of class \code{\link{ISOParameterDirection}} or any
 #'    \code{character} value among \code{ISOParameterDirection$values()}
 #'  }
-#'  \item{\code{setDescription(description)}}{
-#'    Sets the parameter description
+#'  \item{\code{setDescription(description, locales)}}{
+#'    Sets the parameter description. Locale names can be specified as 
+#'    \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{setOptionality(optional)}}{
 #'    Set whether the parameter is optional (\code{TRUE}), \code{FALSE} otherwise
@@ -36,8 +38,9 @@
 #'  \item{\code{setRepeatability(repeatable)}}{
 #'    Set whether the parameter is repeatable (\code{TRUE}), \code{FALSE} otherwise
 #'  }
-#'  \item{\code{setValueType(valueType)}}{
-#'    Sets the type of parameter value, object of class \code{ISOTypeName} or \code{character}
+#'  \item{\code{setValueType(valueType, locales)}}{
+#'    Sets the type of parameter value, object of class \code{\link{ISOTypeName}} or \code{character}
+#'    Locale names can be specified as \code{list} with the \code{locales} argument.
 #'  }
 #' }
 #' 
@@ -82,10 +85,13 @@ ISOParameter <- R6Class("ISOParameter",
        },
        
        #setName
-       setName = function(name, attributeType){
+       setName = function(name, attributeType, locales = NULL){
          if(!is(attributeType, "ISOTypeName")){
            attrType <- ISOTypeName$new()
            attrType$setName(attributeType)
+           if(!is.null(locales)){
+             attrType$setName(attributeType, locales = locales)
+           }
            attributeType <- attrType
          }
          self$name <- ISOElementSequence$new(aName = name, attributeType = attributeType)
@@ -100,8 +106,11 @@ ISOParameter <- R6Class("ISOParameter",
        },
        
        #setDescription
-       setDescription = function(description){
+       setDescription = function(description, locales = NULL){
          self$description <- as.character(description)
+         if(!is.null(locales)){
+           self$description <- self$createLocalisedProperty(description, locales)
+         }
        },
        
        #setOptionality
@@ -127,10 +136,13 @@ ISOParameter <- R6Class("ISOParameter",
        },
        
        #setValueType
-       setValueType = function(valueType){
+       setValueType = function(valueType, locales = NULL){
          if(!is(valueType, "ISOTypeName")){
            typeName <- ISOTypeName$new()
            typeName$setName(valueType)
+           if(!is.null(locales)){
+             typeName$setName(valueType, locales = locales)
+           }
            valueType <- typeName
          }
          self$valueType <- valueType

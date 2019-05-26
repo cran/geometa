@@ -10,7 +10,7 @@
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an ISOSpatialRepresentation
+#'    This method is used to instantiate an \code{\link{ISOSpatialRepresentation}}
 #'  }
 #' }
 #' 
@@ -24,7 +24,7 @@
 ISOSpatialRepresentation <- R6Class("ISOSpatialRepresentation",
   inherit = ISOAbstractObject,
   private = list(
-    xmlElement = "MD_SpatialRepresentation",
+    xmlElement = "AbstractMD_SpatialRepresentation",
     xmlNamespacePrefix = "GMD"
   ),
   public = list(

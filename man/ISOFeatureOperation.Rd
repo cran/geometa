@@ -17,7 +17,9 @@ ISOFeatureOperation
 \section{Fields}{
 
 \describe{
-\item{\code{formalDefinition}}{}
+\item{\code{signature}}{[\code{\link{character}}]}
+
+\item{\code{formalDefinition}}{[\code{\link{character}}]}
 }}
 
 \section{Methods}{
@@ -26,11 +28,13 @@ ISOFeatureOperation
  \item{\code{new(xml)}}{
    This method is used to instantiate an ISOFeatureOperation
  }
- \item{\code{setSignature(signature)}}{
-   Sets the signature
+ \item{\code{setSignature(signature, locales)}}{
+   Sets the signature. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
- \item{\code{setFormalDefinition(formalDefinition)}}{
-   Sets the formal definition
+ \item{\code{setFormalDefinition(formalDefinition, locales)}}{
+   Sets the formal definition. Locale names can be specified as \code{list}
+   with the \code{locales} argument.
  }
 }
 }

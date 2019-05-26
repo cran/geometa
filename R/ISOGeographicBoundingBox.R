@@ -7,15 +7,27 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO GeographicBoundingBox
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field westBoundLongitude
-#' @field eastBoundLongitude
-#' @field southBoundLatitude
-#' @field northBoundLatitude
+#' @field westBoundLongitude [\code{\link{numeric}}] west longitude
+#' @field eastBoundLongitude [\code{\link{numeric}}] east longitude
+#' @field southBoundLatitude [\code{\link{numeric}}] south latitude
+#' @field northBoundLatitude [\code{\link{numeric}}] north latitude
 #'
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml, minx, miny, maxx, maxy, bbox)}}{
-#'    This method is used to instantiate an ISOGeographicBoundingBox
+#'    This method is used to instantiate an \code{\link{ISOGeographicBoundingBox}}
+#'  }
+#'  \item{\code{setWestBoundLongitude(minx)}}{
+#'    Set the west bound longitude.
+#'  }
+#'  \item{\code{setEastBoundLongitude(minx)}}{
+#'    Set the west bound longitude.
+#'  }
+#'  \item{\code{setSouthBoundLatitude(miny)}}{
+#'    Set the south bound latitude.
+#'  }
+#'  \item{\code{setNorthBoundLatitude(maxy)}}{
+#'    Set the north bound latitude.
 #'  }
 #' }
 #' 
@@ -39,7 +51,7 @@ ISOGeographicBoundingBox <- R6Class("ISOGeographicBoundingBox",
      eastBoundLongitude = NULL,
      southBoundLatitude = NULL,
      northBoundLatitude = NULL,
-     initialize = function(xml = NULL, minx, miny, maxx, maxy, bbox = NULL){
+     initialize = function(xml = NULL, minx = NULL, miny = NULL, maxx = NULL, maxy = NULL, bbox = NULL){
        super$initialize(xml = xml)
        if(is.null(xml)){
          if(!is.null(bbox)){
@@ -62,6 +74,38 @@ ISOGeographicBoundingBox <- R6Class("ISOGeographicBoundingBox",
          class(self$southBoundLatitude) <- "decimal"
          class(self$northBoundLatitude) <- "decimal"
        }
+     },
+     
+     #setWestBoundLongitude
+     setWestBoundLongitude = function(minx){
+       if(!is(minx,"numeric")){
+         stop("Argument 'minx' should be numeric!")
+       }
+       self$westBoundLongitude <- minx
+     },
+     
+     #setEastBoundLongitude
+     setEastBoundLongitude = function(maxx){
+       if(!is(maxx,"numeric")){
+         stop("Argument 'minx' should be numeric!")
+       }
+       self$eastBoundLongitude <- maxx
+     },
+     
+     #setSouthBoundLatitude
+     setSouthBoundLatitude = function(miny){
+       if(!is(miny, "numeric")){
+         stop("Argument 'miny' should be numeric!")
+       }
+       self$southBoundLatitude <- miny
+     },
+     
+     #setNorthBoundLatitude
+     setNorthBoundLatitude = function(maxy){
+       if(!is(maxy, "numeric")){
+         stop("Argument 'maxy', should be numeric!")
+       }
+       self$northBoundLatitude <- maxy
      }
-   )                                          
+   )
 )

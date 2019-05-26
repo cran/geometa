@@ -7,10 +7,10 @@
 #' @return Object of \code{\link{R6Class}} for modelling an ISO SecurityConstraints
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field classification
-#' @field userNote
-#' @field classificationSystem
-#' @field handlingDescription
+#' @field classification [\code{\link{ISOClassification}}] security classifciation
+#' @field userNote [\code{\link{character}}] user note
+#' @field classificationSystem [\code{\link{character}}] classification system
+#' @field handlingDescription [\code{\link{character}}] description
 #'
 #' @section Methods:
 #' \describe{
@@ -18,18 +18,21 @@
 #'    This method is used to instantiate an ISOSecurityConstraints
 #'  }
 #'  \item{\code{setClassification(classification)}}{
-#'    Adds a classification, as object of class "character" or class \code{ISOClassification}.
+#'    Adds a classification, as object of class "character" or class \code{\link{ISOClassification}}.
 #'    If an object of class "character" is specified, it must match the accepted
 #'    values given by \code{ISOClassification$values()}.
 #'  }
-#'  \item{\code{setUserNote(userNote)}}{
-#'    Sets a user note as object of class "character"
+#'  \item{\code{setUserNote(userNote, locales)}}{
+#'    Sets a user note as object of class "character". Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{setClassificationSystem(classificationSystem)}}{
-#'    Sets a classification system as object of class "character"
+#'  \item{\code{setClassificationSystem(classificationSystem, locales)}}{
+#'    Sets a classification system as object of class "character". Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{setHandlingDescription(handlingDescription)}}{
-#'    Sets a handling description as object of class "character"
+#'  \item{\code{setHandlingDescription(handlingDescription, locales)}}{
+#'    Sets a handling description as object of class "character". Locale names can be specified 
+#'    as \code{list} with the \code{locales} argument.
 #'  }
 #' }
 #' 
@@ -76,18 +79,27 @@ ISOSecurityConstraints <- R6Class("ISOSecurityConstraints",
      },
      
      #setUserNote
-     setUserNote = function(userNote){
+     setUserNote = function(userNote, locales = NULL){
        self$userNote <- as.character(userNote)
+       if(!is.null(locales)){
+         self$userNote <- self$createLocalisedProperty(userNote, locales)
+       }
      },
      
      #setClassificationSystem
-     setClassificationSystem = function(classificationSystem){
+     setClassificationSystem = function(classificationSystem, locales = NULL){
        self$classificationSystem = as.character(classificationSystem)
+       if(!is.null(locales)){
+         self$classificationSystem <- self$createLocalisedProperty(classificationSystem, locales)
+       }
      },
      
      #setHandlingDescription
-     setHandlingDescription = function(handlingDescription){
+     setHandlingDescription = function(handlingDescription, locales = NULL){
        self$handlingDescription = as.character(handlingDescription)
+       if(!is.null(locales)){
+         self$handlingDescription <- self$createLocalisedProperty(handlingDescription, locales)
+       }
      }
    )                                          
 )

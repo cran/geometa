@@ -6,102 +6,337 @@
 #' @keywords ISO service identification
 #' @return Object of \code{\link{R6Class}} for modelling an ISO ServiceIdentification
 #' @format \code{\link{R6Class}} object.
-#' 
-#' @field serviceType
-#' @field serviceTypeVersion
-#' @field accessProperties
-#' @field restrictions
-#' @field keywords
-#' @field extent
-#' @field coupledResource
-#' @field couplingType
-#' @field containsOperations
-#' @field operatesOn
 #'
-#' @section Inherited methods:
+#' @section Methods inherited from \code{\link{ISOIdentification}}:
 #' \describe{
 #'  \item{\code{setCitation(citation)}}{
-#'    Sets an object of class \code{ISOCitation}
+#'    Sets an object of class \code{\link{ISOCitation}}
 #'  }
-#'  \item{\code{setAbstract(abstract)}}{
-#'    Sets an abstract (object of class "character")
+#'  \item{\code{setAbstract(abstract, locales)}}{
+#'    Sets an abstract (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{setPurpose(purpose)}}{
-#'    Sets a purpose (object of class "character")
+#'  \item{\code{setPurpose(purpose, locales)}}{
+#'    Sets a purpose (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{addCredit(credit)}}{
-#'    Adds a credit (object of class "character")
+#'  \item{\code{addCredit(credit, locales)}}{
+#'    Adds a credit (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
 #'  }
-#'  \item{\code{delCredit(credit)}}{
-#'    Deletes a credit (object of class "character")
+#'  \item{\code{delCredit(credit, locales)}}{
+#'    Deletes a credit (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
 #'  }
 #'  \item{\code{addStatus(status)}}{
-#'    Adds a status, as object of class "character" or class \code{ISOStatus}. If
+#'    Adds a status, as object of class "character" or class \code{\link{ISOStatus}}. If
 #'    an object of class "character" is specified, it must match the accepted
 #'    progress status values \code{ISOStatus$values()}.
 #'  }
 #'  \item{\code{delStatus(status)}}{
-#'    Deletes a status, as object of class "character" or class \code{ISOStatus}. If
+#'    Deletes a status, as object of class "character" or class \code{\link{ISOStatus}}. If
 #'    an object of class "character" is specified, it must match the accepted
 #'    progress status values \code{ISOStatus$values()}.
 #'  }
 #'  \item{\code{addPointOfContact(pointOfContact)}}{
-#'    Adds an object of class \code{ISOResponsibleParty}
+#'    Adds an object of class \code{\link{ISOResponsibleParty}}
 #'  }
 #'  \item{\code{delPointOfContact(pointOfContact)}}{
-#'    Deletes an object of class \code{ISOResponsibleParty}
+#'    Deletes an object of class \code{\link{ISOResponsibleParty}}
 #'  }
 #'  \item{\code{addResourceMaintenance(resourceMaintenance)}}{
 #'    Adds a resource maintenance information as object of class 
-#'    \code{ISOMaintenanceInformation}.
+#'    \code{\link{ISOMaintenanceInformation}}.
 #'  }
 #'  \item{\code{setResourceMaintenance(resourceMaintenance)}}{
 #'    Sets a resource maintenance information as object of class 
-#'    \code{ISOMaintenanceInformation}.
+#'    \code{\link{ISOMaintenanceInformation}}.
 #'  }
 #'  \item{\code{delResourceMaintenance(resourceMaintenance)}}{
 #'    Deletes a resource maintenance information as object of class 
-#'    \code{ISOMaintenanceInformation}.
+#'    \code{\link{ISOMaintenanceInformation}}.
 #'  }
 #'  \item{\code{addGraphicOverview(graphicOverview)}}{
-#'    Adds an object of class \code{ISOBrowseGraphic}
+#'    Adds an object of class \code{\link{ISOBrowseGraphic}}
 #'  }
 #'  \item{\code{setGraphicOverview(graphicOverview)}}{
-#'    Sets an object of class \code{ISOBrowseGraphic}
+#'    Sets an object of class \code{\link{ISOBrowseGraphic}}
 #'  }
 #'  \item{\code{delGraphicOverview(graphicOverview)}}{
-#'    Deletes an object of class \code{ISOBrowseGraphic}
+#'    Deletes an object of class \code{\link{ISOBrowseGraphic}}
 #'  }
 #'  \item{\code{addKeywords(keywords)}}{
-#'    Adds a set of keywords as object of class \code{ISOKeywords}
+#'    Adds a set of keywords as object of class \code{\link{ISOKeywords}}
 #'  }
 #'  \item{\code{setKeywords(keywords)}}{
-#'    Sets a set of keywords as object of class \code{ISOKeywords}
+#'    Sets a set of keywords as object of class \code{\link{ISOKeywords}}
 #'  }
 #'  \item{\code{delKeywords(keywords)}}{
-#'    Deletes a set of keywords as object of class \code{ISOKeywords}
+#'    Deletes a set of keywords as object of class \code{\link{ISOKeywords}}
 #'  }
 #'  \item{\code{addResourceConstraints(resourceConstraints)}}{
-#'    Adds an object of class \code{ISOLegalConstraints}
+#'    Adds an object of class \code{\link{ISOLegalConstraints}}
 #'  }
 #'  \item{\code{setResourceConstraints(resourceConstraints)}}{
-#'    Sets an object of class \code{ISOLegalConstraints}
+#'    Sets an object of class \code{\link{ISOLegalConstraints}}
 #'  }
 #'  \item{\code{addResourceConstraints(resourceConstraints)}}{
 #'    Deletes an object of class \code{ISOLegalConstraints}
 #'  }
 #' }
 #' 
+#' @examples
+#'   #encoding
+#'   md <- ISOServiceIdentification$new()
+#'   md$setAbstract("abstract")
+#'   md$setPurpose("purpose")
+#'
+#'   #adding a point of contact
+#'   rp <- ISOResponsibleParty$new()
+#'   rp$setIndividualName("someone")
+#'   rp$setOrganisationName("somewhere")
+#'   rp$setPositionName("someposition")
+#'   rp$setRole("pointOfContact")
+#'   contact <- ISOContact$new()
+#'   phone <- ISOTelephone$new()
+#'   phone$setVoice("myphonenumber")
+#'   phone$setFacsimile("myfacsimile")
+#'   contact$setPhone(phone)
+#'   address <- ISOAddress$new()
+#'   address$setDeliveryPoint("theaddress")
+#'   address$setCity("thecity")
+#'   address$setPostalCode("111")
+#'   address$setCountry("France")
+#'   address$setEmail("someone@@theorg.org")
+#'   contact$setAddress(address)
+#'   res <- ISOOnlineResource$new()
+#'   res$setLinkage("http://www.somewhereovertheweb.org")
+#'   res$setName("somename")
+#'   contact$setOnlineResource(res)
+#'   rp$setContactInfo(contact)
+#'   md$addPointOfContact(rp)
+#'
+#'   #citation
+#'   ct <- ISOCitation$new()
+#'   ct$setTitle("sometitle")
+#'   d <- ISODate$new()
+#'   d$setDate(ISOdate(2015, 1, 1, 1))
+#'   d$setDateType("publication")
+#'   ct$addDate(d)
+#'   ct$setEdition("1.0")
+#'   ct$setEditionDate(ISOdate(2015,1,1))
+#'   ct$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
+#'   ct$setPresentationForm("mapDigital")
+#'   ct$setCitedResponsibleParty(rp)
+#'   md$setCitation(ct)
+#'
+#'   #graphic overview
+#'   go <- ISOBrowseGraphic$new(
+#'     fileName = "http://wwww.somefile.org/png",
+#'     fileDescription = "Map Overview",
+#'     fileType = "image/png"
+#'   )
+#'   md$setGraphicOverview(go)
+#'
+#'   #maintenance information
+#'   mi <- ISOMaintenanceInformation$new()
+#'   mi$setMaintenanceFrequency("daily")
+#'   md$setResourceMaintenance(mi)
+#'
+#'   #adding legal constraints
+#'   lc <- ISOLegalConstraints$new()
+#'   lc$addUseLimitation("limitation1")
+#'   lc$addUseLimitation("limitation2")
+#'   lc$addUseLimitation("limitation3")
+#'   lc$addAccessConstraint("copyright")
+#'   lc$addAccessConstraint("license")
+#'   lc$addUseConstraint("copyright")
+#'   lc$addUseConstraint("license")
+#'   md$setResourceConstraints(lc)
+#'
+#'   xml <- md$encode()
+#'    
+#' @references 
+#'   ISO 19115:2003 - Geographic information -- Metadata
+#' 
+#' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
+#'
+ISOServiceIdentification <- R6Class("ISOServiceIdentification",
+   inherit = ISOIdentification,
+   private = list(
+     xmlElement = "MD_ServiceIdentification",
+     xmlNamespacePrefix = "GMD"
+   ),
+   public = list(
+     initialize = function(xml = NULL){
+       defaults <- list(characterSet = ISOCharacterSet$new(value = "utf8"))
+       super$initialize(xml = xml, defaults = defaults)
+     }
+   )                        
+)
+
+#' ISOSRVServiceIdentification
+#'
+#' @docType class
+#' @importFrom R6 R6Class
+#' @export
+#' @keywords ISO service identification
+#' @return Object of \code{\link{R6Class}} for modelling an ISO ServiceIdentification
+#' @format \code{\link{R6Class}} object.
+#' 
+#' @field serviceType [\code{\link{character}}] the service type
+#' @field serviceTypeVersion [\code{\link{character}}] the service type version(s)
+#' @field accessProperties [\code{\link{ISOStandardOrderProcess}}] the access properties
+#' @field restrictions [\code{\link{ISOConstraints}}] restrictions applied to service
+#' @field keywords [\code{\link{ISOKeywords}}] service keywords
+#' @field extent [\code{\link{ISOExtent}}] service extent(s)
+#' @field coupledResource [\code{\link{ISOCoupledResource}}] the coupled resource
+#' @field couplingType [\code{\link{ISOCouplingType}}] the coupling type
+#' @field containsOperations [\code{\link{ISOOperationMetadata}}] the operation metadata
+#' @field operatesOn [\code{\link{ISODataIdentification}}] data identification on which service operates
+#'
+#' @section Methods inherited from \code{\link{ISOServiceIdentification}}:
+#' \describe{
+#'  \item{\code{setCitation(citation)}}{
+#'    Sets an object of class \code{\link{ISOCitation}}
+#'  }
+#'  \item{\code{setAbstract(abstract, locales)}}{
+#'    Sets an abstract (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
+#'  }
+#'  \item{\code{setPurpose(purpose, locales)}}{
+#'    Sets a purpose (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
+#'  }
+#'  \item{\code{addCredit(credit, locales)}}{
+#'    Adds a credit (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
+#'  }
+#'  \item{\code{delCredit(credit, locales)}}{
+#'    Deletes a credit (object of class "character"). Locale names can be 
+#'    specified as \code{list} with the \code{locales} argument.
+#'  }
+#'  \item{\code{addStatus(status)}}{
+#'    Adds a status, as object of class "character" or class \code{\link{ISOStatus}}. If
+#'    an object of class "character" is specified, it must match the accepted
+#'    progress status values \code{ISOStatus$values()}.
+#'  }
+#'  \item{\code{delStatus(status)}}{
+#'    Deletes a status, as object of class "character" or class \code{\link{ISOStatus}}. If
+#'    an object of class "character" is specified, it must match the accepted
+#'    progress status values \code{ISOStatus$values()}.
+#'  }
+#'  \item{\code{addPointOfContact(pointOfContact)}}{
+#'    Adds an object of class \code{\link{ISOResponsibleParty}}
+#'  }
+#'  \item{\code{delPointOfContact(pointOfContact)}}{
+#'    Deletes an object of class \code{\link{ISOResponsibleParty}}
+#'  }
+#'  \item{\code{addResourceMaintenance(resourceMaintenance)}}{
+#'    Adds a resource maintenance information as object of class 
+#'    \code{\link{ISOMaintenanceInformation}}.
+#'  }
+#'  \item{\code{setResourceMaintenance(resourceMaintenance)}}{
+#'    Sets a resource maintenance information as object of class 
+#'    \code{\link{ISOMaintenanceInformation}}.
+#'  }
+#'  \item{\code{delResourceMaintenance(resourceMaintenance)}}{
+#'    Deletes a resource maintenance information as object of class 
+#'    \code{\link{ISOMaintenanceInformation}}.
+#'  }
+#'  \item{\code{addGraphicOverview(graphicOverview)}}{
+#'    Adds an object of class \code{\link{ISOBrowseGraphic}}
+#'  }
+#'  \item{\code{setGraphicOverview(graphicOverview)}}{
+#'    Sets an object of class \code{\link{ISOBrowseGraphic}}
+#'  }
+#'  \item{\code{delGraphicOverview(graphicOverview)}}{
+#'    Deletes an object of class \code{\link{ISOBrowseGraphic}}
+#'  }
+#'  \item{\code{addKeywords(keywords)}}{
+#'    Adds a set of keywords as object of class \code{\link{ISOKeywords}}
+#'  }
+#'  \item{\code{setKeywords(keywords)}}{
+#'    Sets a set of keywords as object of class \code{\link{ISOKeywords}}
+#'  }
+#'  \item{\code{delKeywords(keywords)}}{
+#'    Deletes a set of keywords as object of class \code{\link{ISOKeywords}}
+#'  }
+#'  \item{\code{addResourceConstraints(resourceConstraints)}}{
+#'    Adds an object of class \code{\link{ISOLegalConstraints}}
+#'  }
+#'  \item{\code{setResourceConstraints(resourceConstraints)}}{
+#'    Sets an object of class \code{\link{ISOLegalConstraints}}
+#'  }
+#'  \item{\code{addResourceConstraints(resourceConstraints)}}{
+#'    Deletes an object of class \code{\link{ISOLegalConstraints}}
+#'  }
+#' }
+#' 
 #' @section Methods:
 #' \describe{
 #'  \item{\code{new(xml,value)}}{
-#'    This method is used to instantiate an ISOServiceIdentification
+#'    This method is used to instantiate an \code{\link{ISOSRVServiceIdentification}}
+#'  }
+#'  \item{\code{setServiceType(serviceType)}}{
+#'    Set the type of service
+#'  }
+#'  \item{\code{addServiceTypeVersion(version)}}{
+#'    Adds a service type version
+#'  }
+#'  \item{\code{delServiceTypeVersion(version)}}{
+#'    Deletes a service type version
+#'  }
+#'  \item{\code{setAccessProperties(accesProperties)}}{
+#'    Sets the access properties, as object of class  \code{\link{ISOStandardOrderProcess}}
+#'  }
+#'  \item{\code{setRestrictions(restrictions)}}{
+#'    Sets the restrictions associated to the service, as object of class \code{\link{ISOConstraints}}
+#'  }
+#'  \item{\code{addKeywords(keywords)}}{
+#'    Adds a set of keywords as object of class \code{\link{ISOKeywords}}
+#'  }
+#'  \item{\code{setKeywords(keywords)}}{
+#'    Sets a set of keywords as object of class \code{\link{ISOKeywords}}
+#'  }
+#'  \item{\code{delKeywords(keywords)}}{
+#'    Deletes a set of keywords as object of class \code{\link{ISOKeywords}}
+#'  }
+#'  \item{\code{addExtent(extent)}}{
+#'    Adds an object of class \code{\link{ISOExtent}}.
+#'  }
+#'  \item{\code{setExtent(extent)}}{
+#'    Sets an object of class \code{\link{ISOExtent}}.
+#'  }
+#'  \item{\code{delExtent(extent)}}{
+#'    Deletes an object of class \code{\link{ISOExtent}}.
+#'  }
+#'  \item{\code{addCoupledResource(resource)}}{
+#'    Adds a coupled resource, object of class \code{\link{ISOCoupledResource}}
+#'  }
+#'  \item{\code{delCoupledResource(resource)}}{
+#'    Deletes a coupled resource, object of class \code{\link{ISOCoupledResource}}
+#'  }
+#'  \item{\code{setCouplingType(couplingType)}}{
+#'    Set the coupling type, object of class \code{character} values among following: "loose" "mixed" "tight"
+#'  }
+#'  \item{\code{addOperationMetadata(operationMetadata)}}{
+#'    Adds operation metadata, object of class \code{\link{ISOOperationMetadata}}
+#'  }
+#'  \item{\code{delOperationMetadata(operationMetadata)}}{
+#'    Deletes operation metadata, object of class \code{\link{ISOOperationMetadata}}
+#'  }
+#'  \item{\code{addOperatesOn(dataIdentification)}}{
+#'    Adds an operates on relationship, object of class \code{\link{ISODataIdentification}}
+#'  }
+#'  \item{\code{delOperatesOn(dataIdentification)}}{
+#'    Deletes an operates on relationship, object of class \code{\link{ISODataIdentification}}
 #'  }
 #' }
 #' 
 #' @examples
 #'   #encoding
-#'   md <- ISOServiceIdentification$new()
+#'   md <- ISOSRVServiceIdentification$new()
 #'   md$setAbstract("abstract")
 #'   md$setPurpose("purpose")
 #'
@@ -284,12 +519,12 @@
 #'   xml <- md$encode()
 #'    
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Services 
+#'   ISO 19119:2005 - Geographic information -- Services 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
-ISOServiceIdentification <- R6Class("ISOServiceIdentification",
-  inherit = ISOIdentification,
+ISOSRVServiceIdentification <- R6Class("ISOSRVServiceIdentification",
+  inherit = ISOServiceIdentification,
   private = list(
     xmlElement = "SV_ServiceIdentification",
     xmlNamespacePrefix = "SRV"
@@ -318,8 +553,7 @@ ISOServiceIdentification <- R6Class("ISOServiceIdentification",
     operatesOn = list(),
     
     initialize = function(xml = NULL){
-      defaults <- list(characterSet = ISOCharacterSet$new(value = "utf8"))
-      super$initialize(xml = xml, defaults = defaults)
+      super$initialize(xml = xml)
     },
     
     #setServiceType
