@@ -7,13 +7,11 @@
 #' @return Object of \code{\link{R6Class}} for modelling an GMLOperationParameterGroup
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field maximumOccurs
-#' @field parameter
+#' @field maximumOccurs [\code{\link{GMLElement}}]
+#' @field parameter [\code{\link{GMLOperationParameter}}|\code{\link{GMLOperationParameterGroup}}]
 #'
 #' @section Inherited methods:
-#' \describe{
-#'   from \code{GMLAbstractGeneralOperationParameter}
-#' }
+#' from \code{GMLAbstractGeneralOperationParameter}
 #' 
 #' @section Methods:
 #' \describe{

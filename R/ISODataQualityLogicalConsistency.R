@@ -8,9 +8,7 @@
 #' @format \code{\link{R6Class}} object.
 #'
 #' @section Inherited methods:
-#' \describe{
-#'   from \code{\link{ISODataQualityAbstractElement}}
-#' }
+#' from \code{\link{ISODataQualityAbstractElement}}
 #' 
 #' @section Methods:
 #' \describe{
@@ -43,9 +41,7 @@ ISOAbstractLogicalConsistency <- R6Class("ISOAbstractLogicalConsistency",
 #' @format \code{\link{R6Class}} object.
 #'
 #' @section Inherited methods:
-#' \describe{
-#'   from \code{\link{ISODataQualityAbstractElement}}
-#' }
+#' from \code{\link{ISODataQualityAbstractElement}}
 #' 
 #' @section Methods:
 #' \describe{
@@ -103,9 +99,7 @@ ISOTopologicalConsistency <- R6Class("ISOTopologicalConsistency",
 #' @format \code{\link{R6Class}} object.
 #'
 #' @section Inherited methods:
-#' \describe{
-#'   from \code{\link{ISODataQualityAbstractElement}}
-#' }
+#' from \code{\link{ISODataQualityAbstractElement}}
 #' 
 #' @section Methods:
 #' \describe{
@@ -163,9 +157,7 @@ ISOFormatConsistency <- R6Class("ISOFormatConsistency",
 #' @format \code{\link{R6Class}} object.
 #'
 #' @section Inherited methods:
-#' \describe{
-#'   from \code{\link{ISODataQualityAbstractElement}}
-#' }
+#' from \code{\link{ISODataQualityAbstractElement}}
 #' 
 #' @section Methods:
 #' \describe{
@@ -223,9 +215,7 @@ ISODomainConsistency <- R6Class("ISODomainConsistency",
 #' @format \code{\link{R6Class}} object.
 #'
 #' @section Inherited methods:
-#' \describe{
-#'   from \code{\link{ISODataQualityAbstractElement}}
-#' }
+#' from \code{\link{ISODataQualityAbstractElement}}
 #' 
 #' @section Methods:
 #' \describe{

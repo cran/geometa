@@ -89,8 +89,6 @@ test_that("encoding - i18n - RU",{
 })
 
 test_that("encoding - i18n - ZH",{
-  testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encoding
   md <- ISOLocalisedCharacterString$new(locale = "en", value = "摘要")
   expect_is(md, "ISOLocalisedCharacterString")

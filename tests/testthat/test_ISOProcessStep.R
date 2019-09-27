@@ -82,6 +82,8 @@ test_that("encoding - with empty sources / hrefs",{
 test_that("encoding - i18n",{
   testthat::skip_on_cran()
   testthat::skip_on_travis()
+  testthat::skip_on_cran()
+  testthat::skip_on_travis()
   #encoding
   md <- ISOProcessStep$new()
   md$setDescription(

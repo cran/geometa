@@ -9,6 +9,8 @@ require(testthat)
 context("ISOFeatureCatalogue")
 
 test_that("encoding",{
+  testthat::skip_on_cran()
+  testthat::skip_on_travis()
   #encoding
   fc <- ISOFeatureCatalogue$new(uuid = "my-fc-identifier")
   fc$setName("name")

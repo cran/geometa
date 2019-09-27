@@ -17,14 +17,14 @@ GMLConversion
 \section{Fields}{
 
 \describe{
-\item{\code{parameterValue}}{}
+\item{\code{method}}{[\code{\link{GMLElement}}]}
+
+\item{\code{parameterValue}}{[\code{list} of \code{\link{GMLAbstractGeneralParameterValue}}]}
 }}
 
 \section{Inherited methods}{
 
-\describe{
-  from \code{GMLAbstractCoordinateOperation}
-}
+from \code{GMLAbstractCoordinateOperation}
 }
 
 \section{Methods}{

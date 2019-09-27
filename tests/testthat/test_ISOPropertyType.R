@@ -29,8 +29,6 @@ test_that("encoding",{
 })
 
 test_that("encoding - i18n",{
-  testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encoding
   md <- ISOPropertyType$new()
   md$setMemberName("name")

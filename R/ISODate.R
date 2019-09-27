@@ -25,8 +25,7 @@
 #' 
 #' @examples 
 #'   md <- ISODate$new()
-#'   d <- ISOBaseDate$new(value = ISOdate(2015, 1, 1, 1))
-#'   md$setDate(d)
+#'   md$setDate(ISOdate(2015, 1, 1, 1))
 #'   md$setDateType("publication")
 #'   xml <- md$encode()
 #' 
@@ -50,8 +49,8 @@ ISODate <- R6Class("ISODate",
      
      #setDate
      setDate = function(date){
-       if(!is(date, "ISOBaseDate")){
-         date <- ISOBaseDate$new(value = date)
+       if(!(is(date, "Date") | is(date, "POSIXt"))){
+         stop("The date should be either a 'Date' or 'POSIXt' object")
        }
        self$date = date
      },

@@ -1,12 +1,12 @@
-# test_ISOLineage.R
+# test_ISOLocaleContainer.R
 # Author: Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 #
-# Description: Unit tests for ISOLineage.R
+# Description: Unit tests for ISOLocaleContainer.R
 #=======================
 require(geometa, quietly = TRUE)
 require(testthat)
 
-context("ISOLineage")
+context("ISOLocaleContainer")
 
 test_that("encoding",{
   testthat::skip_on_cran()
@@ -21,7 +21,7 @@ test_that("encoding",{
   loc$setCharacterSet("utf8")
   md$setLocale(loc)
   date1 <- ISODate$new()
-  d1 <- ISOBaseDate$new(value = ISOdate(2015, 1, 1, 1))
+  d1 <- ISOdate(2015, 1, 1, 1)
   date1$setDate(d1)
   date1$setDateType("publication")
   md$addDate(date1)

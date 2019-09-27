@@ -45,6 +45,11 @@ pivot_format <- R6Class("pivot_format",
     initialize = function(id, pkg, reader = NULL, checker = NULL, constructor = NULL){
       self$id <- id
       self$pkg <- pkg
+      if(pkg != "geometa"){
+        if(!eval(parse(text = sprintf("require(\"%s\")", pkg)))){
+          stop(sprintf("Package '%s' is required for metadata mapping", pkg))
+        }
+      }
       self$reader <- reader
       self$checker <- checker
       if(!is.null(constructor)){
@@ -105,7 +110,7 @@ setMappingFormats <- function(){
       constructor = "ISOMetadata$new"
     ),
     pivot_format$new(
-      id = "eml", pkg = "EML/emld", 
+      id = "eml", pkg = "EML", 
       reader = "%s[[%s]]", checker = "!is.null(%s[[%s]])",
       constructor = "eml$eml"
     ),
@@ -127,9 +132,6 @@ setMappingFormats <- function(){
 #' 
 #' @param pretty by default \code{TRUE} to return the list of formats as \code{data.frame}. Set
 #' to \code{FALSE} to return a list of \code{pivot_format} objects
-#' 
-#' @examples             
-#'   getMappingFormats()
 #' 
 #' @author Emmanuel Blondel, \email{emmanuel.blondel1@@gmail.com}
 #
@@ -335,6 +337,14 @@ get_pivot_source_object <- function(mapping, obj, verbose = FALSE){
         if(!item$islist && suppressWarnings(is.na(item_obj))){
           return(NULL)
         }
+      
+        #manage list of wrapped objects from which value has to be extracted (eg. ISOAnchors)
+        if(is.list(item_obj)){
+          item_obj <- lapply(item_obj, function(x){
+            if(is(x,"character")) return(x)
+            if("value" %in% names(x)) if(!is.null(x$value)) return(x$value) else return(x)
+          })
+        }
         
         #management of attributes
         if(!is.null(item$attrs$element)){
@@ -351,6 +361,8 @@ get_pivot_source_object <- function(mapping, obj, verbose = FALSE){
             if(from_element_obj != item$attrs$element$value){
               return(NULL)
             }
+          }else{
+            return(NULL)
           }
         }
         if(!is.null(item$attrs$sep)){
@@ -381,6 +393,19 @@ get_pivot_source_object <- function(mapping, obj, verbose = FALSE){
     }
   }))
   if(is.null(from_obj)) return(NULL) #the value we try to find does not exist, we stop here
+  if(!is.null(names(from_obj))){
+    if("value" %in% names(from_obj)) from_obj <- from_obj$value
+  }else{
+    if(is.list(from_obj)){
+      from_obj <- lapply(from_obj, function(from_obj_item){
+        out_obj <- from_obj_item
+        if(!is.null(names(from_obj_item))){
+          if("value" %in% names(from_obj_item)) out_obj <- from_obj_item$value
+        }
+        return(out_obj)
+      })
+    }
+  }
   return(from_obj)
 }
 
@@ -628,9 +653,10 @@ feed_pivot_target_data <- function(mapping, out_obj, out, verbose = FALSE){
         }else{
           if(verbose) cat("Filling an existing a list of elements...\n")
           out_item_previous <- try(eval(parse(text=paste0("out",last_previous))), silent = TRUE)
-          eval(parse(text = paste0("out",last_previous," <- lapply(1:length(out_item_previous), function(k){
-                                   out_item_new <- out_item_previous[[k]]
-                                   out_item_new[[\"",item$field,"\"]] <- out_obj_item[[k]][[\"",item$field,"\"]] #here we take the first list element (~ item$field)
+          items_nb <- max(c(length(out_item_previous), length(out_obj_item)))
+          eval(parse(text = paste0("out",last_previous," <- lapply(1:items_nb, function(k){
+                                   if(k <= length(out_item_previous)) out_item_new <- out_item_previous[[k]] else out_item_new <- list()
+                                   if(k <= length(out_obj_item)) out_item_new[[\"",item$field,"\"]] <- out_obj_item[[k]][[\"",item$field,"\"]] #here we take the first list element (~ item$field)
                                    return(out_item_new)
         })")))
 				}
@@ -686,7 +712,37 @@ apply_format_mapping <- function(mapping, obj, out, verbose = FALSE){
 } 
 
 
-#convert_metadata
+#' @name convert_metadata
+#' @aliases convert_metadata
+#' @title convert_metadata
+#' @export
+#' @description \code{convert_metadata} is a tentative generic metadata converter to
+#' convert from one source object, represented in a source metadata object model in R
+#' (eg eml) to a target metadata object, represented in another target metadata object
+#' model (eg \pkg{geometa} \code{\link{ISOMetadata}}). This function relies on a list of
+#' mapping rules defined to operate from the source metadata object to the target metadata 
+#' object. This list of mapping rules is provided in a tabular format. A version is embedded 
+#' in \pkg{geometa} and can be returned with \code{\link{getMappings}}.
+#' 
+#' @usage convert_metadata(obj, from, to, mappings, verbose)
+#' 
+#' @param obj a metadata object given in one of the mapping formats known by \pkg{geometa}.
+#' The object should be a valid \code{id} as listed by \code{\link{getMappingFormats}}, supported
+#' as source format (\code{from} is \code{TRUE}).
+#' @param from a valid mapping format id (see \code{\link{getMappingFormats}}) that indicates the metadata
+#' model / format used for the argument \code{obj}
+#' @param to a valid mapping format id (see \code{\link{getMappingFormats}}) to convert to
+#' @param mappings a \code{data.frame} giving the reference mapping rules to convert metadata object.
+#' This \code{data.frame} is by default the output of \code{\link{getMappings}}.
+#' @param verbose print debugging messages. Default is \code{FALSE}
+#' @return an metadata object in the model specified as \code{to} argument
+#' 
+#' @note This function is mainly used internally in \code{as} generic methods to convert from one 
+#' metadata format to another.  It is exported for extension to user custom metadata formats or for
+#' debugging purpose. This converter is still experimental.
+#' 
+#' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
+#'
 convert_metadata <- function(obj, from, to, mappings, verbose = FALSE){
   
   available_metadata_formats <- getMappingFormats(pretty = FALSE)
@@ -695,9 +751,9 @@ convert_metadata <- function(obj, from, to, mappings, verbose = FALSE){
   
   format_ids <- sapply(available_metadata_formats, function(x){x$id})
   if(!(from %in% format_ids))
-    stop(sprintf("The source format '%s' is not among known formats. Check the list of possible formats with list_metadata_formats()", from))
+    stop(sprintf("The source format '%s' is not among known formats. Check the list of possible formats with getMappingFormats(pretty = TRUE)", from))
   if(!(to %in% format_ids))
-    stop(sprintf("The target format '%s' is not among known formats. Check the list of possible formats with list_metadata_formats()", to))
+    stop(sprintf("The target format '%s' is not among known formats. Check the list of possible formats with getMappingFormats(pretty = TRUE)", to))
   
   format_from <- available_metadata_formats[sapply(available_metadata_formats, function(x){x$id == from})][[1]]
   format_to <- available_metadata_formats[sapply(available_metadata_formats, function(x){x$id == to})][[1]]
@@ -758,6 +814,23 @@ registerMappings <- function(x){
   .geometa.mappings$rules <- x
 }
 
+#' @name getMappings
+#' @aliases getMappings
+#' @title getMappings
+#' @export
+#' @description List the mappings rules to convert from/to other metadata formats (currently 
+#' EML/emld objects and NetCDF-CF/ncdf4 objects)
+#' 
+#' @usage getMappings()
+#' 
+#' @return a \code{data.frame} containing the metadata mapping rules
+#'
+getMappings <- function(){
+  available_metadata_formats <- getMappingFormats(pretty = FALSE)
+  if(length(available_metadata_formats)==0) setMappingFormats()
+  return(.geometa.mappings$rules)
+}
+
 #setters
 
 setOldClass("emld")
@@ -769,7 +842,7 @@ setAs("emld", "ISOMetadata", function(from){
   in_from <- from
   class(in_from) <- "list"
   out_md <- convert_metadata(in_from, from = "eml", to = "geometa", 
-                             mappings = .geometa.mappings$rules, verbose = FALSE)
+                             mappings = getMappings(), verbose = FALSE)
   return(out_md)
 })
 
@@ -777,8 +850,8 @@ setOldClass("ncdf4")
 setAs("ncdf4", "ISOMetadata", function(from){
   if(!requireNamespace("ncdf4", quietly = TRUE))
     stop("package ncdf4 required, please install it first")
-  out_md <- convert_metadata(from, from = "eml", to = "geometa", 
-                             mappings = .geometa.mappings$rules, verbose = FALSE)
+  out_md <- convert_metadata(from, from = "ncdf", to = "geometa", 
+                             mappings = getMappings(), verbose = FALSE)
   return(out_md)
 })
 
@@ -788,7 +861,7 @@ setAs("ISOMetadata", "emld", function(from){
   if(!requireNamespace("emld", quietly = TRUE))
     stop("package emld required, please install it first")
   out_eml <- convert_metadata(from, from = "geometa", to = "eml", 
-                              mappings = .geometa.mappings$rules, verbose = FALSE)
+                              mappings = getMappings(), verbose = FALSE)
   out_emld <- emld::as_emld(out_eml)
   return(out_emld)
 })

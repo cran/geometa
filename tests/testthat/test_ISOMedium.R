@@ -1,12 +1,12 @@
-# test_ISOCitation.R
+# test_ISOMedium.R
 # Author: Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 #
-# Description: Unit tests for ISOCitation.R
+# Description: Unit tests for ISOMedium.R
 #=======================
 require(geometa, quietly = TRUE)
 require(testthat)
 
-context("ISOCitation")
+context("ISOMedium")
 
 test_that("encoding",{
   testthat::skip_on_cran()

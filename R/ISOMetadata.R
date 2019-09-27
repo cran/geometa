@@ -9,13 +9,13 @@
 #' @format \code{\link{R6Class}} object.
 #'
 #' @field fileIdentifier [\code{\link{character}}] metadata file identifier
-#' @field language [\code{\link{ISOLanguage}}|\code{\link{character}}] metadata language code
+#' @field language [\code{\link{ISOLanguage}}|\code{\link{character}}] metadata language coded
 #' @field characterSet [\code{\link{ISOCharacterSet}}|\code{\link{character}}] character set
 #' @field parentIdentifier [\code{\link{character}}] parent metadata identifier
 #' @field hierarchyLevel [\code{\link{ISOHierarchyLevel}}|\code{\link{character}}] hierarchy level
 #' @field hierarchyLevelName [\code{\link{character}}] hierarchy level name
 #' @field contact [\code{\link{ISOResponsibleParty}}] contact(s)
-#' @field dateStamp [\code{\link{POSIXt}}] datestamp
+#' @field dateStamp [\code{\link{Date}}|\code{\link{POSIXt}}] datestamp
 #' @field metadataStandardName [\code{\link{character}}] metadata standard name
 #' @field metadataStandardVersion [\code{\link{character}}] metadata standard version
 #' @field dataSetURI [\code{\link{character}}] dataset URI
@@ -320,7 +320,7 @@
 #'      )
 #'    )
 #'    inspire_date <- ISODate$new()
-#'    inspire_date$setDate("2008-06-01")
+#'    inspire_date$setDate(as.Date("2008-06-01"))
 #'    inspire_date$setDateType("publication")
 #'    th$addDate(inspire_date)
 #'    inspire_kwd$setThesaurusName(th)

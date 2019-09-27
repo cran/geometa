@@ -7,8 +7,8 @@
 #' @return Object of \code{\link{R6Class}} for modelling an GMLTemporalCRS
 #' @format \code{\link{R6Class}} object.
 #'
-#' @field timeCS
-#' @field temporalDatum
+#' @field timeCS [\code{\link{GMLTimeCS}}]
+#' @field temporalDatum [\code{GMLTemporalDatum}]
 #'
 #' @section Methods:
 #' \describe{
