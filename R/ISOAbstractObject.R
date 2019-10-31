@@ -161,7 +161,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     encoding = options("encoding"),
     document = FALSE,
     system_fields = c("wrap", "valueDescription",
-                      "element", "namespace", "defaults", "attrs", "printAttrs",
+                      "element", "namespace", "defaults", "attrs", "printAttrs", "parentAttrs",
                       "codelistId", "measureType", "isNull", "anyElement"),
     xmlComments = function(isoCompliant = NA, inspireReport = NULL){
       comments <- list()
@@ -285,6 +285,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     defaults = list(),
     attrs = list(),
     printAttrs = list(),
+    parentAttrs = NULL,
     value = NULL,
     isNull = FALSE,
     anyElement = FALSE,
@@ -412,6 +413,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       xml_children <- xmlChildren(xml, encoding = private$encoding)
       for(child in xml_children){
         fieldName <- xmlName(child)
+        
         childElement <- child
         nsPrefix <- ""
         fNames <- unlist(strsplit(fieldName, ":"))
@@ -425,6 +427,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         
         wrap_fields <- FALSE  
         fieldClass <- NULL
+        parentAttrs <- NULL
         if(!is(child, "XMLInternalTextNode")){
           fieldClass <- ISOAbstractObject$getISOClassByNode(child)
           nsPrefix <- names(xmlNamespace(child))
@@ -435,6 +438,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
             if(preftag!=childName) nsPrefix <- substring(preftag, 2, nchar(preftag))
           }
           if(is.null(fieldClass)){
+            parentAttrs <- as.list(xmlAttrs(child, TRUE, FALSE))
+            if(length(parentAttrs)>0) parentAttrs <- parentAttrs[names(parentAttrs) != "xsi:type"]
+            if(length(parentAttrs)==0) parentAttrs <- NULL
             children <- xmlChildren(child, encoding = private$encoding)
             if(length(children)>0){
               if(length(children)==1){
@@ -485,6 +491,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
             )
           }else{
             fieldValue <- fieldClass$new(xml = child)
+            fieldValue$parentAttrs <- parentAttrs
             fieldValue$attrs <- as.list(xmlAttrs(child, TRUE, FALSE))
           }
           if(is(self[[fieldName]], "list")){
@@ -649,7 +656,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
           nsURI = rootNamespaces
         )
       }else{
-        wrapperAttrs <- NULL
+        wrapperAttrs <- self$parentAttrs
         if(self$isNull){
           wrapperAttrs <- self$attrs
           if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
@@ -706,7 +713,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         				}
       			  }
               if(self$wrap){
-                wrapperAttrs <- list()
+                wrapperAttrs <- self$parentAttrs
                 if(hasLocales) wrapperAttrs <- freeTextAttr
                 wrapperNode <- xmlOutputDOM(
                   tag = field,
@@ -730,7 +737,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               #})]
             }else{
               if(fieldObj$wrap){
-                wrapperAttrs <- NULL
+                wrapperAttrs <- fieldObj$parentAttrs
                 if(fieldObj$isNull){
                   wrapperAttrs <- fieldObj$attrs
                   if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
@@ -808,7 +815,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
 				          }
 				  
                   if(nodeValue$wrap){
-                    wrapperAttrs <- NULL
+                    wrapperAttrs <- nodeValue$parentAttrs
                     if(nodeValue$isNull){
                       wrapperAttrs <- nodeValue$attrs
                       if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
@@ -829,7 +836,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                   }
                 }else{
                   if(nodeValue$wrap && field != "_internal_"){
-                    wrapperAttrs <- NULL
+                    wrapperAttrs <- nodeValue$parentAttrs
                     if(nodeValue$isNull){
                       wrapperAttrs <- nodeValue$attrs
                       if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
@@ -921,6 +928,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       if(Encoding(out)!="UTF-8") out <- iconv(out, to = "UTF-8")
       out <- xmlParse(out, encoding = Encoding(out), error = function (msg, ...) {})
       out <- as(out, "XMLInternalNode") #to XMLInternalNode
+
       if(length(rootXMLAttrs)>0){
         suppressWarnings(xmlAttrs(out) <- rootXMLAttrs)
       }
