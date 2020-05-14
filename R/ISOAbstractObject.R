@@ -155,6 +155,7 @@
 #'
 ISOAbstractObject <- R6Class("ISOAbstractObject",
   inherit = geometaLogger,
+  cloneable = FALSE,
   private = list(
     xmlElement = "AbstractObject",
     xmlNamespacePrefix = "GCO",
@@ -198,10 +199,22 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     toComplexTypes = function(value){
       newvalue <- value
       #datetime types
-      if(regexpr(pattern = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})$", value)>0){
-        newvalue <- as.POSIXct(strptime(value, "%Y-%m-%dT%H:%M:%S"), tz = "GMT")
+      if(regexpr(pattern = "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2})", value)>0){
+        if(endsWith(value, "Z")){
+          newvalue <- as.POSIXct(strptime(value, "%Y-%m-%dT%H:%M:%S"), tz = "UTC")
+        }else{
+          if(nchar(value)==25){
+            utc_offset <- substr(value, 20, 25)
+            value <- unlist(strsplit(value, utc_offset))[1]
+            utc_offset <- gsub(":", "", utc_offset)
+            value <- paste0(value, utc_offset)
+            #TODO find a way to fetch "tzone" attribute -not solved for now
+            newvalue <- as.POSIXct(strptime(value, "%Y-%m-%dT%H:%M:%S"), tz = "")
+          }
+        }
+        
       }else if(regexpr(pattern = "^(\\d{4})-(\\d{2})-(\\d{2})$", value)>0){
-        newvalue <- as.Date(as.POSIXct(strptime(value, "%Y-%m-%d"), tz = "GMT"))
+        newvalue <- as.Date(as.POSIXct(strptime(value, "%Y-%m-%d"), tz = "UTC"))
       }
       
       return(newvalue)
@@ -209,7 +222,19 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     fromComplexTypes = function(value){
       #datetime types
       if(suppressWarnings(all(class(value)==c("POSIXct","POSIXt")))){
-        value <- format(value,"%Y-%m-%dT%H:%M:%S")
+        tz <- attr(value, "tzone")
+        if(length(tz)>0){
+          if(tz %in% c("UTC","GMT")){
+            value <- format(value,"%Y-%m-%dT%H:%M:%S")
+            value <- paste0(value,"Z")
+          }else{
+            utc_offset <- format(value, "%z")
+            utc_offset <- paste0(substr(utc_offset,1,3),":",substr(utc_offset,4,5))
+            value <- paste0(format(value,"%Y-%m-%dT%H:%M:%S"), utc_offset)
+          }
+        }else{
+          value <- format(value,"%Y-%m-%dT%H:%M:%S")
+        }
       }else if(class(value)[1] == "Date"){
         value <- format(value,"%Y-%m-%d")
       }
@@ -407,10 +432,10 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       
       #remove comments if any (in case of document)
       if(is(xml, "XMLInternalDocument")){
-        children <- xmlChildren(xml, encoding = private$encoding)
+        children <- xmlChildren(xml, encoding = private$encoding, addFinalizer = FALSE)
         xml <- children[names(children) != "comment"][[1]]
       }
-      xml_children <- xmlChildren(xml, encoding = private$encoding)
+      xml_children <- xmlChildren(xml, encoding = private$encoding, addFinalizer = FALSE)
       for(child in xml_children){
         fieldName <- xmlName(child)
         
@@ -441,7 +466,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
             parentAttrs <- as.list(xmlAttrs(child, TRUE, FALSE))
             if(length(parentAttrs)>0) parentAttrs <- parentAttrs[names(parentAttrs) != "xsi:type"]
             if(length(parentAttrs)==0) parentAttrs <- NULL
-            children <- xmlChildren(child, encoding = private$encoding)
+            children <- xmlChildren(child, encoding = private$encoding, addFinalizer = FALSE)
             if(length(children)>0){
               if(length(children)==1){
                 childroot <- children[[1]]
@@ -588,6 +613,12 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 if(!is.null(attrNs)){
                   attr(attrs,"namespaces") <- NULL
                   names(attrs) <- paste(attrNs, names(attrs), sep=":")
+                  #control mal-formed attributes (starting with :)
+                  names(attrs) <- lapply(names(attrs), function(x){
+                    out <- x 
+                    if(startsWith(x,":")) out <- substr(x, 2, nchar(x))
+                    return(out)
+                  })
                 }
                 value <- ISOAttributes$new(attrs)
               }
@@ -705,7 +736,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
             fieldObjXml <- fieldObj$encode(addNS = FALSE, validate = FALSE,
                                            resetSerialID = FALSE, setSerialID = setSerialID)
             if(is(fieldObj, "ISOElementSequence")){
-              fieldObjXml.children <- xmlChildren(fieldObjXml)
+              fieldObjXml.children <- xmlChildren(fieldObjXml, addFinalizer = FALSE)
       			  hasLocales <- FALSE
       				if(!is.null(fieldObj[["_internal_"]])){
         				if(any(sapply(fieldObj[["_internal_"]],function(x){class(x)[1]})=="ISOFreeText")){
@@ -805,7 +836,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 nodeValueXml <- nodeValue$encode(addNS = FALSE, validate = FALSE,
                                                  resetSerialID = FALSE, setSerialID = setSerialID)
                 if(is(item, "ISOElementSequence")){
-                  nodeValueXml.children <- xmlChildren(nodeValueXml)
+                  nodeValueXml.children <- xmlChildren(nodeValueXml, addFinalizer = FALSE)
 
                   hasLocales <- FALSE
                   if(!is.null(item[["_internal_"]])){
