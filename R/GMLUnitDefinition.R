@@ -73,6 +73,10 @@ GMLUnitDefinition <- R6Class("GMLUnitDefinition",
 
 GMLUnitDefinition$buildFrom = function(x, by = "symbol", unitsystem = "udunits2"){
    out <- NULL
+   
+   if(!requireNamespace("units", quietly = TRUE)) 
+      stop("Package 'units' is required.")
+   
    if(unitsystem == "udunits2"){
       units_df <- units::valid_udunits()
       unit <- units_df[units_df[,by] == x,]
@@ -96,7 +100,7 @@ GMLUnitDefinition$buildFrom = function(x, by = "symbol", unitsystem = "udunits2"
       if(unitType != "base"){
          def <- unit$def
          def_unit <-  gsub("\\.", " ", gsub("/", " ",gsub("\\^", "-", def)))
-         def_unit_obj <- as_units(def_unit, implicit_exponents = TRUE)
+         def_unit_obj <- units::as_units(def_unit, implicit_exponents = TRUE)
          def_unit_attrs <- attributes(def_unit_obj)$units
          
          if(unitType == "derived"){
@@ -111,6 +115,14 @@ GMLUnitDefinition$buildFrom = function(x, by = "symbol", unitsystem = "udunits2"
             def <- unit$def
             def_unit <-  gsub("\\.", " ", gsub("/", " ",gsub("\\^", "-", def)))
             def_unit_comps <- unlist(strsplit(def_unit, " "))
+            base_unit <- base_units_df[base_units_df$symbol %in% def_unit_comps,]
+            if(nrow(base_unit)>0){
+               uom = base_unit[1L, "symbol"]
+               gmlunit$setConversionToPreferredUnit(
+                  uom = uom,
+                  factor = def_unit_comps[def_unit_comps!= uom][1]
+               )
+            }
          }
       }
       

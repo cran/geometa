@@ -40,7 +40,7 @@
 INSPIREMetadataValidator <- R6Class("INSPIREMetadataValidator",
   inherit = geometaLogger,
   private = list(
-    host = "http://inspire.ec.europa.eu",
+    host = "https://inspire.ec.europa.eu",
     endpoint = "validator/v2"
   ),
   public = list(
@@ -59,7 +59,8 @@ INSPIREMetadataValidator <- R6Class("INSPIREMetadataValidator",
     uploadFile = function(path){
       req <- POST(
         sprintf("%s/TestObjects?action=upload", self$url),
-        body = list(fileupload = httr::upload_file(path = path))
+        body = list(fileupload = httr::upload_file(path = path)),
+        encode = "multipart"
       )
       if(status_code(req)!=200){
         errMsg <- sprintf("Error while upload file '%s' to INSPIRE reference validator web-service", path)
