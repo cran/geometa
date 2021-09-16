@@ -10,7 +10,6 @@ context("ISOServiceIdentification")
 
 test_that("encoding",{
   testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encoding
   md <- ISOServiceIdentification$new()
   md$setAbstract("abstract")
@@ -50,9 +49,9 @@ test_that("encoding",{
   ct$addDate(d)
   ct$setEdition("1.0")
   ct$setEditionDate(ISOdate(2015,1,1))
-  ct$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
-  ct$setPresentationForm("mapDigital")
-  ct$setCitedResponsibleParty(rp)
+  ct$addIdentifier(ISOMetaIdentifier$new(code = "identifier"))
+  ct$addPresentationForm("mapDigital")
+  ct$addCitedResponsibleParty(rp)
   md$setCitation(ct)
   
   #graphic overview
@@ -95,7 +94,6 @@ test_that("encoding",{
 
 test_that("encoding - i18n",{
   testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encoding
   md <- ISOServiceIdentification$new()
   md$setAbstract(
@@ -279,9 +277,9 @@ test_that("encoding - i18n",{
   ct$addDate(d)
   ct$setEdition("1.0")
   ct$setEditionDate(ISOdate(2015,1,1))
-  ct$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
-  ct$setPresentationForm("mapDigital")
-  ct$setCitedResponsibleParty(rp)
+  ct$addIdentifier(ISOMetaIdentifier$new(code = "identifier"))
+  ct$addPresentationForm("mapDigital")
+  ct$addCitedResponsibleParty(rp)
   md$setCitation(ct)
   
   #graphic overview
@@ -350,7 +348,6 @@ test_that("encoding - i18n",{
 
 test_that("encoding",{
   testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encoding
   md <- ISOSRVServiceIdentification$new()
   md$setAbstract("abstract")
@@ -390,9 +387,9 @@ test_that("encoding",{
   ct$addDate(d)
   ct$setEdition("1.0")
   ct$setEditionDate(ISOdate(2015,1,1))
-  ct$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
-  ct$setPresentationForm("mapDigital")
-  ct$setCitedResponsibleParty(rp)
+  ct$addIdentifier(ISOMetaIdentifier$new(code = "identifier"))
+  ct$addPresentationForm("mapDigital")
+  ct$addCitedResponsibleParty(rp)
   md$setCitation(ct)
   
   #graphic overview
@@ -548,7 +545,6 @@ test_that("encoding",{
 
 test_that("encoding - i18n",{
   testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encoding
   md <- ISOSRVServiceIdentification$new()
   md$setAbstract(
@@ -732,9 +728,9 @@ test_that("encoding - i18n",{
   ct$addDate(d)
   ct$setEdition("1.0")
   ct$setEditionDate(ISOdate(2015,1,1))
-  ct$setIdentifier(ISOMetaIdentifier$new(code = "identifier"))
-  ct$setPresentationForm("mapDigital")
-  ct$setCitedResponsibleParty(rp)
+  ct$addIdentifier(ISOMetaIdentifier$new(code = "identifier"))
+  ct$addPresentationForm("mapDigital")
+  ct$addCitedResponsibleParty(rp)
   md$setCitation(ct)
   
   #graphic overview

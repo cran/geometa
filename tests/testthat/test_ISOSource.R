@@ -10,7 +10,6 @@ context("ISOSource")
 
 test_that("encoding",{
   testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encode
   md <- ISOSource$new()
   md$setDescription("description")
@@ -22,7 +21,7 @@ test_that("encoding",{
   
   cit <- ISOCitation$new()
   cit$setTitle("sometitle") 
-  cit$setAlternateTitle("somealternatetitle") #and more citation properties...
+  cit$addAlternateTitle("somealternatetitle") #and more citation properties...
   d <- ISODate$new()
   d$setDate(ISOdate(2015,1,1))
   d$setDateType("creation")
@@ -46,7 +45,6 @@ test_that("encoding",{
 
 test_that("encoding - i18n",{
   testthat::skip_on_cran()
-  testthat::skip_on_travis()
   #encode
   md <- ISOSource$new()
   md$setDescription(

@@ -203,12 +203,12 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         if(endsWith(value, "Z")){
           newvalue <- as.POSIXct(strptime(value, "%Y-%m-%dT%H:%M:%S"), tz = "UTC")
         }else{
-          if(nchar(value)==25){
-            utc_offset <- substr(value, 20, 25)
-            value <- unlist(strsplit(value, utc_offset))[1]
-            utc_offset <- gsub(":", "", utc_offset)
-            value <- paste0(value, utc_offset)
+          if(regexpr(pattern = "[[:space:]]", value)){
+            splits <- unlist(strsplit(value, " "))
+            value <- splits[1]
             #TODO find a way to fetch "tzone" attribute -not solved for now
+            newvalue <- as.POSIXct(strptime(value, "%Y-%m-%dT%H:%M:%S"), tz = "")
+          }else{
             newvalue <- as.POSIXct(strptime(value, "%Y-%m-%dT%H:%M:%S"), tz = "")
           }
         }
@@ -223,7 +223,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       #datetime types
       if(suppressWarnings(all(class(value)==c("POSIXct","POSIXt")))){
         tz <- attr(value, "tzone")
-        if(length(tz)>0){
+        if(length(tz)>1){
           if(tz %in% c("UTC","GMT")){
             value <- format(value,"%Y-%m-%dT%H:%M:%S")
             value <- paste0(value,"Z")
@@ -577,8 +577,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 }
               }else{
                 #xmlNamespacePrefix <- "GML"
-                #if(startsWith(nsPrefix,"gml")) xmlNamespacePrefix <- toupper(nsPrefix)
                 xmlNamespacePrefix <- self$getClass()$private_fields$xmlNamespacePrefix
+                if(startsWith(nsPrefix,"gml")) xmlNamespacePrefix <- toupper(nsPrefix)
+                if(is.null(xmlNamespacePrefix)) xmlNamespacePrefix <- "GML"
                 gmlElem <- GMLElement$new(element = fieldName, xmlNamespacePrefix = xmlNamespacePrefix)
                 gmlElem$decode(xml = childElement)
                 if(is(self[[fieldName]], "list")){
@@ -591,6 +592,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               #xmlNamespacePrefix <- "GML"
               #if(startsWith(nsPrefix,"gml")) xmlNamespacePrefix <- toupper(nsPrefix)
               xmlNamespacePrefix <- self$getClass()$private_fields$xmlNamespacePrefix
+              if(startsWith(nsPrefix,"gml")) xmlNamespacePrefix <- toupper(nsPrefix)
               if(is.null(xmlNamespacePrefix)) xmlNamespacePrefix <- "GML"
               gmlElem <- GMLElement$new(element = fieldName, xmlNamespacePrefix = xmlNamespacePrefix)
               gmlElem$decode(xml = childElement)
@@ -686,7 +688,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
           nsURI = rootNamespaces
         )
       }else{
-        wrapperAttrs <- self$parentAttrs
+        wrapperAttrs <- self$attrs
         if(self$isNull){
           wrapperAttrs <- self$attrs
           if(length(wrapperAttrs)>1) wrapperAttrs <- wrapperAttrs[names(wrapperAttrs)!="gco:nilReason"]
@@ -744,7 +746,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       			  }
               if(self$wrap){
                 wrapperAttrs <- self$parentAttrs
-                if(hasLocales) wrapperAttrs <- freeTextAttr
+                if(hasLocales) wrapperAttrs <- c(wrapperAttrs, freeTextAttr)
                 wrapperNode <- xmlOutputDOM(
                   tag = field,
                   nameSpace = namespaceId, 
