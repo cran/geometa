@@ -1037,17 +1037,11 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       
       if(inspire){
         inspireValidator <- INSPIREMetadataValidator$new()
-        if(!inspireValidator$running){
-          self$WARN("INSPIRE Reference validator web-service is currently down. Skipping INSPIRE validation")
-          inspire <- FALSE
-        }
-        if(inspire){
-          inspireReport <- inspireValidator$getValidationReport(obj = self)
-          isValid <- list(
-            ISO = isValid,
-            INSPIRE = inspireReport
-          )
-        }
+        inspireReport <- inspireValidator$getValidationReport(obj = self)
+        isValid <- list(
+          ISO = isValid,
+          INSPIRE = inspireReport
+        )
       }
       
       return(isValid)
