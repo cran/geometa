@@ -16,12 +16,21 @@ INSPIREMetadataValidator
 \section{Methods}{
 
 \describe{
- \item{\code{new()}}{
-   This method is used to instantiate an INSPIRE Metadata validator
+ \item{\code{new(url, apiKey)}}{
+   This method is used to instantiate an INSPIRE Metadata validator. To check 
+   metadata with the INSPIRE metadata validator, a user API key is now required, 
+   and should be specified with the \code{apiKey}. By default, the \code{url} will be
+   the INSPIRE production service \url{https://inspire.ec.europa.eu/validator/swagger-ui.html}
+   
+   The \code{keyring_backend} can be set to use a different backend for storing 
+   the INSPIRE metadata validator API key with \pkg{keyring} (Default value is 'env').
  }
  \item{\code{uploadFile(path)}}{
    Upload a XML metadata file to INSPIRE web-service. Method called internally through
    \code{getValidationReport}.
+ }
+ \item{\code{getAPIKey()}}{
+   Get the API user key
  }
  \item{\code{getValidationReport(obj, file, raw)}}{
    Get validation report for a metadata specified either as R object of class
@@ -36,8 +45,11 @@ INSPIREMetadataValidator
 
 \examples{
  \donttest{
-  inspireValidator <- INSPIREMetadataValidator$new()
-  inspireReport <- inspireValidator$getValidationReport(obj = ISOMetadata$new())
+  apiKey <- ""
+  if(nzchar(apiKey)){
+    inspireValidator <- INSPIREMetadataValidator$new(apiKey = apiKey)
+    inspireReport <- inspireValidator$getValidationReport(obj = ISOMetadata$new())
+  }
  }
 
 }
