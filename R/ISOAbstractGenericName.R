@@ -22,18 +22,15 @@
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOAbstractGenericName <- R6Class("ISOAbstractGenericName",
-  inherit = ISOAbstractObject,
+  inherit = GMLCodeType,
   private = list(
     xmlElement = "AbstractGenericName",
     xmlNamespacePrefix = "GCO"
   ),
   public = list(
     value = NA,
-    initialize = function(xml = NULL, value){
-      super$initialize(xml = xml)
-      if(is.null(xml)){
-        self$value = value
-      }
+    initialize = function(xml = NULL, value = NULL, codeSpace = NULL){
+      super$initialize(xml = xml, value = value, codeSpace = codeSpace)
     }
   )                        
 )

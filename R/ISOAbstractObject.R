@@ -168,7 +168,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     xmlNamespacePrefix = "GCO",
     encoding = options("encoding"),
     document = FALSE,
-    system_fields = c("wrap", "valueDescription",
+    system_fields = c("wrap", "value_as_field", "valueDescription",
                       "element", "namespace", "defaults", "attrs", "printAttrs", "parentAttrs",
                       "codelistId", "measureType", "isNull", "anyElement"),
     xmlComments = function(isoCompliant = NA, inspireReport = NULL){
@@ -319,11 +319,12 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     printAttrs = list(),
     parentAttrs = NULL,
     value = NULL,
+    value_as_field = FALSE,
     isNull = FALSE,
     anyElement = FALSE,
     initialize = function(xml = NULL, element = NULL, namespace = NULL,
                           attrs = list(), defaults = list(),
-                          wrap = TRUE){
+                          wrap = TRUE, value_as_field = FALSE){
       if(!is.null(element)){ private$xmlElement <- element }
       if(!is.null(namespace)){ private$xmlNamespacePrefix <- toupper(namespace)}
       self$element = private$xmlElement
@@ -331,6 +332,7 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       self$attrs = attrs
       self$defaults = defaults
       self$wrap = wrap
+      self$value_as_field = value_as_field
       if(!is.null(xml)){
         self$decode(xml)
       }
@@ -916,7 +918,16 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               }), collapse = " ")
               txtNode <- xmlTextNode(mts)
               if(field == "value"){
-                rootXML$addNode(txtNode)
+                if(field == "value" && self$value_as_field){
+                  wrapperNode <- xmlOutputDOM(
+                    tag = field,
+                    nameSpace = namespaceId
+                  )
+                  wrapperNode$addNode(txtNode)
+                  rootXML$addNode(wrapperNode$value())
+                }else{
+                  rootXML$addNode(txtNode)
+                }
               }else{
                 wrapperNode <- xmlOutputDOM(tag = field, nameSpace = namespaceId)
                 wrapperNode$addNode(txtNode)
@@ -934,10 +945,19 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               emptyNode <- xmlOutputDOM(tag = field,nameSpace = namespaceId, attrs = emptyNodeAttrs)
               rootXML$addNode(emptyNode$value())
             }else{
-              if(field == "value"|| field == "_internal_"){
+              if((field == "value"|| field == "_internal_")){
                 if(is.logical(fieldObj)) fieldObj <- tolower(as.character(is.logical(fieldObj)))
                 fieldObj <- private$fromComplexTypes(fieldObj)
-                rootXML$addNode(xmlTextNode(fieldObj))
+                if(field == "value" && self$value_as_field){
+                  wrapperNode <- xmlOutputDOM(
+                    tag = field,
+                    nameSpace = namespaceId
+                  )
+                  wrapperNode$addNode(xmlTextNode(fieldObj))
+                  rootXML$addNode(wrapperNode$value())
+                }else{
+                  rootXML$addNode(xmlTextNode(fieldObj))
+                }
               }else{
                 dataObj <- self$wrapBaseElement(field, fieldObj)
                 if(!is.null(dataObj)){
@@ -1048,11 +1068,15 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       
       if(inspire){
         if(!is.null(inspireValidator) && is(inspireValidator, "INSPIREMetadataValidator")){
-          inspireReport <- inspireValidator$getValidationReport(obj = self)
-          isValid <- list(
-            ISO = isValid,
-            INSPIRE = inspireReport
-          )
+          if(inspireValidator$running){
+            inspireReport <- inspireValidator$getValidationReport(obj = self)
+            isValid <- list(
+              ISO = isValid,
+              INSPIRE = inspireReport
+            )
+          }else{
+            self$WARN(sprintf("INSPIRE Metadata validator service (%s) is not running", inspireValidator$url))
+          }
         }else{
           self$WARN("No INSPIRE Metadata validator set, aborting INSPIRE metadata validation!")
         }
@@ -1364,12 +1388,13 @@ ISOAbstractObject$getStandardByPrefix = function(prefix){
     "GFC" = data.frame(specification = "ISO/TC211 19110:2005", title = "Geographic Information - Methodology for feature cataloguing", stringsAsFactors = FALSE),
     "GMD" = data.frame(specification = "ISO/TC211 19115-1:2003", title = "Geographic Information - Metadata", stringsAsFactors = FALSE),
     "GMI" = data.frame(specification = "ISO/TC211 19115-2:2009", title = "Geographic Information - Metadata - Part 2: Extensions for imagery and gridded data", stringsAsFactors = FALSE),
+    "GTS" = data.frame(specification = "ISO/TC211 19139:2007", title = "Geographic Metadata XML Schema - Geographic Temporal Schema (GTS)", stringsAsFactors = FALSE),
     "SRV" = data.frame(specification = "ISO/TC211 19119:2005", title = "Geographic Information - Service Metadata", stringsAsFactors = FALSE),
     "GMX" = data.frame(specification = "ISO/TC211 19139:2007", title = "Geographic Metadata XML Schema", stringsAsFactors = FALSE),
     "GML" = data.frame(specification = "GML 3.2.1 (ISO 19136)", title = "Geographic Markup Language", stringsAsFactors = FALSE),
     "GMLCOV" = data.frame(specification = "GML 3.2.1 Coverage (OGC GMLCOV)", title = "OGC GML Coverage Implementation Schema", stringsAsFactors = FALSE),
     "GMLRGRID" = data.frame(specification = "GML 3.3 Referenceable Grid (OGC GML)", title = "OGC GML Referenceable Grid", stringsAsFactors = FALSE),
-    NA
+    "SWE" = data.frame(specification = "SWE 2.0", title = "Sensor Web Enablement (SWE) Common Data Model", stringsAsFactors = FALSE)
   )
   return(std)
 }

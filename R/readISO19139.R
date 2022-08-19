@@ -33,15 +33,15 @@ readISO19139 <- function(file = NULL, url = NULL, raw = FALSE){
   encoding <- "UTF-8"
   raw_xml <- NULL
   if(!is.null(url)){
-    req <- httr::GET(url)
+    req <- httr::GET(url, httr::add_headers("Accept" = "application/xml"))
     if(httr::status_code(req) != 200){
       stop("The URL resource is unavailable")
     }
     doc <- content(req, as = "text", encoding = encoding)
     raw_xml <- XML::xmlParse(doc, encoding = encoding, addFinalizer = FALSE)
   }else{
-    raw_xml <- suppressWarnings(readLines(file, encoding = encoding))
-    raw_xml <- paste0(raw_xml, collapse="") 
+    raw_xml <- readr::read_lines(file)
+    raw_xml <- paste0(raw_xml, collapse="\n") 
     if(Encoding(raw_xml) != "UTF-8") Encoding(raw_xml) <- "UTF-8"
     if(Encoding(raw_xml) == "unknown"){
       raw_xml <- XML::xmlParse(raw_xml, error = function (msg, ...) {}, addFinalizer = FALSE)
