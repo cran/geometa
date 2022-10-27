@@ -6,13 +6,6 @@
 #' @keywords ISO GML element
 #' @return Object of \code{\link{R6Class}} for modelling an GML element
 #' @format \code{\link{R6Class}} object.
-#'
-#' @section Methods:
-#' \describe{
-#'  \item{\code{new(xml, element, attrs, defaults)}}{
-#'    This method is used to instantiate a GML element
-#'  }
-#' }
 #' 
 #' @note Class used by geometa internal XML decoder/encoder
 #' 
@@ -29,11 +22,21 @@ GMLElement <- R6Class("GMLElement",
       xmlNamespacePrefix = "GML"
     ),
     public = list(
+      
+      #'@description Initializes object
+      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param element element
+      #'@param attrs attrs
+      #'@param defaults default values
+      #'@param xmlNamespacePrefix xmlNamespacePrefix Default is 'GML'
       initialize = function(xml = NULL, element = NULL, attrs = list(), defaults = list(), xmlNamespacePrefix = "GML"){
         private$xmlNamespacePrefix <- xmlNamespacePrefix
         super$initialize(xml = xml, element = element, attrs = attrs, defaults = defaults, wrap = FALSE)
       },
       
+      
+      #'@description Decodes the XML
+      #'@param xml object of class \link{XMLInternalNode-class}
       decode = function(xml){
         fieldName <- xmlName(xml)
         nsPrefix <- ""
@@ -61,7 +64,7 @@ GMLElement <- R6Class("GMLElement",
               childName <- names(children)[i]
               childElem <- GMLElement$new(element = childName)
               childElem$decode(xml = childXML)
-              if(is(self[[childName]], "list")){
+              if(is(self[[childName]], "list") | !is.null(self[[childName]])){
                 self[[childName]] <- c(self[[childName]], childElem)
               }else{
                 self[[childName]] <- childElem

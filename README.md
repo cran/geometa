@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/eblondel/geometa/actions/workflows/r-cmd-check.yml/badge.svg?branch=master)](https://github.com/eblondel/geometa/actions/workflows/r-cmd-check.yml)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geometa)](https://cran.r-project.org/package=geometa)
 [![cran checks](https://cranchecks.info/badges/worst/geometa)](https://cran.r-project.org/web/checks/check_results_geometa.html)
-[![Github_Status_Badge](https://img.shields.io/badge/Github-0.7-blue.svg)](https://github.com/eblondel/geometa)
+[![Github_Status_Badge](https://img.shields.io/badge/Github-0.7--1-blue.svg)](https://github.com/eblondel/geometa)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1184892.svg)](https://doi.org/10.5281/zenodo.1184892)
 
 **Tools for Reading and Writing ISO/OGC Geographic Metadata**
@@ -35,6 +35,6 @@ We thank in advance people that use ``geometa`` for citing it in their work / pu
 |ISO/TC211 19139:2007                 |Geographic Metadata XML Schema                                                      |GMX       |[![ISO/TC211 19139:2007](https://img.shields.io/badge/-7%25-ad0f0f.svg)](https://github.com/eblondel/geometa)                   |         5|      62|
 |ISO/TS 19103:2005                    |Geographic Common extensible markup language                                        |GCO       |[![ISO/TS 19103:2005](https://img.shields.io/badge/-100%25-4a4ea8.svg)](https://github.com/eblondel/geometa)                    |        23|       0|
 |GML 3.2.1 (ISO 19136)                |Geographic Markup Language                                                          |GML       |[![GML 3.2.1 (ISO 19136)](https://img.shields.io/badge/-37%25-ff0c0c.svg)](https://github.com/eblondel/geometa)                 |        63|     106|
-|GML 3.2.1 Coverage (OGC GMLCOV)      |OGC GML Coverage Implementation Schema                                              |GMLCOV    |[![GML 3.2.1 Coverage (OGC GMLCOV)](https://img.shields.io/badge/-100%25-4a4ea8.svg)](https://github.com/eblondel/geometa)      |         1|       0|
-|GML 3.3 Referenceable Grid (OGC GML) |OGC GML Referenceable Grid                                                          |GMLRGRID  |[![GML 3.3 Referenceable Grid (OGC GML)](https://img.shields.io/badge/-100%25-4a4ea8.svg)](https://github.com/eblondel/geometa) |         5|       0|
-|SWE 2.0                              |Sensor Web Enablement (SWE) Common Data Model                                       |SWE       |[![SWE 2.0](https://img.shields.io/badge/-37%25-ff0c0c.svg)](https://github.com/eblondel/geometa)                               |        11|      19|
+|GML 3.2.1 Coverage (OGC GMLCOV)      |OGC GML Coverage Implementation Schema                                              |GMLCOV    |[![GML 3.2.1 Coverage (OGC GMLCOV)](https://img.shields.io/badge/-40%25-f9ae2c.svg)](https://github.com/eblondel/geometa)       |         2|       3|
+|GML 3.3 Referenceable Grid (OGC GML) |OGC GML Referenceable Grid                                                          |GMLRGRID  |[![GML 3.3 Referenceable Grid (OGC GML)](https://img.shields.io/badge/-100%25-4a4ea8.svg)](https://github.com/eblondel/geometa) |         6|       0|
+|SWE 2.0                              |Sensor Web Enablement (SWE) Common Data Model                                       |SWE       |[![SWE 2.0](https://img.shields.io/badge/-63%25-f2eb24.svg)](https://github.com/eblondel/geometa)                               |        19|      11|

@@ -8,7 +8,7 @@
 #' @format \code{\link{R6Class}} object.
 #' 
 #' @references 
-#'   OGC Geography Markup Language. https://www.ogc.org/standards/swecommon
+#'   SWE Common Data Model Encoding Standard. https://www.ogc.org/standards/swecommon
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -52,7 +52,9 @@ SWEQuantityRange <- R6Class("SWEQuantityRange",
      #'@description setUom
      #'@param uom uom
      setUom = function(uom){
-       self$uom <- uom
+        uomElem <- SWEElement$create(element = "uom")
+        uomElem$setAttr("code", uom)
+        self$uom <- uomElem
      },
      
      #'@description setConstraint

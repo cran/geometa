@@ -8,8 +8,10 @@
 #' @importFrom utils read.csv
 #' @import XML
 #' @import httr
+#' @import readr
 #' @import jsonlite
 #' @import keyring
+#' @import crayon
 #' @export
 #' @keywords ISO metadata element
 #' @return Object of \code{\link{R6Class}} for modelling an ISO Metadata Element
@@ -92,8 +94,8 @@
 #'    Gets the namespace definition of the current ISO* class. By default, only
 #'    the namespace definition of the current element is retrieved (\code{recursive = FALSE}).
 #'  }
-#'  \item{\code{getClassName()}}{
-#'    Gets the class name
+#'  \item{\code{getClassName(level)}}{
+#'    Gets the class name. The level of class inheritance. Default is \code{1L}
 #'  }
 #'  \item{\code{getClass()}}{
 #'    Gets the class
@@ -311,17 +313,37 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
 
     #fields
     #---------------------------------------------------------------------------
+    #'@field wrap wrap
     wrap = TRUE,
+    #'@field element element
     element = NA,
+    #'@field namespace namespace
     namespace = NA,
+    #'@field defaults defaults
     defaults = list(),
+    #'@field attrs attributes
     attrs = list(),
+    #'@field printAttrs attributes to print
     printAttrs = list(),
+    #'@field parentAttrs parent attributes
     parentAttrs = NULL,
+    #'@field value value
     value = NULL,
+    #'@field value_as_field value as field?
     value_as_field = FALSE,
+    #'@field isNull is null?
     isNull = FALSE,
+    #'@field anyElement any element?
     anyElement = FALSE,
+    
+    #'@description Initializes object
+    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param element element name
+    #'@param namespace namespace
+    #'@param attrs attrs
+    #'@param defaults defaults
+    #'@param wrap wrap?
+    #'@param value_as_field value as field?
     initialize = function(xml = NULL, element = NULL, namespace = NULL,
                           attrs = list(), defaults = list(),
                           wrap = TRUE, value_as_field = FALSE){
@@ -341,7 +363,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     #Main methods
     #---------------------------------------------------------------------------
     
-    #print
+    #'@description Provides a custom print output (as tree) of the current class
+    #'@param ... args
+    #'@param depth class nesting depth
     print = function(..., depth = 1){
       #list of fields to encode as XML
       fields <- rev(names(self))
@@ -352,14 +376,14 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         (x %in% private$system_fields)
       })]
       
-      cat(sprintf("<%s>", self$getClassName()))
+      if(!inherits(self, "GMLElement") && !inherits(self, "SWEElement")) cat(crayon::white(paste0("<", crayon::underline(self$getClassName()), ">")))
       if(is(self, "ISOCodeListValue")){
         clVal <- self$printAttrs$codeListValue
         clDes <- self$codelistId$entries[self$codelistId$entries$value == clVal,"description"]
         if(length(clDes)==0){
           clDes <- self$valueDescription
         }
-        cat(paste0(": ", clVal, " {",clDes,"}"))
+        cat(paste0(": ", clVal, crayon::cyan(paste0(" {",clDes,"}"))))
       }
       
       for(field in fields){
@@ -376,24 +400,34 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
         shift <- "...."
         if(!is.null(fieldObj)){
           if(is(fieldObj, "ISOAbstractObject")){
-            cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", field, " "))
+            attrs_str <- ""
+            if(length(fieldObj$attrs)>0){
+              attrs <- paste(sapply(names(fieldObj$attrs), function(attrName){paste0(attrName,"=",fieldObj$attrs[[attrName]])}), collapse=",")
+              attrs_str <- paste0("[",attrs,"]")
+            }
+            cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), " ", attrs_str, " "))
             fieldObj$print(depth = depth+1)
           }else if(is(fieldObj, "ISOAttributes")){
             attrs <- paste(sapply(names(fieldObj$attrs), function(attrName){paste0(attrName,"=",fieldObj$attrs[[attrName]])}), collapse=",")
-            cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, "[",attrs,"]"))
+            cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), "[",attrs,"]"))
           }else if(is(fieldObj, "list")){
             for(item in fieldObj){
               if(is(item, "ISOAbstractObject")){
-                cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", field, " "))
+                attrs_str <- ""
+                if(length(item$attrs)>0){
+                  attrs <- paste(sapply(names(item$attrs), function(attrName){paste0(attrName,"=",item$attrs[[attrName]])}), collapse=",")
+                  attrs_str <- paste0("[",attrs,"]")
+                }
+                cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), " ", attrs_str))
                 item$print(depth = depth+1)
                 if(is(item, "ISOCodeListValue")){
                   clVal <- item$printAttrs$codeListValue
                   clDes <- item$codelistId$entries[item$codelistId$entries$value == clVal,"description"]
-                  cat(paste0(": ", clVal, " {",clDes,"}"))
+                  cat(paste0(": ", clVal, crayon::cyan(paste0(" {",clDes,"}"))))
                 }
               }else if(is(item, "ISOAttributes")){
                 attrs <- paste(sapply(names(item$attrs), function(attrName){paste0(attrName,"=",item$attrs[[attrName]])}), collapse=",")
-                cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, "[",attrs,"]"))
+                cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), "[",attrs,"]"))
               }else if(is(item, "matrix")){
                 m <- paste(apply(item, 1L, function(x){
                   x <- lapply(x, function(el){
@@ -408,9 +442,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                   })
                   return(paste(x, collapse = " "))
                 }), collapse = " ")
-                cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", m))
+                cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), ": ", crayon::bgWhite(m)))
               }else{
-                cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", item))
+                cat(paste0("\n", paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), ": ", crayon::bgWhite(item)))
               }
             }
           }else if (is(fieldObj,"matrix")){
@@ -427,16 +461,21 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
               })
               return(paste(x, collapse = " "))
             }), collapse = " ")
-            cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", m))
+            cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), ": ", crayon::bgWhite(m)))
           }else{
-            cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", field, ": ", fieldObj))
+            fieldObjP <- fieldObj
+            if(is(fieldObjP,"Date")|is(fieldObjP, "POSIXt")){
+              fieldObjP <- private$fromComplexTypes(fieldObjP)
+            }
+            cat(paste0("\n",paste(rep(shift, depth), collapse=""),"|-- ", crayon::italic(field), ": ", crayon::bgWhite(fieldObjP)))
           }
         }
       }
       invisible(self)
     },
     
-    #decode
+    #'@description Decodes object from XML
+    #'@param xml object of class \link{XMLInternalNode-class}
     decode = function(xml){
       
       #remove comments if any (in case of document)
@@ -611,7 +650,19 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
                 self[[fieldName]] <- gmlElem
               }
             }
-            
+           
+          }else if(inherits(self, "SWEAbstractObject")){ 
+            #TODO see how to improve encoding/decoding for GML/SWE objects
+            xmlNamespacePrefix <- self$getClass()$private_fields$xmlNamespacePrefix
+            if(startsWith(nsPrefix,"swe")) xmlNamespacePrefix <- toupper(nsPrefix)
+            if(is.null(xmlNamespacePrefix)) xmlNamespacePrefix <- "SWE"
+            sweElem <- SWEElement$new(element = fieldName, xmlNamespacePrefix = xmlNamespacePrefix)
+            sweElem$decode(xml = childElement)
+            if(is(self[[fieldName]], "list")){
+              self[[fieldName]] <- c(self[[fieldName]], sweElem)
+            }else{
+              self[[fieldName]] <- sweElem
+            }
           }else{
             value <- xmlValue(child)
             isList <- is.list(self$getClass()$public_fields[[fieldName]])
@@ -654,7 +705,33 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       if("gco:nilReason" %in% names(xmlattrs)) self$isNull <- TRUE
     },
     
-    #encode
+    #'@description Encodes object as XML. 
+    #'
+    #'    By default, namespace definition will be added to XML root (\code{addNS = TRUE}), and validation
+    #'    of object will be performed (\code{validate = TRUE}) prior to its XML encoding. The argument 
+    #'    \code{strict} allows to stop the encoding in case object is not valid, with a default value set to \code{FALSE}. 
+    #'    
+    #'    The argument \code{setSerialID} is used by \pkg{geometa} to generate automatically serial IDs associated to
+    #'    XML elements, in particular for GML, default value is \code{TRUE} (recommended value).
+    #'    
+    #'    The argument \code{resetSerialID} is used by \pkg{geometa} for reseting mandatory IDs
+    #'    associated to XML elements, such as GML objects, default value is \code{TRUE} 
+    #'    (recommended value).
+    #'    
+    #'    Setting \code{inspire} to TRUE (default FALSE), the metadata will be checked with
+    #'    the INSPIRE metadata validator (online web-service provided by INSPIRE). To check 
+    #'    metadata with the INSPIRE metadata validator, setting an INSPIRE metadata validator 
+    #'    is now required, and should be specified with the \code{inspireValidator}. See 
+    #'    \code{\link{INSPIREMetadataValidator}} for more details
+    #'    
+    #'@param addNS add namespace? Default is \code{TRUE}
+    #'@param validate validate XML output against schemas?
+    #'@param strict strict validation? Default is \code{FALSE}.
+    #'@param inspire perform INSPIRE validation? Default is \code{FALSE}
+    #'@param inspireValidator an object of class \link{INSPIREMetadataValidator} to perform INSPIRE metadata validation
+    #'@param resetSerialID reset Serial ID? Default is \code{TRUE}
+    #'@param setSerialID set serial ID? Default is \code{TRUE}
+    #'@param encoding encoding. Default is \code{UTF-8}
     encode = function(addNS = TRUE, validate = TRUE, strict = FALSE, inspire = FALSE, inspireValidator = NULL,
                       resetSerialID = TRUE, setSerialID = TRUE,
                       encoding = "UTF-8"){
@@ -1026,7 +1103,12 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(out)
     },
     
-    #validate
+    #'@description Validates an XML object resulting from object encoding
+    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param strict strict validation? If \code{TRUE}, a invalid XML will return an error
+    #'@param inspire perform INSPIRE validation? Default is \code{FALSE}
+    #'@param inspireValidator an object of class \link{INSPIREMetadataValidator} to perform INSPIRE metadata validation
+    #'@return \code{TRUE} if valid, \code{FALSE} otherwise
     validate = function(xml = NULL, strict = FALSE, inspire = FALSE, inspireValidator = NULL){
       
       #xml
@@ -1085,7 +1167,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(isValid)
     },
     
-    #save
+    #'@description Save XML representation resulting from \code{$encode(...)} method to a file
+    #'@param file file
+    #'@param ... any other argument from \code{$encode(...)} method
     save = function(file, ...){
       #encode as xml
       xml <- self$encode(...)
@@ -1101,7 +1185,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
     #Util & internal methods
     #---------------------------------------------------------------------------
     
-    #getNamespaceDefinition
+    #'@description Get namespace definition
+    #'@param recursive recursive namespace definitions? Default is \code{FALSE}
+    #'@return the list of XML namespace definitions
     getNamespaceDefinition = function(recursive = FALSE){
       nsdefs <- NULL
       
@@ -1199,18 +1285,31 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(nsdefs)
     },
     
-    #getClassName
-    getClassName = function(){
-      return(class(self)[1])
+    #'@description Get class name
+    #'@param level level of class
+    #'@return the class name
+    getClassName = function(level = 1L){
+      return(class(self)[level])
     },
     
-    #getClass
+    #'@description Get class
+    #'@return the corresponding class, as \link{R6Class} reference object generator
     getClass = function(){
-      class <- eval(parse(text=self$getClassName()))
+      class <- try(eval(parse(text = self$getClassName())), silent = TRUE)
+      level <- 1L
+      class_is_error <- is(class, "try-error")
+      while(class_is_error){
+        class <- try(eval(parse(text = paste0("geometa::",self$getClassName(level)))), silent = TRUE)
+        class_is_error <- is(class, "try-error")
+        if(class_is_error) level <- level + 1
+      }
       return(class)
     },
     
-    #wrapBaseElement
+    #'@description Wraps base element
+    #'@param field field name
+    #'@param fieldObj field object
+    #'@param an object of class \link{R6Class}
     wrapBaseElement = function(field, fieldObj){
       dataType <- class(fieldObj)
       
@@ -1237,7 +1336,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(dataObj)
     },
     
-    #setIsNull
+    #'@description Set Is Null
+    #'@param isNull object of class \link{logical}
+    #'@param reason reason why object is Null
     setIsNull = function(isNull, reason = "missing"){
       if(isNull){
         allowedReasons <- c("inapplicable", "missing", "template", "unknown", "withheld")
@@ -1253,7 +1354,10 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       }
     },
     
-    #contains
+    #'@description Util to know if a field contain a metadata element
+    #'@param field field name
+    #'@param metadataElement metadata element
+    #'@return \code{TRUE} if contains, \code{FALSE} otherwise
     contains = function(field, metadataElement){
       out = FALSE
       if(length(self[[field]]) == 0){
@@ -1266,7 +1370,10 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(out)
     },
     
-    #addListElement
+    #'@description Util to add an element to a list of elements for N cardinality of a target element name
+    #'@param field field
+    #'@param metadataElement metadata element
+    #'@return \code{TRUE} if added, \code{FALSE} otherwise
     addListElement = function(field, metadataElement){
       startNb <- length(self[[field]])
       if(!self$contains(field, metadataElement)){
@@ -1276,7 +1383,10 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(endNb == startNb+1)
     },
     
-    #delListElement
+    #'@description Util to deleted an element to a list of elements for N cardinality of a target element name
+    #'@param field field
+    #'@param metadataElement metadata element
+    #'@return \code{TRUE} if deleted, \code{FALSE} otherwise
     delListElement = function(field, metadataElement){
       startNb <- length(self[[field]])
       if(self$contains(field, metadataElement)){
@@ -1286,12 +1396,16 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(endNb == startNb-1)
     },
     
-    #setAttr
+    #'@description Util to set an attribute
+    #'@param attrKey attribute key
+    #'@param attrValue attribute value
     setAttr = function(attrKey, attrValue){
       self$attrs[[attrKey]] <- attrValue
     },
     
-    #addFieldAttrs
+    #'@description Util add field attributes, over the XML field wrapping element instead of the element itself
+    #'@param field field
+    #'@param ... list of attributes
     addFieldAttrs = function(field, ...){
       hasfield <- field %in% names(self$getClass()$public_fields)
       if(hasfield){
@@ -1305,7 +1419,9 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       }
     },
     
-    #setId
+    #'@description Set id
+    #'@param id id
+    #'@param addNS add namespace definition? Default is \code{FALSE}
     setId = function(id, addNS = FALSE){
       attrKey <- "id"
       prefix <- tolower(private$xmlNamespacePrefix)
@@ -1314,37 +1430,45 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       self$attrs[[attrKey]] <- id
     },
     
-    #setHref
+    #'@description Set Href attribute
+    #'@param href href
     setHref = function(href){
       self$attrs[["xlink:href"]] <- href
     },
     
-    #setCodeList
+    #'@description Set codelist attribute
+    #'@param codeList codelist
     setCodeList = function(codeList){
       self$attrs[["codeList"]] <- codeList
     },
     
-    #setCodeListValue
+    #'@description Set codelist value
+    #'@param codeListValue codelist value
     setCodeListValue = function(codeListValue){
       self$attrs[["codeListValue"]] <- codeListValue
     },
     
-    #setCodeSpace
+    #'@description Set codeSpace
+    #'@param codeSpace codespace
     setCodeSpace = function(codeSpace){
       self$attrs[["codeSpace"]] <- codeSpace
     },
     
-    #setValue
+    #'@description Set value
+    #'@param value value
     setValue = function(value){
       self$value <- value
     },
     
-    #isDocument
+    #'@description Util to check where object refers to a emetadata document (eg. \link{ISOMetadata} or \link{ISOFeatureCatalogue})
+    #'@return \code{TRUE} if a document, \code{FALSE} otherwise
     isDocument = function(){
       return(private$document)
     },
     
-    #isFieldInheritedFrom
+    #'@description Indicates the class a field inherits from
+    #'@param field field
+    #'@return an object generator of class \link{R6Class}
     isFieldInheritedFrom = function(field){
       parentClass <- NULL
       inherited <- !(field %in% names(self$getClass()$public_fields))
@@ -1362,11 +1486,13 @@ ISOAbstractObject <- R6Class("ISOAbstractObject",
       return(parentClass)
     },
 	
-    #createLocalisedProperty
+    #'@description Creates a localised property
+    #'@param text text
+    #'@param locales a list of localized names
     createLocalisedProperty = function(text, locales){
       if(!is(locales, "list")){
         stop("The argument 'locales' should be an object of class 'list'")
-      }
+      } 
       ft <- ISOFreeText$new()
       for(locale in names(locales)){
         localeValue <- locales[[locale]]
@@ -1429,6 +1555,7 @@ ISOAbstractObject$getISOClasses = function(extended = FALSE, pretty = FALSE){
     return(r6Predicate & envPredicate & includePredicate)
   })]
   list_of_classes <- as.vector(list_of_classes)
+  list_of_classes <- list_of_classes[!startsWith(list_of_classes, "pivot")]
   if(pretty){
     std_info <- do.call("rbind",lapply(list_of_classes, function(x){
       clazz <- invisible(try(eval(parse(text=x)),silent=TRUE))
@@ -1529,6 +1656,80 @@ ISOAbstractObject$compare = function(metadataElement1, metadataElement2){
   return(text1 == text2)
 }
 
+#' @name getClassesInheriting
+#' @aliases getClassesInheriting
+#' @title getClassesInheriting
+#'
+#' @param classname the name of the superclass for which inheriting sub-classes have to be listed
+#' @param extended whether we want to look at user namespace for third-party sub-classes
+#' @param pretty prettify the output as \code{data.frame}
+
+#' @export
+#' @description get the list of classes inheriting a given super class provided by its name
+#'
+#' @usage getClassesInheriting(classname, extended, pretty)
+#'
+#' @examples
+#'   getClassesInheriting("ISAbstractObject")
+getClassesInheriting <- function(classname, extended = FALSE, pretty = FALSE){
+  list_of_classes <- ls(getNamespaceInfo("geometa", "exports"))
+  if(extended) {
+    search_envs <- search()
+    search_envs <- search_envs[search_envs!="package:geometa"]
+    list_of_other_classes <- unlist(sapply(search_envs, ls))
+    list_of_classes <- c(list_of_classes, list_of_other_classes)
+  }
+  
+  list_of_classes <- list_of_classes[sapply(list_of_classes, function(x){
+    clazz <- try(eval(parse(text=x)),silent=TRUE)
+    if(is(clazz, "try-error")) clazz <- try(eval(parse(text=paste0("geometa::",x))),silent=TRUE)
+    r6Predicate <- class(clazz)[1]=="R6ClassGenerator"
+    if(!r6Predicate) return(FALSE)
+    
+    geometaObjPredicate <- FALSE
+    superclazz <- clazz
+    while(!geometaObjPredicate && !is.null(superclazz)){
+      clazz_fields <- names(superclazz)
+      if(!is.null(clazz_fields)) if(length(clazz_fields)>0){
+        if("get_inherit" %in% clazz_fields){
+          superclazz <- superclazz$get_inherit()
+          geometaPredicate <- FALSE
+          if("parent_env" %in% clazz_fields) geometaPredicate <- environmentName(superclazz$parent_env)=="geometa"
+          geometaObjPredicate <- superclazz$classname == classname && geometaPredicate
+        }else{
+          break
+        }
+      }
+    }
+    return(geometaObjPredicate)
+  })]
+  
+  list_of_classes <- as.vector(list_of_classes)
+  if(pretty){
+    std_infos <- do.call("rbind",lapply(list_of_classes, function(x){
+      clazz <- try(eval(parse(text=x)),silent=TRUE)
+      if(is(clazz,"try-error")) clazz <- try(eval(parse(text=paste0("geometa::",x))),silent=TRUE)
+      print(clazz)
+      std_info <- data.frame(
+        environment = environmentName(clazz$parent_env),
+        ns_prefix = if(!is.null(clazz$private_fields$xmlNamespacePrefix))clazz$private_fields$xmlNamespacePrefix else NA,
+        ns_uri = if(!is.null(clazz$private_fields$xmlNamespacePrefix)) ISOMetadataNamespace[[clazz$private_fields$xmlNamespacePrefix]]$uri else NA,
+        element = if(!is.null(clazz$private_fields$xmlElement)) clazz$private_fields$xmlElement else NA,
+        stringsAsFactors = FALSE
+      )
+      
+      return(std_info)
+    }))
+    
+    list_of_classes <- cbind(
+      class = list_of_classes,
+      std_infos,
+      stringsAsFactors = FALSE
+    )
+  }
+  return(list_of_classes)
+}
+
 #' @name cacheISOClasses
 #' @aliases cacheISOClasses
 #' @title cacheISOClasses
@@ -1549,7 +1750,7 @@ ISOAbstractObject$compare = function(metadataElement1, metadataElement2){
 #' @author Emmanuel Blondel, \email{emmanuel.blondel1@@gmail.com}
 #
 cacheISOClasses <- function(){
-  .geometa.iso$classes <- ISOAbstractObject$getISOClasses(extended = TRUE, pretty = FALSE)
+  .geometa.iso$classes <- getClassesInheriting(classname = "ISOAbstractObject", extended = TRUE, pretty = FALSE)
 }
 
 #' @name getISOClasses

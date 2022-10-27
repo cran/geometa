@@ -466,18 +466,23 @@
 "GML 3.2.1 (ISO 19136)","Geographic Markup Language","GML","VerticalCRS","GMLVerticalCRS",TRUE
 "GML 3.2.1 (ISO 19136)","Geographic Markup Language","GML","VerticalCS","GMLVerticalCS",TRUE
 "GML 3.2.1 (ISO 19136)","Geographic Markup Language","GML","VerticalDatum","<missing>",FALSE
+"GML 3.2.1 Coverage (OGC GMLCOV)","OGC GML Coverage Implementation Schema","GMLCOV","AbstractContinuousCoverage","<missing>",FALSE
 "GML 3.2.1 Coverage (OGC GMLCOV)","OGC GML Coverage Implementation Schema","GMLCOV","AbstractCoverage","GMLCOVAbstractCoverage",TRUE
+"GML 3.2.1 Coverage (OGC GMLCOV)","OGC GML Coverage Implementation Schema","GMLCOV","AbstractDiscreteCoverage","<missing>",FALSE
+"GML 3.2.1 Coverage (OGC GMLCOV)","OGC GML Coverage Implementation Schema","GMLCOV","Extension","GMLCOVExtension",TRUE
+"GML 3.2.1 Coverage (OGC GMLCOV)","OGC GML Coverage Implementation Schema","GMLCOV","SimpleMultiPoint","<missing>",FALSE
+"GML 3.3 Referenceable Grid (OGC GML)","OGC GML Referenceable Grid","GMLRGRID","AbstractReferenceableGrid","GMLAbstractReferenceableGrid",TRUE
 "GML 3.3 Referenceable Grid (OGC GML)","OGC GML Referenceable Grid","GMLRGRID","AbstractReferenceableGrid","GMLAbstractReferenceableGrid",TRUE
 "GML 3.3 Referenceable Grid (OGC GML)","OGC GML Referenceable Grid","GMLRGRID","GeneralGridAxis","GMLGeneralGridAxis",TRUE
 "GML 3.3 Referenceable Grid (OGC GML)","OGC GML Referenceable Grid","GMLRGRID","ReferenceableGridByArray","GMLReferenceableGridByArray",TRUE
 "GML 3.3 Referenceable Grid (OGC GML)","OGC GML Referenceable Grid","GMLRGRID","ReferenceableGridByTransformation","GMLReferenceableGridByTransformation",TRUE
 "GML 3.3 Referenceable Grid (OGC GML)","OGC GML Referenceable Grid","GMLRGRID","ReferenceableGridByVectors","GMLReferenceableGridByVectors",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractDataComponent","SWEAbstractDataComponent",TRUE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractEncoding","<missing>",FALSE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractEncoding","SWEAbstractEncoding",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractObject","SWEAbstractObject",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractSimpleComponent","SWEAbstractSimpleComponent",TRUE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractSWE","<missing>",FALSE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractSWEIdentifiable","<missing>",FALSE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractSWE","SWEAbstractSWE",TRUE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AbstractSWEIdentifiable","SWEAbstractSWEIdentifiable",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AllowedTimes","<missing>",FALSE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AllowedTokens","<missing>",FALSE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","AllowedValues","<missing>",FALSE
@@ -490,15 +495,15 @@
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","CountRange","SWECountRange",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","DataArray","<missing>",FALSE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","DataChoice","<missing>",FALSE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","DataRecord","<missing>",FALSE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","DataRecord","SWEDataRecord",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","DataStream","<missing>",FALSE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","Matrix","<missing>",FALSE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","NilValues","<missing>",FALSE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","NilValues","SWENilValues",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","Quantity","SWEQuantity",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","QuantityRange","SWEQuantityRange",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","Text","SWEText",TRUE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","TextEncoding","<missing>",FALSE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","TextEncoding","SWETextEncoding",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","Time","SWETime",TRUE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","TimeRange","<missing>",FALSE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","TimeRange","SWETimeRange",TRUE
 "SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","Vector","<missing>",FALSE
-"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","XMLEncoding","<missing>",FALSE
+"SWE 2.0","Sensor Web Enablement (SWE) Common Data Model","SWE","XMLEncoding","SWEXMLEncoding",TRUE

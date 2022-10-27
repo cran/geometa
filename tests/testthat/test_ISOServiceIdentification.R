@@ -60,12 +60,12 @@ test_that("encoding",{
     fileDescription = "Map Overview",
     fileType = "image/png"
   )
-  md$setGraphicOverview(go)
+  md$addGraphicOverview(go)
   
   #maintenance information
   mi <- ISOMaintenanceInformation$new()
   mi$setMaintenanceFrequency("daily")
-  md$setResourceMaintenance(mi)
+  md$addResourceMaintenance(mi)
   
   #adding legal constraints
   lc <- ISOLegalConstraints$new()
@@ -79,7 +79,7 @@ test_that("encoding",{
   expect_equal(length(lc$useLimitation), 3L)
   expect_equal(length(lc$accessConstraints), 2L)
   expect_equal(length(lc$useConstraints), 2L)
-  md$setResourceConstraints(lc)
+  md$addResourceConstraints(lc)
   
   xml <- md$encode()
   expect_is(xml, "XMLInternalNode")
@@ -296,12 +296,12 @@ test_that("encoding - i18n",{
       ZH = "地图概述"
     )
   )
-  md$setGraphicOverview(go)
+  md$addGraphicOverview(go)
   
   #maintenance information
   mi <- ISOMaintenanceInformation$new()
   mi$setMaintenanceFrequency("daily")
-  md$setResourceMaintenance(mi)
+  md$addResourceMaintenance(mi)
   
   #adding legal constraints
   lc <- ISOLegalConstraints$new()
@@ -332,7 +332,7 @@ test_that("encoding - i18n",{
   expect_equal(length(lc$useLimitation), 2L)
   expect_equal(length(lc$accessConstraints), 2L)
   expect_equal(length(lc$useConstraints), 2L)
-  md$setResourceConstraints(lc)
+  md$addResourceConstraints(lc)
   
   xml <- md$encode()
   expect_is(xml, "XMLInternalNode")
@@ -398,12 +398,12 @@ test_that("encoding",{
     fileDescription = "Map Overview",
     fileType = "image/png"
   )
-  md$setGraphicOverview(go)
+  md$addGraphicOverview(go)
   
   #maintenance information
   mi <- ISOMaintenanceInformation$new()
   mi$setMaintenanceFrequency("daily")
-  md$setResourceMaintenance(mi)
+  md$addResourceMaintenance(mi)
   
   #adding legal constraints
   lc <- ISOLegalConstraints$new()
@@ -417,7 +417,7 @@ test_that("encoding",{
   expect_equal(length(lc$useLimitation), 3L)
   expect_equal(length(lc$accessConstraints), 2L)
   expect_equal(length(lc$useConstraints), 2L)
-  md$setResourceConstraints(lc)
+  md$addResourceConstraints(lc)
   
   #specific elements to service identification
   md$setServiceType("Fishery data harmonization process")
@@ -443,7 +443,7 @@ test_that("encoding",{
   #adding extent
   extent <- ISOExtent$new()
   bbox <- ISOGeographicBoundingBox$new(minx = -180, miny = -90, maxx = 180, maxy = 90)
-  extent$setGeographicElement(bbox)
+  extent$addGeographicElement(bbox)
   md$addExtent(extent)
   
   #coupling type
@@ -747,12 +747,12 @@ test_that("encoding - i18n",{
       ZH = "地图概述"
     )
   )
-  md$setGraphicOverview(go)
+  md$addGraphicOverview(go)
   
   #maintenance information
   mi <- ISOMaintenanceInformation$new()
   mi$setMaintenanceFrequency("daily")
-  md$setResourceMaintenance(mi)
+  md$addResourceMaintenance(mi)
   
   #adding legal constraints
   lc <- ISOLegalConstraints$new()
@@ -783,7 +783,7 @@ test_that("encoding - i18n",{
   expect_equal(length(lc$useLimitation), 2L)
   expect_equal(length(lc$accessConstraints), 2L)
   expect_equal(length(lc$useConstraints), 2L)
-  md$setResourceConstraints(lc)
+  md$addResourceConstraints(lc)
   
   #specific elements to service identification
   md$setServiceType("Fishery data harmonization process")
@@ -863,7 +863,7 @@ test_that("encoding - i18n",{
   #adding extent
   extent <- ISOExtent$new()
   bbox <- ISOGeographicBoundingBox$new(minx = -180, miny = -90, maxx = 180, maxy = 90)
-  extent$setGeographicElement(bbox)
+  extent$addGeographicElement(bbox)
   md$addExtent(extent)
   
   #coupling type

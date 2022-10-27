@@ -7,132 +7,6 @@
 #' @keywords ISO imagery metadata element
 #' @return Object of \code{\link{R6Class}} for modelling an ISO Imagery Metadata
 #' @format \code{\link{R6Class}} object.
-#'
-#' @field acquisitionInformation [\code{list} of \code{\link{ISOImageryAcquisitionInformation}}]
-#'
-#' @section Methods:
-#' \describe{
-#'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an \code{\link{ISOImageryMetadata}}
-#'  }
-#'  \item{\code{addAcquisitionInfo(acquisitionInfo)}}{
-#'    Add acquisition information, object of class \code{\link{ISOImageryAcquisitionInformation}}
-#'  }
-#'  \item{\code{delAcquisitionInfo(acquisitionInfo)}}{
-#'    Deletes acquisition information, object of class \code{\link{ISOImageryAcquisitionInformation}}
-#'  }
-#' }
-#' 
-#' @section Methods inherited from of \code{ISOMetadata}):
-#' \describe{
-#'  \item{\code{setFileIdentifier(fileIdentifier)}}{
-#'    Sets the file identifier
-#'  }
-#'  \item{\code{setLanguage{locale}}}{
-#'    Sets the locale
-#'  }
-#'  \item{\code{setCharacterSet(charset)}}{
-#'    Sets the character set
-#'  }
-#'  \item{\code{setParentIdentifier(parentIdentifier)}}{
-#'    Sets the parentIdentifier
-#'  }
-#'  \item{\code{addHierarchyLevel(level)}}{
-#'    Adds the hierarchy level
-#'  }
-#'  \item{\code{setHierarchyLevel(level)}}{
-#'    Sets the hierarchy level
-#'  }
-#'  \item{\code{delHierarchyLevel(level)}}{
-#'    Deletes the hierarchy level
-#'  }
-#'  \item{\code{addHierarchyLevelName(levelName)}}{
-#'    Adds the hierarchy level name
-#'  }
-#'  \item{\code{delHierarchyLevelName(levelName)}}{
-#'    Deletes the hierarchy level name
-#'  }
-#'  \item{\code{addContact(contact)}}{
-#'    Adds a contact as object of class \code{ISOResponsibleParty}
-#'  }
-#'  \item{\code{delContact(contact)}}{
-#'    Deletes a contact as object of class \code{ISOResponsibleParty}
-#'  }
-#'  \item{\code{setDateStamp(date)}}{
-#'    Sets the date stamp
-#'  }
-#'  \item{\code{setMetadataStandardName(name)}}{
-#'    Sets the metadata standard name
-#'  }
-#'  \item{\code{setMetadataStandardVersion(version)}}{
-#'    Sets the metadata standard version
-#'  }
-#'  \item{\code{setDataSetURI(dataSetURI)}}{
-#'    Sets the metadata dataSet URI
-#'  }
-#'  \item{\code{addLocale(locale)}}{
-#'    Adds a locale, object of class \code{ISOLocale}
-#'  }
-#'  \item{\code{delLocale(locale)}}{
-#'    Deletes a locale, object of class \code{ISOLocale}
-#'  }
-#'  \item{\code{addSpatialRepresentationInfo(spatialRepresentationInfo)}}{
-#'    Adds a spatial representation
-#'  }
-#'  \item{\code{setSpatialRepresentationInfo(spatialRepresentationInfo)}}{
-#'    Sets a spatial representation
-#'  }
-#'  \item{\code{delSpatialRepresentationInfo(spatialRepresentationInfo)}}{
-#'    Deletes a spatial representation
-#'  }
-#'  \item{\code{addReferenceSystemInfo(referenceSystemInfo)}}{
-#'    Adds a reference system
-#'  }
-#'  \item{\code{setReferenceSystemInfo(referenceSystemInfo)}}{
-#'    Sets the reference system
-#'  }
-#'  \item{\code{delReferenceSystemInfo(referenceSystemInfo)}}{
-#'    Deletes a reference system
-#'  }
-#'  \item{\code{addMetadataExtensionInfo(extensionInfo)}}{
-#'    Adds extension info, object of class \code{ISOMetadataExtensionInformation}
-#'  }
-#'  \item{\code{delMetadataExtensionInfo(extensionInfo)}}{
-#'    Deletes extension info, object of class \code{ISOMetadataExtensionInformation}
-#'  }
-#'  \item{\code{addIdentificationInfo(identificationInfo)}}{
-#'    Adds a data identification
-#'  }
-#'  \item{\code{setIdentificationInfo(identificationInfo)}}{
-#'    Sets the data identification
-#'  }
-#'  \item{\code{delIdentificationInfo(identificationInfo)}}{
-#'    Deletes a data identification
-#'  }
-#'  \item{\code{addContentInfo(contentInfo)}}{
-#'    Adds a content info, either an object of class \code{\link{ISOCoverageDescription}}
-#'    for coverage data, or \code{\link{ISOFeatureCatalogueDescription}} for vector data.
-#'  }
-#'  \item{\code{delContentInfo(contentInfo)}}{
-#'    Deletes a content info, either an object of class \code{\link{ISOCoverageDescription}} 
-#'    for coverage data, or \code{\link{ISOFeatureCatalogueDescription}} for vector data.
-#'  }
-#'  \item{\code{setDistributionInfo(distributionInfo)}}{
-#'    Sets the distribution
-#'  }
-#'  \item{\code{addDataQualityInfo(dataQualityInfo)}}{
-#'    Adds a data quality
-#'  }
-#'  \item{\code{setDataQualityInfo(dataQualityInfo)}}{
-#'    Sets the data quality
-#'  }
-#'  \item{\code{delDataQualityInfo(dataQualityInfo)}}{
-#'    Deletes a data quality
-#'  }
-#'  \item{\code{setMetadataMaintenance(metadataMaintenance)}}{
-#'    Sets a metadata maintenance as object of class \code{ISOMaintenanceInformation}
-#'  }
-#' }
 #' 
 #' @examples
 #'     #example 1 - WRITE: Create an ISO metadata and encode it as XML
@@ -180,14 +54,14 @@
 #'    geomObject <- ISOGeometricObjects$new()
 #'    geomObject$setGeometricObjectType("surface")
 #'    geomObject$setGeometricObjectCount(5L)
-#'    vsr$setGeometricObjects(geomObject)
+#'    vsr$addGeometricObjects(geomObject)
 #'    md$addSpatialRepresentationInfo(vsr)
 #'    
 #'    #ReferenceSystem
 #'    rs <- ISOReferenceSystem$new()
 #'    rsId <- ISOReferenceIdentifier$new(code = "4326", codeSpace = "EPSG")
 #'    rs$setReferenceSystemIdentifier(rsId)
-#'    md$setReferenceSystemInfo(rs)
+#'    md$addReferenceSystemInfo(rs)
 #'    
 #'    #data identification
 #'    ident <- ISODataIdentification$new()
@@ -197,8 +71,8 @@
 #'    ident$addCredit("credit2")
 #'    ident$addCredit("credit3")
 #'    ident$addStatus("completed")
-#'    ident$setLanguage("eng")
-#'    ident$setCharacterSet("utf8")
+#'    ident$addLanguage("eng")
+#'    ident$addCharacterSet("utf8")
 #'    ident$addTopicCategory("biota")
 #'    ident$addTopicCategory("oceans")
 #'    
@@ -258,7 +132,7 @@
 #'    #maintenance information
 #'    mi <- ISOMaintenanceInformation$new()
 #'    mi$setMaintenanceFrequency("daily")
-#'    ident$setResourceMaintenance(mi)
+#'    ident$addResourceMaintenance(mi)
 #'    
 #'    #adding legal constraints
 #'    lc <- ISOLegalConstraints$new()
@@ -282,8 +156,8 @@
 #'    #adding extent
 #'    extent <- ISOExtent$new()
 #'    bbox <- ISOGeographicBoundingBox$new(minx = -180, miny = -90, maxx = 180, maxy = 90)
-#'    extent$setGeographicElement(bbox)
-#'    ident$setExtent(extent)
+#'    extent$addGeographicElement(bbox)
+#'    ident$addExtent(extent)
 #'    
 #'    #add keywords
 #'    kwds <- ISOKeywords$new()
@@ -324,7 +198,7 @@
 #'    #spatial representation type
 #'    ident$addSpatialRepresentationType("vector")
 #'    
-#'    md$setIdentificationInfo(ident)
+#'    md$addIdentificationInfo(ident)
 #'    
 #'    #Distribution
 #'    distrib <- ISODistribution$new()
@@ -337,7 +211,7 @@
 #'      or$setProtocol("WWW:LINK-1.0-http--link")
 #'      dto$addOnlineResource(or)
 #'    }
-#'    distrib$setDigitalTransferOptions(dto)
+#'    distrib$addDigitalTransferOptions(dto)
 #'    md$setDistributionInfo(distrib)
 #'    
 #'    #create dataQuality object with a 'dataset' scope
@@ -408,7 +282,7 @@
 #'    lineage$setStatement("statement")
 #'    dq$setLineage(lineage)
 #'    
-#'    md$setDataQualityInfo(dq)
+#'    md$addDataQualityInfo(dq)
 #'    
 #'    #Content Information
 #'    #-------------------------
@@ -462,14 +336,18 @@ ISOImageryMetadata <- R6Class("ISOImageryMetadata",
   ),
   public = list(
     
-     #+ acquisitionInformation [0..*]: ISOImageryAcquisitionInformation  
+     #'@field acquisitionInformation acquisitionInformation [0..*]: ISOImageryAcquisitionInformation  
      acquisitionInformation = list(),
     
+     #'@description Initializes object
+     #'@param xml object of class \link{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },
     
-     #addAcquisitionInfo
+     #'@description Adds acquisition info
+     #'@param acquisitionInfo object of class \link{ISOImageryAcquisitionInformation}
+     #'@return \code{TRUE} if added, \code{FALSE} otherwise
      addAcquisitionInfo = function(acquisitionInfo){
        if(!is(acquisitionInfo, "ISOImageryAcquisitionInformation")){
          stop("The argument should be an object of class 'ISOImageryAcquisitionInformation")
@@ -477,7 +355,9 @@ ISOImageryMetadata <- R6Class("ISOImageryMetadata",
        return(self$addListElement("acquisitionInformation", acquisitionInfo))
      },
      
-     #delAcquisitionInfo
+     #'@description Deletes acquisition info
+     #'@param acquisitionInfo object of class \link{ISOImageryAcquisitionInformation}
+     #'@return \code{TRUE} if deleted, \code{FALSE} otherwise
      delAcquisitionInfo = function(acquisitionInfo){
        if(!is(acquisitionInfo, "ISOImageryAcquisitionInformation")){
          stop("The argument should be an object of class 'ISOImageryAcquisitionInformation")
