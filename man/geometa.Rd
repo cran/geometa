@@ -4,22 +4,19 @@
 \name{geometa}
 \alias{geometa}
 \alias{geometa-package}
-\title{Tools for Reading and Writing ISO/OGC Geographic Metadata}
+\title{geometa: Tools for Reading and Writing ISO/OGC Geographic Metadata}
 \description{
-Provides facilities to handle reading and writing of geographic metadata 
-defined with OGC/ISO 19115 and 19110 geographic information metadata standards, and 
-encoded using the ISO 19139 (XML) standard.
+Provides facilities to read, write and validate geographic metadata defined with ISO TC211 / OGC ISO geographic information metadata standards, and encoded using the ISO 19139 (XML) standard technical specification. This includes ISO 19110 (Feature cataloguing), 19115 (dataset metadata), 19119 (service metadata) and 19136 (GML). Other interoperable schemas from the OGC are progressively supported as well, such as the Sensor Web Enablement (SWE) Common Data Model, the OGC GML Coverage Implementation Schema (GMLCOV), or the OGC GML Referenceable Grid (GMLRGRID).
 }
-\details{
-\tabular{ll}{
-   Package: \tab geometa\cr
-   Type: \tab Package\cr
-   Version: \tab 0.6-7\cr
-   Date: \tab 2022-03-15\cr
-   License: \tab MIT\cr
-   LazyLoad: \tab yes\cr
- }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/eblondel/geometa/wiki}
+  \item Report bugs at \url{https://github.com/eblondel/geometa/issues}
+}
+
 }
 \author{
-Emmanuel Blondel \email{emmanuel.blondel1@gmail.com}
+\strong{Maintainer}: Emmanuel Blondel \email{emmanuel.blondel1@gmail.com} (\href{https://orcid.org/0000-0002-5870-5762}{ORCID})
+
 }

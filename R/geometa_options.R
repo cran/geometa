@@ -24,6 +24,23 @@ getGeometaOption <- function(option){
   return(.geometa.options[[option]])
 }
 
+#'@name getGeometaOptions
+#'@aliases getGeometaOptions
+#'@title getGeometaOptions
+#'@description \code{getGeometaOptions} allows to get options from \pkg{geometa}
+#'@export
+#' 
+#' @usage getGeometaOptions()
+#' 
+#' @examples             
+#'   getGeometaOptions()
+#' 
+#' @author Emmanuel Blondel, \email{emmanuel.blondel1@@gmail.com}
+#'    
+getGeometaOptions <- function(){
+  return(.geometa.options)
+}
+
 #' @name setGeometaOption
 #' @aliases setGeometaOption
 #' @title setGeometaOption

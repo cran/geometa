@@ -39,15 +39,15 @@ SWECount <- R6Class("SWECount",
       super$initialize(xml, element = private$xmlElement,
                        updatable = updatable, optional = optional, definition = definition)
       if(is.null(xml)){
-        self$constraint <- constraint
-        self$value <- value
+        self$setConstraint(constraint)
+        self$setValue(value)
       }
     },
     
     #'@description setConstraint
     #'@param constraint constraint
     setConstraint = function(constraint){
-      self$constraint <- constraint
+      self$constraint <- SWEElement$create(element = "constraint", value = constraint)
     },
     
     #'@description setValue
@@ -56,7 +56,7 @@ SWECount <- R6Class("SWECount",
       if(!is.integer(value)){
         stop("Value should be integer")
       }
-      self$value <- value
+      self$value <- SWEElement$create(element = "value", value = value)
     }
   )                        
 )
