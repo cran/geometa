@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO feature catalogue
-#' @return Object of \code{\link{R6Class}} for modelling an ISO FeatureCatalogue
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO FeatureCatalogue
+#' @format \code{\link[R6]{R6Class}} object.
 #'
 #' @examples 
 #'  fc <- ISOFeatureCatalogue$new(uuid = "my-fc-identifier")
@@ -101,7 +101,7 @@ ISOFeatureCatalogue <- R6Class("ISOFeatureCatalogue",
       definitionSource = list(),
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       #'@param uuid uuid
       initialize = function(xml = NULL, uuid = NULL){
         super$initialize(xml = xml)
@@ -109,11 +109,20 @@ ISOFeatureCatalogue <- R6Class("ISOFeatureCatalogue",
       },
       
       #'@description Set producer
-      #'@param producer object of class \link{ISOResponsibleParty}
+      #'@param producer object of class \link{ISOResponsibleParty} (in ISO 19139) or \link{ISOResponsibility} (in ISO 19115-3)
       setProducer = function(producer){
-        if(!is(producer,"ISOResponsibleParty")){
-          stop("The argument should be a 'ISOResponsibleParty' object")
-        }
+        switch(getMetadataStandard(),
+          "19139" = {
+            if(!is(producer,"ISOResponsibleParty")){
+              stop("The argument should be a 'ISOResponsibleParty' object")
+            }
+          },
+          "19115-3" = {
+            if(!is(producer,"ISOResponsibility")){
+              stop("The argument should be a 'ISOResponsibility' object")
+            }
+          }
+        )
         self$producer <- producer
       },
       

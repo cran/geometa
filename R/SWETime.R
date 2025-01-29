@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO SWE
-#' @return Object of \code{\link{R6Class}} for modelling an SWE Time
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an SWE Time
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   SWE Common Data Model Encoding Standard. https://www.ogc.org/standards/swecommon
@@ -30,7 +30,7 @@ SWETime <- R6Class("SWETime",
      value = NA_character_,
      
      #'@description Initializes an object of class \link{SWETime}
-     #'@param xml object of class \link{XMLInternalNode-class} from \pkg{XML}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class} from \pkg{XML}
      #'@param uom uom
      #'@param constraint constraint
      #'@param value value

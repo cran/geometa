@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML element
-#' @return Object of \code{\link{R6Class}} for modelling an GML element
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML element
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @note Class used by geometa internal XML decoder/encoder
 #' 
@@ -24,7 +24,7 @@ GMLElement <- R6Class("GMLElement",
     public = list(
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       #'@param element element
       #'@param attrs attrs
       #'@param defaults default values
@@ -36,7 +36,7 @@ GMLElement <- R6Class("GMLElement",
       
       
       #'@description Decodes the XML
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       decode = function(xml){
         fieldName <- xmlName(xml)
         nsPrefix <- ""

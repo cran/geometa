@@ -2,10 +2,21 @@
 % Please edit documentation in R/ISOMetadataNamespace.R
 \name{setISOMetadataNamespaces}
 \alias{setISOMetadataNamespaces}
-\title{setMetadataNamespaces}
+\title{setISOMetadataNamespaces}
 \usage{
-setISOMetadataNamespaces()
+setISOMetadataNamespaces(version)
+}
+\arguments{
+\item{version}{the standard version}
 }
 \description{
-setMetadataNamespaces
+\code{setISOMetadataNamespaces} sets the default list of namespaces
+}
+\examples{
+            
+  getISOMetadataNamespaces()
+
+}
+\author{
+Emmanuel Blondel, \email{emmanuel.blondel1@gmail.com}
 }

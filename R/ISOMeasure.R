@@ -4,11 +4,13 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO measure
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Measure
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO Measure
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references
-#'  ISO/TS 19103:2005 Geographic information -- Conceptual schema language
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gco/1.0/gco/#element_Measure}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/gco/1.0/gco/#element_Measure}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -16,7 +18,10 @@ ISOMeasure <- R6Class("ISOMeasure",
     inherit = ISOAbstractObject,
     private = list(
       xmlElement = "Measure",
-      xmlNamespacePrefix = "GCO"
+      xmlNamespacePrefix = list(
+        "19139" = "GCO",
+        "19115-3" = "GCO"
+      )
     ),
     public = list(
       #'@field value value
@@ -25,7 +30,7 @@ ISOMeasure <- R6Class("ISOMeasure",
       attrs = list(),
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       #'@param value value
       #'@param uom uom symbol of unit of measure used
       #'@param useUomURI use uom URI. Default is \code{FALSE}
@@ -37,7 +42,7 @@ ISOMeasure <- R6Class("ISOMeasure",
           }
           self$value = value
           uomAttr <- uom
-          if(useUomURI){
+          if(useUomURI & getMetadataStandard() == "19139"){
             uomAttr <- sprintf("http://schemas.opengis.net/iso/19139/20070417/resources/uom/gmxUom.xml#xpointer(//*[@gml:id='%s'])", uomAttr)
           }
           self$attrs[["uom"]] <- uomAttr

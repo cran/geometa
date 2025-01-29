@@ -4,15 +4,17 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO typename
-#' @return Object of \code{\link{R6Class}} for modelling an ISOTypeName
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOTypeName
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   typeName <- ISOTypeName$new(aName = "name")
 #'   xml <- typeName$encode()
 #' 
 #' @references
-#'  ISO/TS 19103:2005 Geographic information -- Conceptual schema language
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gco/1.0/gco/#element_TypeName}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/gco/1.0/gco/#element_TypeName}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -20,7 +22,10 @@ ISOTypeName <- R6Class("ISOTypeName",
    inherit = ISOAbstractObject,
    private = list(
      xmlElement = "TypeName",
-     xmlNamespacePrefix = "GCO"
+     xmlNamespacePrefix = list(
+       "19139" = "GCO",
+       "19115-3" = "GCO"
+     )
    ),
    public = list(
      
@@ -28,7 +33,7 @@ ISOTypeName <- R6Class("ISOTypeName",
      aName = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param aName name
      initialize = function(xml = NULL, aName = NULL){
        super$initialize(xml = xml)

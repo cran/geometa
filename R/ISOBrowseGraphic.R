@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO browse graphic
-#' @return Object of \code{\link{R6Class}} for modelling an ISO BrowseGraphic
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO BrowseGraphic
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'  md <- ISOBrowseGraphic$new(
@@ -16,7 +16,9 @@
 #'  xml <- md$encode()
 #' 
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_BrowseGraphic}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mcc/1.0/mcc/#element_MD_BrowseGraphic}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -24,7 +26,10 @@ ISOBrowseGraphic <- R6Class("ISOBrowseGraphic",
    inherit = ISOAbstractObject,
    private = list(
      xmlElement = "MD_BrowseGraphic",
-     xmlNamespacePrefix = "GMD"
+     xmlNamespacePrefix = list(
+       "19139" = "GMD",
+       "19115-3" = "MCC"
+     )
    ),
    public = list(
      #'@field fileName file name
@@ -35,7 +40,7 @@ ISOBrowseGraphic <- R6Class("ISOBrowseGraphic",
      fileType = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param fileName file name
      #'@param fileDescription file description
      #'@param fileType file type

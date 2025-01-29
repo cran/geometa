@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO imagery objective
-#' @return Object of \code{\link{R6Class}} for modelling an ISO imagery objective
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery objective
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'    #encoding
@@ -40,7 +40,9 @@
 #'    xml <- md$encode()
 #' 
 #' @references 
-#'   ISO 19115-2:2009 - Geographic information -- Metadata Part 2: Extensions for imagery and gridded data
+#'   - 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_Objective}
+#'   
+#'   - 19115-3 \url{https://schemas.isotc211.org/19115/-3/mac/2.0/mac/#element_MI_Objective}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #' 
@@ -48,7 +50,10 @@ ISOImageryObjective <- R6Class("ISOImageryObjective",
   inherit = ISOAbstractObject,
   private = list(
     xmlElement = "MI_Objective",
-    xmlNamespacePrefix = "GMI"
+    xmlNamespacePrefix = list(
+      "19139" = "GMI",
+      "19115-3" = "MAC"
+    )
   ),
   public = list(
     
@@ -70,7 +75,7 @@ ISOImageryObjective <- R6Class("ISOImageryObjective",
     objectiveOccurance = list(),
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     initialize = function(xml = NULL){
       super$initialize(xml = xml)
     },

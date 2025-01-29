@@ -5,10 +5,10 @@
 \alias{ISOImageryPlatform}
 \title{ISOImageryPlatform}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO imagery platform
+Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery platform
 }
 \description{
 ISOImageryPlatform
@@ -63,7 +63,9 @@ ISOImageryPlatform
 
 }
 \references{
-ISO 19115-2:2009 - Geographic information -- Metadata Part 2: Extensions for imagery and gridded data
+- 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_Platform}
+  
+  - 19115-3 \url{https://schemas.isotc211.org/19115/-3/mac/2.0/mac/#element_MI_Platform}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -86,6 +88,12 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item{\code{sponsor}}{sponsor [0..*]: ISOResponsibleParty}
 
 \item{\code{instrument}}{instrument [0..*]: ISOImageryInstrument}
+
+\item{\code{otherPropertyType}}{otherPropertyType [0..1] : ISORecordType (=> ISO 19115-3)}
+
+\item{\code{otherProperty}}{otherProperty [0..1] : ISORecord (=> ISO 19115-3)}
+
+\item{\code{history}}{history [0..*] : ISOInstrumentationEventList (=> ISO 19115-3)}
 }
 \if{html}{\out{</div>}}
 }
@@ -101,6 +109,10 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item \href{#method-ISOImageryPlatform-delSponsor}{\code{ISOImageryPlatform$delSponsor()}}
 \item \href{#method-ISOImageryPlatform-addInstrument}{\code{ISOImageryPlatform$addInstrument()}}
 \item \href{#method-ISOImageryPlatform-delInstrument}{\code{ISOImageryPlatform$delInstrument()}}
+\item \href{#method-ISOImageryPlatform-setOtherPropertyType}{\code{ISOImageryPlatform$setOtherPropertyType()}}
+\item \href{#method-ISOImageryPlatform-setOtherProperty}{\code{ISOImageryPlatform$setOtherProperty()}}
+\item \href{#method-ISOImageryPlatform-addInstrumentationEventList}{\code{ISOImageryPlatform$addInstrumentationEventList()}}
+\item \href{#method-ISOImageryPlatform-delInstrumentationEventList}{\code{ISOImageryPlatform$delInstrumentationEventList()}}
 \item \href{#method-ISOImageryPlatform-clone}{\code{ISOImageryPlatform$clone()}}
 }
 }
@@ -112,6 +124,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -132,6 +145,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -149,7 +163,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -303,6 +317,80 @@ Deletes instrument
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{instrument}}{object of class \link{ISOImageryInstrument}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOImageryPlatform-setOtherPropertyType"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOImageryPlatform-setOtherPropertyType}{}}}
+\subsection{Method \code{setOtherPropertyType()}}{
+setOtherPropertyType
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOImageryPlatform$setOtherPropertyType(otherPropertyType)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{otherPropertyType}}{otherPropertyType object of class \link{ISORecordType}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOImageryPlatform-setOtherProperty"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOImageryPlatform-setOtherProperty}{}}}
+\subsection{Method \code{setOtherProperty()}}{
+setOtherProperty
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOImageryPlatform$setOtherProperty(otherProperty)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{otherProperty}}{otherProperty object of class \link{ISORecord}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOImageryPlatform-addInstrumentationEventList"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOImageryPlatform-addInstrumentationEventList}{}}}
+\subsection{Method \code{addInstrumentationEventList()}}{
+Adds instrumentation event list
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOImageryPlatform$addInstrumentationEventList(instrumentEventList)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{instrumentEventList}}{object of class \link{ISOInstrumentationEventList}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOImageryPlatform-delInstrumentationEventList"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOImageryPlatform-delInstrumentationEventList}{}}}
+\subsection{Method \code{delInstrumentationEventList()}}{
+Adds instrumentation event list
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOImageryPlatform$delInstrumentationEventList(instrumentEventList)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{instrumentEventList}}{object of class \link{ISOInstrumentationEventList}}
 }
 \if{html}{\out{</div>}}
 }

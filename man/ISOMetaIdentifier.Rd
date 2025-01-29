@@ -5,10 +5,10 @@
 \alias{ISOMetaIdentifier}
 \title{ISOMetaIdentifier}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO MetaIdentifier
+Object of \code{\link[R6]{R6Class}} for modelling an ISO MetaIdentifier
 }
 \description{
 ISOMetaIdentifier
@@ -21,7 +21,9 @@ ISOMetaIdentifier
   
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_Identifier}
+  
+  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mcc/1.0/mcc/#element_MD_Identifier}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -30,12 +32,32 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \keyword{identifier}
 \keyword{meta}
 \section{Super classes}{
-\code{\link[geometa:geometaLogger]{geometa::geometaLogger}} -> \code{\link[geometa:ISOAbstractObject]{geometa::ISOAbstractObject}} -> \code{\link[geometa:ISOIdentifier]{geometa::ISOIdentifier}} -> \code{ISOMetaIdentifier}
+\code{\link[geometa:geometaLogger]{geometa::geometaLogger}} -> \code{\link[geometa:ISOAbstractObject]{geometa::ISOAbstractObject}} -> \code{ISOMetaIdentifier}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{authority}}{authority [0..1]: ISOCitation}
+
+\item{\code{code}}{code [1..1]: character}
+
+\item{\code{codeSpace}}{codeSpace [0..1]: character (ISO 19115-3)}
+
+\item{\code{version}}{version [0..1]: character (ISO 19115-3)}
+
+\item{\code{description}}{description [0..1]: character (ISO 19115-3)}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-ISOMetaIdentifier-new}{\code{ISOMetaIdentifier$new()}}
+\item \href{#method-ISOMetaIdentifier-setAuthority}{\code{ISOMetaIdentifier$setAuthority()}}
+\item \href{#method-ISOMetaIdentifier-setCode}{\code{ISOMetaIdentifier$setCode()}}
+\item \href{#method-ISOMetaIdentifier-setCodeSpace}{\code{ISOMetaIdentifier$setCodeSpace()}}
+\item \href{#method-ISOMetaIdentifier-setVersion}{\code{ISOMetaIdentifier$setVersion()}}
+\item \href{#method-ISOMetaIdentifier-setDescription}{\code{ISOMetaIdentifier$setDescription()}}
 \item \href{#method-ISOMetaIdentifier-clone}{\code{ISOMetaIdentifier$clone()}}
 }
 }
@@ -47,6 +69,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -62,14 +85,13 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setAttr"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setAttr'><code>geometa::ISOAbstractObject$setAttr()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setCodeList"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setCodeList'><code>geometa::ISOAbstractObject$setCodeList()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setCodeListValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setCodeListValue'><code>geometa::ISOAbstractObject$setCodeListValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setCodeSpace"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setCodeSpace'><code>geometa::ISOAbstractObject$setCodeSpace()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setHref"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setHref'><code>geometa::ISOAbstractObject$setHref()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentifier" data-id="setAuthority"><a href='../../geometa/html/ISOIdentifier.html#method-ISOIdentifier-setAuthority'><code>geometa::ISOIdentifier$setAuthority()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -79,15 +101,102 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \subsection{Method \code{new()}}{
 Initializes object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOMetaIdentifier$new(xml = NULL, code)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ISOMetaIdentifier$new(xml = NULL, code = NULL, codeSpace = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 
 \item{\code{code}}{code}
+
+\item{\code{codeSpace}}{code space}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOMetaIdentifier-setAuthority"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOMetaIdentifier-setAuthority}{}}}
+\subsection{Method \code{setAuthority()}}{
+Set authority
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOMetaIdentifier$setAuthority(authority)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{authority}}{object of class \link{ISOCitation}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOMetaIdentifier-setCode"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOMetaIdentifier-setCode}{}}}
+\subsection{Method \code{setCode()}}{
+Set code
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOMetaIdentifier$setCode(code)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{code}}{code}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOMetaIdentifier-setCodeSpace"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOMetaIdentifier-setCodeSpace}{}}}
+\subsection{Method \code{setCodeSpace()}}{
+Set codeSpace
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOMetaIdentifier$setCodeSpace(codeSpace)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{codeSpace}}{codeSpace}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOMetaIdentifier-setVersion"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOMetaIdentifier-setVersion}{}}}
+\subsection{Method \code{setVersion()}}{
+Set version
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOMetaIdentifier$setVersion(version)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{version}}{version}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOMetaIdentifier-setDescription"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOMetaIdentifier-setDescription}{}}}
+\subsection{Method \code{setDescription()}}{
+Set description
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOMetaIdentifier$setDescription(description)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{description}}{description}
 }
 \if{html}{\out{</div>}}
 }

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML compound CRS
-#' @return Object of \code{\link{R6Class}} for modelling an GMLCompoundCRS
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GMLCompoundCRS
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   ISO 19136:2007 Geographic Information -- Geographic Markup Language.
@@ -27,7 +27,7 @@ GMLCompoundCRS <- R6Class("GMLCompoundCRS",
     componentReferenceSystem = list(),
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param defaults default values
     #'@param id id
     initialize = function(xml = NULL, defaults = list(), id = NULL){

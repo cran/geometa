@@ -5,10 +5,10 @@
 \alias{ISOAbstractObject}
 \title{ISOAbstractObject}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO Metadata Element
+Object of \code{\link[R6]{R6Class}} for modelling an ISO Metadata Element
 }
 \description{
 ISOAbstractObject
@@ -26,7 +26,7 @@ Abstract ISO Metadata class used internally by geometa
    The object returned is a \code{data.frame} containing the specification reference
    and title.
  }
- \item{\code{getISOStandard(clazz)}}{
+ \item{\code{getISOStandard(clazz, version)}}{
    Inherit the ISO (and/or OGC) standard reference for a given \pkg{geometa} class.
    The object returned is a \code{data.frame} containing the specification reference
    and title.
@@ -90,6 +90,8 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-ISOAbstractObject-new}{\code{ISOAbstractObject$new()}}
+\item \href{#method-ISOAbstractObject-checkMetadataStandardCompliance}{\code{ISOAbstractObject$checkMetadataStandardCompliance()}}
+\item \href{#method-ISOAbstractObject-stopIfMetadataStandardIsNot}{\code{ISOAbstractObject$stopIfMetadataStandardIsNot()}}
 \item \href{#method-ISOAbstractObject-print}{\code{ISOAbstractObject$print()}}
 \item \href{#method-ISOAbstractObject-decode}{\code{ISOAbstractObject$decode()}}
 \item \href{#method-ISOAbstractObject-encode}{\code{ISOAbstractObject$encode()}}
@@ -145,7 +147,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 
 \item{\code{element}}{element name}
 
@@ -158,6 +160,34 @@ Initializes object
 \item{\code{wrap}}{wrap?}
 
 \item{\code{value_as_field}}{value as field?}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOAbstractObject-checkMetadataStandardCompliance"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOAbstractObject-checkMetadataStandardCompliance}{}}}
+\subsection{Method \code{checkMetadataStandardCompliance()}}{
+Check if object can be instantiated vs. the current metadata standard
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOAbstractObject$checkMetadataStandardCompliance()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOAbstractObject-stopIfMetadataStandardIsNot"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOAbstractObject-stopIfMetadataStandardIsNot}{}}}
+\subsection{Method \code{stopIfMetadataStandardIsNot()}}{
+Utility to stop in case a the current metadata standard does not match the one required for the code. This utility
+can be used to check applicability of a certain method, depending on on the current metadata standard.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOAbstractObject$stopIfMetadataStandardIsNot(version)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{version}}{version}
 }
 \if{html}{\out{</div>}}
 }
@@ -195,7 +225,7 @@ Decodes object from XML
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -274,7 +304,7 @@ Validates an XML object resulting from object encoding
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 
 \item{\code{strict}}{strict validation? If \code{TRUE}, a invalid XML will return an error}
 
@@ -357,7 +387,7 @@ Get class
 }
 
 \subsection{Returns}{
-the corresponding class, as \link{R6Class} reference object generator
+the corresponding class, as \link[R6]{R6Class} reference object generator
 }
 }
 \if{html}{\out{<hr>}}
@@ -376,7 +406,7 @@ Wraps base element
 
 \item{\code{fieldObj}}{field object}
 
-\item{\code{an}}{object of class \link{R6Class}}
+\item{\code{an}}{object of class \link[R6]{R6Class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -638,7 +668,7 @@ Indicates the class a field inherits from
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-an object generator of class \link{R6Class}
+an object generator of class \link[R6]{R6Class}
 }
 }
 \if{html}{\out{<hr>}}

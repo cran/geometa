@@ -4,12 +4,14 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO decimal
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Decimal
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO Decimal
+#' @format \code{\link[R6]{R6Class}} object.
 #' @note Class used by geometa internal XML decoder/encoder
 #' 
 #' @references
-#'  ISO/TS 19103:2005 Geographic information -- Conceptual schema language
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gco/1.0/gco/#element_Decimal}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/gco/1.0/gco/#element_Decimal}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -17,7 +19,10 @@ ISOBaseDecimal <- R6Class("ISOBaseDecimal",
    inherit = ISOAbstractObject,
    private = list(
      xmlElement = "Decimal",
-     xmlNamespacePrefix = "GCO",
+     xmlNamespacePrefix = list(
+       "19139" = "GCO",
+       "19115-3" = "GCO"
+     ),
      
      #decimal places
      decimalplaces = function(x) {
@@ -33,7 +38,7 @@ ISOBaseDecimal <- R6Class("ISOBaseDecimal",
      value = NA,
      
      #'@description Initializes a base decimal object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param value value
      initialize = function(xml = NULL, value){
        super$initialize(xml = xml)

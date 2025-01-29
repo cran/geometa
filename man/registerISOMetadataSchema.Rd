@@ -4,9 +4,11 @@
 \alias{registerISOMetadataSchema}
 \title{registerISOMetadataSchema}
 \usage{
-registerISOMetadataSchema(xsdFile)
+registerISOMetadataSchema(version, xsdFile)
 }
 \arguments{
+\item{version}{the schema version}
+
 \item{xsdFile}{the schema XSD file}
 }
 \description{
@@ -14,8 +16,9 @@ registerISOMetadataSchema(xsdFile)
 in \pkg{geometa}
 }
 \examples{
-            
-  registerISOMetadataSchema(xsdFile = "http://www.isotc211.org/2005/gmd/gmd.xsd")
+\donttest{             
+  registerISOMetadataSchema(version = "19139", xsdFile = "http://www.isotc211.org/2005/gmd/gmd.xsd")
+}
 
 }
 \author{

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO address
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Address
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO Address
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'  md <- ISOAddress$new()
@@ -17,7 +17,9 @@
 #'  xml <- md$encode()
 #'  
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'  - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_CI_Address}
+#'  
+#'  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/cit/2.0/cit/#element_CI_Address}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -25,11 +27,14 @@ ISOAddress <- R6Class("ISOAddress",
   inherit = ISOAbstractObject,
   private = list(
     xmlElement = "CI_Address",
-    xmlNamespacePrefix = "GMD"
+    xmlNamespacePrefix = list(
+      "19139" = "GMD",
+      "19115-3" = "CIT"
+    )
   ),
   public = list(
     #'@field deliveryPoint delivery point
-    deliveryPoint = NULL,
+    deliveryPoint = list(),
     #'@field city city
     city = NULL,
     #'@field postalCode postal code
@@ -37,10 +42,10 @@ ISOAddress <- R6Class("ISOAddress",
     #'@field country country
     country = NULL,
     #'@field electronicMailAddress email
-    electronicMailAddress = NULL,
+    electronicMailAddress = list(),
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     initialize = function(xml = NULL){
       super$initialize(xml = xml)
     },
@@ -49,11 +54,38 @@ ISOAddress <- R6Class("ISOAddress",
     #'@param deliveryPoint delivery point
     #'@param locales list of localized names
     setDeliveryPoint = function(deliveryPoint, locales = NULL){
+      self$stopIfMetadataStandardIsNot("19139")
       if(!is(deliveryPoint,"character")) deliveryPoint <- as.character(deliveryPoint)
       self$deliveryPoint <- deliveryPoint
       if(!is.null(locales)){
         self$deliveryPoint <- self$createLocalisedProperty(deliveryPoint, locales)
       }
+    },
+    
+    #'@description Adds delivery point
+    #'@param deliveryPoint delivery point
+    #'@param locales list of localized names
+    #'@return \code{TRUE} if added, \code{FALSE} otherwise
+    addDeliveryPoint = function(deliveryPoint, locales = NULL){
+      self$stopIfMetadataStandardIsNot("19115-3")
+      if(!is(deliveryPoint,"character")) deliveryPoint <- as.character(deliveryPoint)
+      if(!is.null(locales)){
+        deliveryPoint <- self$createLocalisedProperty(deliveryPoint, locales)
+      }
+      return(self$addListElement("deliveryPoint", deliveryPoint))
+    },
+    
+    #'@description Deletes delivery point
+    #'@param deliveryPoint delivery point
+    #'@param locales list of localized names
+    #'@return \code{TRUE} if added, \code{FALSE} otherwise
+    delDeliveryPoint = function(deliveryPoint, locales = NULL){
+      self$stopIfMetadataStandardIsNot("19115-3")
+      if(!is(deliveryPoint,"character")) deliveryPoint <- as.character(deliveryPoint)
+      if(!is.null(locales)){
+        deliveryPoint <- self$createLocalisedProperty(deliveryPoint, locales)
+      }
+      return(self$delListElement("deliveryPoint", deliveryPoint))
     },
     
     #'@description Set city
@@ -97,6 +129,32 @@ ISOAddress <- R6Class("ISOAddress",
       if(!is.null(locales)){
         self$electronicMailAddress <- self$createLocalisedProperty(email, locales)
       }
+    },
+    
+    #'@description Adds email
+    #'@param email email
+    #'@param locales list of localized names
+    #'@return \code{TRUE} if added, \code{FALSE} otherwise
+    addEmail = function(email, locales = NULL){
+      self$stopIfMetadataStandardIsNot("19115-3")
+      if(!is(email,"character")) email <- as.character(email)
+      if(!is.null(locales)){
+        email <- self$createLocalisedProperty(email, locales)
+      }
+      return(self$addListElement("email", email))
+    },
+    
+    #'@description Deletes email
+    #'@param email email
+    #'@param locales list of localized names
+    #'@return \code{TRUE} if deleted, \code{FALSE} otherwise
+    delEmail = function(email, locales = NULL){
+      self$stopIfMetadataStandardIsNot("19115-3")
+      if(!is(email,"character")) email <- as.character(email)
+      if(!is.null(locales)){
+        email <- self$createLocalisedProperty(email, locales)
+      }
+      return(self$delListElement("email", email))
     }
 
   )                        

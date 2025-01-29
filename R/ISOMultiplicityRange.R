@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO multiplicity range
-#' @return Object of \code{\link{R6Class}} for modelling an ISO MultiplicityRange
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO MultiplicityRange
+#' @format \code{\link[R6]{R6Class}} object.
 #'
 #' 
 #' @examples
@@ -13,7 +13,9 @@
 #'   xml <- md$encode()
 #' 
 #' @references
-#'  ISO/TS 19103:2005 Geographic information -- Conceptual schema language
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gco/1.0/gco/#element_MultiplicityRange}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/gco/1.0/gco/#element_MultiplicityRange}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -21,7 +23,10 @@ ISOMultiplicityRange <- R6Class("ISOMultiplicityRange",
   inherit = ISOAbstractObject,
   private = list(
     xmlElement = "MultiplicityRange",
-    xmlNamespacePrefix = "GCO"
+    xmlNamespacePrefix = list(
+      "19139" = "GCO",
+      "19115-3" = "GCO"
+    )
   ),
   public = list(
     #'@field lower lower
@@ -30,7 +35,7 @@ ISOMultiplicityRange <- R6Class("ISOMultiplicityRange",
     upper = NULL,
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param lower lower
     #'@param upper upper
     initialize = function(xml = NULL, lower, upper){

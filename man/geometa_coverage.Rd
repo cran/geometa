@@ -5,7 +5,10 @@
 \alias{geometa_coverae}
 \title{geometa_coverage}
 \usage{
-geometa_coverage()
+geometa_coverage(version)
+}
+\arguments{
+\item{version}{main metadata standard version}
 }
 \value{
 an object of class \code{data.frame}
@@ -21,7 +24,7 @@ of ISO/OGC standards in \pkg{geometa}.
 }
 \examples{
 \donttest{
-  cov <- geometa_coverage()
+  cov <- geometa_coverage(version = "19115-3")
 }
 
 }

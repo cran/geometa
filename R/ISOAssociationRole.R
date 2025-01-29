@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO association role
-#' @return Object of \code{\link{R6Class}} for modelling an ISOAssociationRole
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOAssociationRole
+#' @format \code{\link[R6]{R6Class}} object.
 #'  
 #' @references 
 #'   ISO 19110:2005 Methodology for Feature cataloguing
@@ -32,7 +32,7 @@ ISOAssociationRole <- R6Class("ISOAssociationRole",
       rolePlayer = list(),
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       initialize = function(xml = NULL){
         defaults = list(type = ISORoleType$new(value = "ordinary"))
         super$initialize(xml = xml, defaults = defaults)

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO URL
-#' @return Object of \code{\link{R6Class}} for modelling an ISOURL
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOURL
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @note Class used by geometa internal XML decoder/encoder
 #' 
@@ -25,7 +25,7 @@ ISOURL <- R6Class("ISOURL",
     value = NA,
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param value value
     initialize = function(xml = NULL, value = NULL){
       super$initialize(xml = xml)

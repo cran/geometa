@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO date
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Date
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO Date
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   md <- ISODate$new()
@@ -14,15 +14,20 @@
 #'   xml <- md$encode()
 #' 
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'  - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_CI_Date}
+#'  
+#'  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/cit/2.0/cit/#element_CI_Date}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISODate <- R6Class("ISODate",
-   inherit = ISOAbstractObject,
+   inherit = ISOAbstractTypedDate,
    private = list(
       xmlElement = "CI_Date",
-      xmlNamespacePrefix = "GMD"
+      xmlNamespacePrefix = list(
+        "19139" = "GMD",
+        "19115-3" = "CIT"
+      )
    ),
    public = list(
      #'@field date date
@@ -31,9 +36,14 @@ ISODate <- R6Class("ISODate",
      dateType = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
-     initialize = function(xml = NULL){
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
+     #'@param date object of class \link{Date} or \link{POSIXt}
+     #'@param dateType object of class \link{ISODateType} or any \link{character}
+     #'value among values returned by \code{ISODateType$values()}
+     initialize = function(xml = NULL, date = NULL, dateType = NULL){
        super$initialize(xml = xml)
+       if(!is.null(date)) self$setDate(date)
+       if(!is.null(dateType)) self$setDateType(dateType)
      },
      
      #'@description Set date

@@ -4,11 +4,13 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO imagery Operation
-#' @return Object of \code{\link{R6Class}} for modelling an ISO imagery Operation
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery Operation
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
-#'   ISO 19115-2:2009 - Geographic information -- Metadata Part 2: Extensions for imagery and gridded data
+#'   - 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_Operation}
+#'   
+#'   - 19115-3 \url{https://schemas.isotc211.org/19115/-3/mac/2.0/mac/#element_MI_Operation}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #' 
@@ -16,7 +18,10 @@ ISOImageryOperation <- R6Class("ISOImageryOperation",
    inherit = ISOAbstractObject,
    private = list(
      xmlElement = "MI_Operation",
-     xmlNamespacePrefix = "GMI"
+     xmlNamespacePrefix = list(
+       "19139" = "GMI",
+       "19115-3" = "MAC"
+     )
    ),
    public = list(
      
@@ -42,9 +47,13 @@ ISOImageryOperation <- R6Class("ISOImageryOperation",
      plan = NULL,
      #'@field significantEvent significantEvent [0..*]: ISOImageryEvent
      significantEvent = list(),
+     #'@field otherPropertyType otherPropertyType [0..1] : ISORecordType (=> ISO 19115-3)
+     otherPropertyType = NULL,
+     #'@field otherProperty otherProperty [0..1] : ISORecord (=> ISO 19115-3)
+     otherProperty = NULL,
 
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },
@@ -205,6 +214,24 @@ ISOImageryOperation <- R6Class("ISOImageryOperation",
          stop("The argument should be an object of class 'ISOImageryEvent")
        }
        return(self$delListElement("significantEvent", event))
+     },
+     
+     #'@description setOtherPropertyType
+     #'@param otherPropertyType otherPropertyType object of class \link{ISORecordType}
+     setOtherPropertyType = function(otherPropertyType){
+       if(!is(otherPropertyType, "ISORecordType")){
+         otherPropertyType = ISORecordType$new(value = otherPropertyType)
+       }
+       self$otherPropertyType = otherPropertyType
+     },
+     
+     #'@description setOtherProperty
+     #'@param otherProperty otherProperty object of class \link{ISORecord}
+     setOtherProperty = function(otherProperty){
+       if(!is(otherProperty, "ISORecord")){
+         otherProperty = ISORecord$new(value = otherProperty)
+       }
+       self$otherProperty = otherProperty
      }
      
    )                        

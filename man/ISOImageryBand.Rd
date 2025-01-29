@@ -5,10 +5,10 @@
 \alias{ISOImageryBand}
 \title{ISOImageryBand}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO imagery band
+Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery band
 }
 \description{
 ISOImageryBand
@@ -45,6 +45,11 @@ ISOImageryBand
    
    xml <- md$encode()
 
+}
+\references{
+- ISO 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_Band}
+  
+  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrc/1.0/mrc/#element_MI_Band}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -90,6 +95,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -110,9 +116,12 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISORangeDimension" data-id="setDescription"><a href='../../geometa/html/ISORangeDimension.html#method-ISORangeDimension-setDescription'><code>geometa::ISORangeDimension$setDescription()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISORangeDimension" data-id="setDescriptor"><a href='../../geometa/html/ISORangeDimension.html#method-ISORangeDimension-setDescriptor'><code>geometa::ISORangeDimension$setDescriptor()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISORangeDimension" data-id="setName"><a href='../../geometa/html/ISORangeDimension.html#method-ISORangeDimension-setName'><code>geometa::ISORangeDimension$setName()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISORangeDimension" data-id="setSequenceIdentifier"><a href='../../geometa/html/ISORangeDimension.html#method-ISORangeDimension-setSequenceIdentifier'><code>geometa::ISORangeDimension$setSequenceIdentifier()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOBand" data-id="setBitsPerValue"><a href='../../geometa/html/ISOBand.html#method-ISOBand-setBitsPerValue'><code>geometa::ISOBand$setBitsPerValue()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOBand" data-id="setMaxValue"><a href='../../geometa/html/ISOBand.html#method-ISOBand-setMaxValue'><code>geometa::ISOBand$setMaxValue()</code></a></span></li>
@@ -137,7 +146,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }

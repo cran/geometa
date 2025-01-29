@@ -5,10 +5,10 @@
 \alias{ISOCitation}
 \title{ISOCitation}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO Citation
+Object of \code{\link[R6]{R6Class}} for modelling an ISO Citation
 }
 \description{
 ISOCitation
@@ -52,7 +52,9 @@ ISOCitation
  
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_CI_Citation}
+ 
+ - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/cit/2.0/cit/#element_CI_Citation}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -60,7 +62,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \keyword{ISO}
 \keyword{citation}
 \section{Super classes}{
-\code{\link[geometa:geometaLogger]{geometa::geometaLogger}} -> \code{\link[geometa:ISOAbstractObject]{geometa::ISOAbstractObject}} -> \code{ISOCitation}
+\code{\link[geometa:geometaLogger]{geometa::geometaLogger}} -> \code{\link[geometa:ISOAbstractObject]{geometa::ISOAbstractObject}} -> \code{\link[geometa:ISOAbstractCitation]{geometa::ISOAbstractCitation}} -> \code{ISOCitation}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -85,11 +87,15 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 
 \item{\code{otherCitationDetails}}{other citation details}
 
-\item{\code{collectiveTitle}}{collective title}
+\item{\code{collectiveTitle}}{collective title (for ISO 19139)}
 
 \item{\code{ISBN}}{ISBN}
 
 \item{\code{ISSN}}{ISSN}
+
+\item{\code{onlineResource}}{online resource (for ISO 19115-3)}
+
+\item{\code{graphic}}{graphic (for ISO 19115-3)}
 }
 \if{html}{\out{</div>}}
 }
@@ -98,19 +104,15 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \itemize{
 \item \href{#method-ISOCitation-new}{\code{ISOCitation$new()}}
 \item \href{#method-ISOCitation-setTitle}{\code{ISOCitation$setTitle()}}
-\item \href{#method-ISOCitation-setAlternateTitle}{\code{ISOCitation$setAlternateTitle()}}
 \item \href{#method-ISOCitation-addAlternateTitle}{\code{ISOCitation$addAlternateTitle()}}
 \item \href{#method-ISOCitation-delAlternateTitle}{\code{ISOCitation$delAlternateTitle()}}
 \item \href{#method-ISOCitation-addDate}{\code{ISOCitation$addDate()}}
 \item \href{#method-ISOCitation-setEdition}{\code{ISOCitation$setEdition()}}
 \item \href{#method-ISOCitation-setEditionDate}{\code{ISOCitation$setEditionDate()}}
-\item \href{#method-ISOCitation-setIdentifier}{\code{ISOCitation$setIdentifier()}}
 \item \href{#method-ISOCitation-addIdentifier}{\code{ISOCitation$addIdentifier()}}
 \item \href{#method-ISOCitation-delIdentifier}{\code{ISOCitation$delIdentifier()}}
-\item \href{#method-ISOCitation-setCitedResponsibleParty}{\code{ISOCitation$setCitedResponsibleParty()}}
 \item \href{#method-ISOCitation-addCitedResponsibleParty}{\code{ISOCitation$addCitedResponsibleParty()}}
 \item \href{#method-ISOCitation-delCitedResponsibleParty}{\code{ISOCitation$delCitedResponsibleParty()}}
-\item \href{#method-ISOCitation-setPresentationForm}{\code{ISOCitation$setPresentationForm()}}
 \item \href{#method-ISOCitation-addPresentationForm}{\code{ISOCitation$addPresentationForm()}}
 \item \href{#method-ISOCitation-delPresentationForm}{\code{ISOCitation$delPresentationForm()}}
 \item \href{#method-ISOCitation-setSeries}{\code{ISOCitation$setSeries()}}
@@ -118,6 +120,10 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item \href{#method-ISOCitation-setCollectiveTitle}{\code{ISOCitation$setCollectiveTitle()}}
 \item \href{#method-ISOCitation-setISBN}{\code{ISOCitation$setISBN()}}
 \item \href{#method-ISOCitation-setISSN}{\code{ISOCitation$setISSN()}}
+\item \href{#method-ISOCitation-addOnlineResource}{\code{ISOCitation$addOnlineResource()}}
+\item \href{#method-ISOCitation-delOnlineResource}{\code{ISOCitation$delOnlineResource()}}
+\item \href{#method-ISOCitation-addGraphic}{\code{ISOCitation$addGraphic()}}
+\item \href{#method-ISOCitation-delGraphic}{\code{ISOCitation$delGraphic()}}
 \item \href{#method-ISOCitation-clone}{\code{ISOCitation$clone()}}
 }
 }
@@ -129,6 +135,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -149,6 +156,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -166,7 +174,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -184,25 +192,6 @@ Set title
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{title}}{title}
-
-\item{\code{locales}}{list of localized names. Default is \code{NULL}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOCitation-setAlternateTitle"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOCitation-setAlternateTitle}{}}}
-\subsection{Method \code{setAlternateTitle()}}{
-Set alternate title
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$setAlternateTitle(alternateTitle, locales = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{alternateTitle}}{alternate title}
 
 \item{\code{locales}}{list of localized names. Default is \code{NULL}}
 }
@@ -313,23 +302,6 @@ Sets the edition date, either an ISODate object containing date and dateType or
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOCitation-setIdentifier"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOCitation-setIdentifier}{}}}
-\subsection{Method \code{setIdentifier()}}{
-Set identifier
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$setIdentifier(identifier)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{identifier}}{identifier, object of class \link{ISOMetaIdentifier}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ISOCitation-addIdentifier"></a>}}
 \if{latex}{\out{\hypertarget{method-ISOCitation-addIdentifier}{}}}
 \subsection{Method \code{addIdentifier()}}{
@@ -374,23 +346,6 @@ Deletes identifier
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOCitation-setCitedResponsibleParty"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOCitation-setCitedResponsibleParty}{}}}
-\subsection{Method \code{setCitedResponsibleParty()}}{
-Set cited responsible party
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$setCitedResponsibleParty(rp)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{rp}}{cited responsible party, object of class \link{ISOResponsibleParty}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ISOCitation-addCitedResponsibleParty"></a>}}
 \if{latex}{\out{\hypertarget{method-ISOCitation-addCitedResponsibleParty}{}}}
 \subsection{Method \code{addCitedResponsibleParty()}}{
@@ -402,7 +357,8 @@ Adds cited responsible party
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rp}}{cited responsible party, object of class \link{ISOResponsibleParty}}
+\item{\code{rp}}{cited responsible party, object of class \link{ISOResponsibleParty} (in ISO 19139) or
+\link{ISOResponsibility} (in ISO 19115-3)}
 
 \item{\code{locales}}{list of localized responsible parties. Default is \code{NULL}}
 }
@@ -424,7 +380,8 @@ Deletes cited responsible party
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rp}}{cited responsible party, object of class \link{ISOResponsibleParty}}
+\item{\code{rp}}{cited responsible party, object of class \link{ISOResponsibleParty} (in ISO 19139) or
+\link{ISOResponsibility} (in ISO 19115-3)}
 
 \item{\code{locales}}{list of localized responsible parties. Default is \code{NULL}}
 }
@@ -432,24 +389,6 @@ Deletes cited responsible party
 }
 \subsection{Returns}{
 \code{TRUE} if deleted, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOCitation-setPresentationForm"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOCitation-setPresentationForm}{}}}
-\subsection{Method \code{setPresentationForm()}}{
-Sets presentation form
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$setPresentationForm(presentationForm)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{presentationForm}}{presentation form, object of class \link{ISOPresentationForm} or \link{character} among values
-returned by \code{ISOPresentationForm$values()}}
-}
-\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -581,6 +520,86 @@ Set ISSN
 \item{\code{issn}}{issn}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOCitation-addOnlineResource"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOCitation-addOnlineResource}{}}}
+\subsection{Method \code{addOnlineResource()}}{
+Adds online resource
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$addOnlineResource(onlineResource)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{onlineResource}}{object of class \link{ISOOnlineResource}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOCitation-delOnlineResource"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOCitation-delOnlineResource}{}}}
+\subsection{Method \code{delOnlineResource()}}{
+Deletes online resource
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$delOnlineResource(onlineResource)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{onlineResource}}{object of class \link{ISOOnlineResource}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOCitation-addGraphic"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOCitation-addGraphic}{}}}
+\subsection{Method \code{addGraphic()}}{
+Adds graphic
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$addGraphic(graphic)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{graphic}}{object of class \link{ISOBrowseGraphic}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOCitation-delGraphic"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOCitation-delGraphic}{}}}
+\subsection{Method \code{delGraphic()}}{
+Adds graphic
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOCitation$delGraphic(graphic)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{graphic}}{object of class \link{ISOBrowseGraphic}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
 }
 }
 \if{html}{\out{<hr>}}

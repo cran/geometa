@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO property type
-#' @return Object of \code{\link{R6Class}} for modelling an ISOPropertyType
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOPropertyType
+#' @format \code{\link[R6]{R6Class}} object.
 #'  
 #' @references 
 #'   ISO 19110:2005 Methodology for Feature cataloguing
@@ -21,7 +21,7 @@ ISOPropertyType <- R6Class("ISOPropertyType",
     public = list(
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       #'@param defaults default values
       initialize = function(xml = NULL, defaults = NULL){
         if(is.null(defaults)) defaults <- list(cardinality = ISOMultiplicity$new(lower=1L,upper=1L))

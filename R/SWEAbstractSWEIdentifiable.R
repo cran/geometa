@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO SWE
-#' @return Object of \code{\link{R6Class}} for modelling an SWE abstract identifiable
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an SWE abstract identifiable
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   SWE Common Data Model Encoding Standard. https://www.ogc.org/standards/swecommon
@@ -28,7 +28,7 @@ SWEAbstractSWEIdentifiable <- R6Class("SWEAbstractSWEIdentifiable",
      description = NULL,
      
      #'@description Initializes a SWE Nil Values object
-     #'@param xml object of class \link{XMLInternalNode-class} from \pkg{XML}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class} from \pkg{XML}
      #'@param element element
      #'@param attrs attrs
      #'@param defaults defaults

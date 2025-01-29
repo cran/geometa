@@ -11,14 +11,12 @@
   assign(".geometa.iso", new.env(), envir= asNamespace(pkgname))
   assign(".geometa.iana", new.env(), envir= asNamespace(pkgname))
   
-  #set ISO metadata namespaces
-  setISOMetadataNamespaces()
+  #metadata schemas
+  setISOMetadataSchemas(version = "19139")
+  setISOMetadataSchemas(version = "19115-3")
   
-  #set ISO schemas
-  setISOMetadataSchemas()
-  
-  #set ISO codelists
-  setISOCodelists()
+  #set default metadata standard
+  setMetadataStandard(version = "19139")
   
   #set IANA Mime Types
   setIANAMimeTypes()

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO imagery requested date
-#' @return Object of \code{\link{R6Class}} for modelling an ISO imagery requested date
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery requested date
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'    #create band range dimension
@@ -15,7 +15,9 @@
 #'    xml <- md$encode()
 #'    
 #' @references 
-#'   ISO 19115-2:2009 - Geographic information -- Metadata Part 2: Extensions for imagery and gridded data
+#'   - 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_RequestedDate}
+#'   
+#'   - 19115-3 \url{https://schemas.isotc211.org/19115/-3/mac/2.0/mac/#element_MI_RequestedDate}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -23,7 +25,10 @@ ISOImageryRequestedDate <- R6Class("ISOImageryRequestedDate",
    inherit = ISOAbstractObject,
    private = list(
      xmlElement = "MI_RequestedDate",
-     xmlNamespacePrefix = "GMI"
+     xmlNamespacePrefix = list(
+       "19139" = "GMI",
+       "19115-3" = "MAC"
+     )
    ),
    public = list(
      
@@ -33,7 +38,7 @@ ISOImageryRequestedDate <- R6Class("ISOImageryRequestedDate",
      latestAcceptableDate = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },

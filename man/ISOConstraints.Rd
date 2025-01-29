@@ -5,10 +5,10 @@
 \alias{ISOConstraints}
 \title{ISOConstraints}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO abstract Constraints
+Object of \code{\link[R6]{R6Class}} for modelling an ISO abstract Constraints
 }
 \description{
 ISOConstraints
@@ -19,7 +19,9 @@ ISOConstraints
 Abstract ISO class
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_Constraints}
+
+  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mco/1.0/mco/#element_MD_Constraints}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -33,6 +35,16 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{useLimitation}}{useLimitation [0..*]: character}
+
+\item{\code{constraintApplicationScope}}{constraintApplicationScope [0..1]: ISOScope (=> ISO 19115-3)}
+
+\item{\code{graphic}}{graphic [0..*]: ISOBrowseGraphic (=> ISO 19115-3)}
+
+\item{\code{reference}}{reference [0..*]: ISOCitation (=> ISO 19115-3)}
+
+\item{\code{releasability}}{releasability [0..1]: ISOReleasability (=> ISO 19115-3)}
+
+\item{\code{responsibleParty}}{responsibleParty [0..*]: ISOAbstractResponsibility (=> ISO 19115-3)}
 }
 \if{html}{\out{</div>}}
 }
@@ -43,6 +55,14 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item \href{#method-ISOConstraints-addUseLimitation}{\code{ISOConstraints$addUseLimitation()}}
 \item \href{#method-ISOConstraints-setUseLimitation}{\code{ISOConstraints$setUseLimitation()}}
 \item \href{#method-ISOConstraints-delUseLimitation}{\code{ISOConstraints$delUseLimitation()}}
+\item \href{#method-ISOConstraints-setScope}{\code{ISOConstraints$setScope()}}
+\item \href{#method-ISOConstraints-addGraphic}{\code{ISOConstraints$addGraphic()}}
+\item \href{#method-ISOConstraints-delGraphic}{\code{ISOConstraints$delGraphic()}}
+\item \href{#method-ISOConstraints-addReference}{\code{ISOConstraints$addReference()}}
+\item \href{#method-ISOConstraints-delReference}{\code{ISOConstraints$delReference()}}
+\item \href{#method-ISOConstraints-setReleasability}{\code{ISOConstraints$setReleasability()}}
+\item \href{#method-ISOConstraints-addResponsibleParty}{\code{ISOConstraints$addResponsibleParty()}}
+\item \href{#method-ISOConstraints-delResponsibleParty}{\code{ISOConstraints$delResponsibleParty()}}
 \item \href{#method-ISOConstraints-clone}{\code{ISOConstraints$clone()}}
 }
 }
@@ -54,6 +74,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -74,6 +95,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -91,7 +113,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 
 \item{\code{defaults}}{list of default values}
 }
@@ -154,6 +176,160 @@ Deletes a use limitation
 \item{\code{useLimitation}}{use limitation}
 
 \item{\code{locales}}{list of localized use limitations. Default is \code{NULL}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-setScope"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-setScope}{}}}
+\subsection{Method \code{setScope()}}{
+Set scope
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$setScope(scope)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{scope}}{object of class \link{ISOScope}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-addGraphic"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-addGraphic}{}}}
+\subsection{Method \code{addGraphic()}}{
+Adds a graphic
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$addGraphic(graphic)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{graphic}}{graphic}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-delGraphic"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-delGraphic}{}}}
+\subsection{Method \code{delGraphic()}}{
+Deletes a graphic
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$delGraphic(graphic)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{graphic}}{graphic}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-addReference"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-addReference}{}}}
+\subsection{Method \code{addReference()}}{
+Adds a reference
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$addReference(reference)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{reference}}{reference}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-delReference"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-delReference}{}}}
+\subsection{Method \code{delReference()}}{
+Deletes a reference
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$delReference(reference)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{reference}}{reference}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-setReleasability"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-setReleasability}{}}}
+\subsection{Method \code{setReleasability()}}{
+Set releasbility
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$setReleasability(releasability)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{releasability}}{object of class \link{ISOReleasability}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-addResponsibleParty"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-addResponsibleParty}{}}}
+\subsection{Method \code{addResponsibleParty()}}{
+Adds a responsible party
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$addResponsibleParty(party)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{party}}{party object of class inheriting \link{ISOAbstractResponsibility}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOConstraints-delResponsibleParty"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOConstraints-delResponsibleParty}{}}}
+\subsection{Method \code{delResponsibleParty()}}{
+Deletes a responsible party
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOConstraints$delResponsibleParty(party)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{party}}{party object of class inheriting \link{ISOAbstractResponsibility}}
 }
 \if{html}{\out{</div>}}
 }

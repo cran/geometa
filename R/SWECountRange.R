@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO SWE
-#' @return Object of \code{\link{R6Class}} for modelling an SWE CountRange
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an SWE CountRange
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   SWE Common Data Model Encoding Standard. https://www.ogc.org/standards/swecommon
@@ -27,7 +27,7 @@ SWECountRange <- R6Class("SWECountRange",
     value = matrix(NA_integer_, 1, 2),
     
     #'@description Initializes an object of class \link{SWECountRange}
-    #'@param xml object of class \link{XMLInternalNode-class} from \pkg{XML}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class} from \pkg{XML}
     #'@param constraint constraint
     #'@param value value
     #'@param updatable updatable

@@ -3,8 +3,8 @@
 #' @docType class
 #' @export
 #' @keywords GML GMLCOV Coverage
-#' @return Object of \code{\link{R6Class}} for modelling a GMLCOV Abstract Coverage
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling a GMLCOV Abstract Coverage
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   GML 3.2.1 Application Schema for Coverages http://www.opengis.net/gmlcov/1.0
@@ -12,7 +12,7 @@
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 GMLCOVAbstractCoverage <-  R6Class("GMLCOVAbstractCoverage",
-  inherit = geometa::GMLAbstractCoverage,
+  inherit = GMLAbstractCoverage,
   private = list(
     xmlElement = "AbstractCoverage",
     xmlNamespacePrefix = "GMLCOV"
@@ -26,7 +26,7 @@ GMLCOVAbstractCoverage <-  R6Class("GMLCOVAbstractCoverage",
     metadata = NULL,
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param element element name
     #'@param attrs list of attributes
     #'@param defaults list of default values

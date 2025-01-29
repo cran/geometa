@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML element
-#' @return Object of \code{\link{R6Class}} for modelling an GML element
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML element
+#' @format \code{\link[R6]{R6Class}} object.
 #'
 #' @section Methods:
 #' \describe{
@@ -31,7 +31,7 @@ SWEElement <- R6Class("SWEElement",
   public = list(
     
     #'@description Initializes a generic abstract SWE element
-    #'@param xml object of class \link{XMLInternalNode-class} from \pkg{XML}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class} from \pkg{XML}
     #'@param element element
     #'@param attrs attrs
     #'@param defaults defaults
@@ -42,7 +42,7 @@ SWEElement <- R6Class("SWEElement",
     },
     
     #'@description Decodes object from XML
-    #'@param xml object of class \link{XMLInternalNode-class} from \pkg{XML}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class} from \pkg{XML}
     decode = function(xml){
       fieldName <- xmlName(xml)
       nsPrefix <- ""

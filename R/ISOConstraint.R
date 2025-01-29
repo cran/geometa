@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO feature constraint
-#' @return Object of \code{\link{R6Class}} for modelling an ISOConstraint
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOConstraint
+#' @format \code{\link[R6]{R6Class}} object.
 #'  
 #' @examples 
 #'   md <- ISOConstraint$new(description = "description")
@@ -28,7 +28,7 @@ ISOConstraint <- R6Class("ISOConstraint",
      description = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param description description
      initialize = function(xml = NULL, description = NULL){
        super$initialize(xml = xml)

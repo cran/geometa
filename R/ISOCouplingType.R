@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO coupling type
-#' @return Object of \code{\link{R6Class}} for modelling an ISOCouplingType
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOCouplingType
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'   #possible values
@@ -15,7 +15,9 @@
 #'   couplingType <- ISOCouplingType$new(value = "loose")
 #' 
 #' @references 
-#'   ISO 19119:2005 - Geographic information -- Services
+#'  - ISO 19139 \url{https://schemas.isotc211.org/19119/-/srv/1.0/srv/#element_SV_CouplingType}
+#'  
+#'  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/srv/2.0/srv/#element_SV_CouplingType}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -28,7 +30,7 @@ ISOCouplingType <- R6Class("ISOCouplingType",
    public = list(
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       #'@param value value
       #'@param description description
       initialize = function(xml = NULL, value, description = NULL){

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO SWE
-#' @return Object of \code{\link{R6Class}} for modelling an SWE Abstract data component
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an SWE Abstract data component
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @note Class used internally by geometa
 #' 
@@ -26,7 +26,7 @@ SWEAbstractDataComponent <- R6Class("SWEAbstractDataComponent",
     name = list(),
     
     #'@description Initializes an object of class \link{SWEAbstractDataComponent}
-    #'@param xml object of class \link{XMLInternalNode-class} from \pkg{XML}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class} from \pkg{XML}
     #'@param element element
     #'@param updatable updatable
     #'@param optional optional

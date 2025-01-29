@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML EnvelopeWithTimePeriod
-#' @return Object of \code{\link{R6Class}} for modelling an GML envelope with time period
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML envelope with time period
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   ISO 19136:2007 Geographic Information -- Geographic Markup Language.
@@ -30,7 +30,7 @@ GMLEnvelopeWithTimePeriod <- R6Class("GMLEnvelopeWithTimePeriod",
      #'@description Initializes a GML envelope with time period. The argument 'bbox' should be 
      #' a matrix of dim 2,2 giving the x/y min/max values of a bouding box, as returned by 
      #' \code{bbox} function in package \pkg{sp}.
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param element element
      #'@param bbox object of class \link{matrix}
      #'@param beginPosition begin position, object of class \link{Date} or \link{POSIXct-class}
@@ -54,7 +54,7 @@ GMLEnvelopeWithTimePeriod <- R6Class("GMLEnvelopeWithTimePeriod",
      },
      
      #'@description Decodes an XML representation
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      decode = function(xml){
         super$decode(xml)
         #backward compatibility in case of GML < 3

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML LineString
-#' @return Object of \code{\link{R6Class}} for modelling an GML linestring
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML linestring
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @note Experimental
 #' 
@@ -28,7 +28,7 @@ GMLLineString <- R6Class("GMLLineString",
     posList = matrix(NA_real_, 2, 2),
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param sfg simple feature geometry resulting from \pkg{sf}
     initialize = function(xml = NULL, sfg){
       super$initialize(xml, element = private$xmlElement, wrap = TRUE)

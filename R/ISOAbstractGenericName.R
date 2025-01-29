@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO abstract generic name
-#' @return Object of \code{\link{R6Class}} for modelling an ISO abstract GenericName
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO abstract GenericName
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references
 #'  ISO/TS 19103:2005 Geographic information -- Conceptual schema language
@@ -23,7 +23,7 @@ ISOAbstractGenericName <- R6Class("ISOAbstractGenericName",
     value = NA,
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param value value
     #'@param codeSpace code space
     initialize = function(xml = NULL, value = NULL, codeSpace = NULL){

@@ -5,10 +5,10 @@
 \alias{ISOStandardOrderProcess}
 \title{ISOStandardOrderProcess}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO StandardOrderProcess
+Object of \code{\link[R6]{R6Class}} for modelling an ISO StandardOrderProcess
 }
 \description{
 ISOStandardOrderProcess
@@ -25,7 +25,9 @@ ISOStandardOrderProcess
 
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_StandardOrderProcess}
+  
+  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrd/1.0/mrd/#element_MD_StandardOrderProcess}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -45,6 +47,10 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item{\code{orderingInstructions}}{orderingInstructions [0..1]: character}
 
 \item{\code{turnaround}}{turnaround [0..1]: character}
+
+\item{\code{orderOptionsType}}{orderOptionsType [0..1]: ISORecordType (=> ISO 19115-3)}
+
+\item{\code{orderOptions}}{orderOptions [0..1]: ISORecord (=> ISO 19115-3)}
 }
 \if{html}{\out{</div>}}
 }
@@ -56,6 +62,8 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item \href{#method-ISOStandardOrderProcess-setPlannedAvailableDateTime}{\code{ISOStandardOrderProcess$setPlannedAvailableDateTime()}}
 \item \href{#method-ISOStandardOrderProcess-setOrderingInstructions}{\code{ISOStandardOrderProcess$setOrderingInstructions()}}
 \item \href{#method-ISOStandardOrderProcess-setTurnaround}{\code{ISOStandardOrderProcess$setTurnaround()}}
+\item \href{#method-ISOStandardOrderProcess-setOrderOptionsType}{\code{ISOStandardOrderProcess$setOrderOptionsType()}}
+\item \href{#method-ISOStandardOrderProcess-setOrderOptions}{\code{ISOStandardOrderProcess$setOrderOptions()}}
 \item \href{#method-ISOStandardOrderProcess-clone}{\code{ISOStandardOrderProcess$clone()}}
 }
 }
@@ -67,6 +75,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -87,6 +96,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -104,7 +114,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -179,6 +189,40 @@ Set turnaround
 \item{\code{turnaround}}{turnaround}
 
 \item{\code{locales}}{list of localized texts. Default is \code{NULL}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOStandardOrderProcess-setOrderOptionsType"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOStandardOrderProcess-setOrderOptionsType}{}}}
+\subsection{Method \code{setOrderOptionsType()}}{
+Set order options type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOStandardOrderProcess$setOrderOptionsType(orderOptionsType)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{orderOptionsType}}{orderOptionsType object of class \link{ISORecordType} or \link{character}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOStandardOrderProcess-setOrderOptions"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOStandardOrderProcess-setOrderOptions}{}}}
+\subsection{Method \code{setOrderOptions()}}{
+Set order options
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOStandardOrderProcess$setOrderOptions(orderOptions)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{orderOptions}}{orderOptions object of class \link{ISORecord} or \link{character}}
 }
 \if{html}{\out{</div>}}
 }

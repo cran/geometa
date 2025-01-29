@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO vertical extent
-#' @return Object of \code{\link{R6Class}} for modelling an ISO VerticalExtent
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO VerticalExtent
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'   ve <- ISOVerticalExtent$new()
@@ -14,7 +14,9 @@
 #'   xml <- ve$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata
+#'  - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_EX_VerticalExtent}
+#'  
+#'  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/gex/1.0/gex/#element_EX_VerticalExtent}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -22,7 +24,10 @@ ISOVerticalExtent <- R6Class("ISOVerticalExtent",
   inherit = ISOAbstractObject,
   private = list(
     xmlElement = "EX_VerticalExtent",
-    xmlNamespacePrefix = "GMD"
+    xmlNamespacePrefix = list(
+      "19139" = "GMD",
+      "19115-3" = "GEX"
+    )
   ),
   public = list(
     #'@field minimumValue minimumValue [1..1]: numeric
@@ -35,7 +40,7 @@ ISOVerticalExtent <- R6Class("ISOVerticalExtent",
     verticalCRS = NA,
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     initialize = function(xml = NULL){
       super$initialize(xml = xml)
     },

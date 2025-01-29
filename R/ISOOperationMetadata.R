@@ -4,15 +4,17 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO OperationMetadata
-#' @return Object of \code{\link{R6Class}} for modelling an ISOOperationMetadata
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOOperationMetadata
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'   md <- ISOOperationMetadata$new()
 #'   xml <- md$encode()
 #' 
 #' @references 
-#'   ISO 19119:2005 - Geographic information -- Services
+#'  - ISO 19139 \url{https://schemas.isotc211.org/19119/-/srv/1.0/srv/#element_SV_OperationMetadata}
+#'  
+#'  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/srv/2.0/srv/#element_SV_OperationMetadata}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -32,7 +34,7 @@ ISOOperationMetadata <- R6Class("ISOOperationMetadata",
     operationDescription = NULL,
     #'@field invocationName invocationName [0..1]: character
     invocationName = NULL,
-    #'@field parameters parameters [0..*]: ISOParameter
+    #'@field parameters parameters [0..*]: ISOSRVParameter
     parameters = list(),
     #'@field connectPoint connectPoint [1..*]: ISOOnlineResource
     connectPoint = list(),
@@ -40,7 +42,7 @@ ISOOperationMetadata <- R6Class("ISOOperationMetadata",
     dependsOn = list(),
  
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     initialize = function(xml = NULL){
       super$initialize(xml = xml)
     },
@@ -98,21 +100,21 @@ ISOOperationMetadata <- R6Class("ISOOperationMetadata",
     },
     
     #'@description Adds parameter
-    #'@param parameter object of class \link{ISOParameter}
+    #'@param parameter object of class \link{ISOSRVParameter}
     #'@return \code{TRUE} if added, \code{FALSE} otherwise
     addParameter = function(parameter){
-      if(!is(parameter, "ISOParameter")){
-        stop("The argument value should be an object of class 'ISOParameter'")
+      if(!is(parameter, "ISOSRVParameter")){
+        stop("The argument value should be an object of class 'ISOSRVParameter'")
       }
       return(self$addListElement("parameters", parameter))
     },
     
     #'@description Deletes parameter
-    #'@param parameter object of class \link{ISOParameter}
+    #'@param parameter object of class \link{ISOSRVParameter}
     #'@return \code{TRUE} if deleted, \code{FALSE} otherwise
     delParameter = function(parameter){
-      if(!is(parameter, "ISOParameter")){
-        stop("The argument value should be an object of class 'ISOParameter'")
+      if(!is(parameter, "ISOSRVParameter")){
+        stop("The argument value should be an object of class 'ISOSRVParameter'")
       }
       return(self$delListElement("parameters", parameter))
     },

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO time period
-#' @return Object of \code{\link{R6Class}} for modelling an GMLTimePeriod
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GMLTimePeriod
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   start <- ISOdate(2000, 1, 12, 12, 59, 45)
@@ -30,7 +30,7 @@ GMLTimePeriod <- R6Class("GMLTimePeriod",
     duration = NULL,
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param beginPosition object of class \link{numeric}, \link{Date} or \link{POSIXct-class}
     #'@param endPosition object of class \link{numeric}, \link{Date} or \link{POSIXct-class}
     initialize = function(xml = NULL, beginPosition = NULL, endPosition = NULL){

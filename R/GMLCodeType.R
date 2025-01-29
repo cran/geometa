@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords GML codetype
-#' @return Object of \code{\link{R6Class}} for modelling a GML code type
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling a GML code type
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   ISO 19136:2007 Geographic Information -- Geographic Markup Language.
@@ -28,7 +28,7 @@ GMLCodeType <- R6Class("GMLCodeType",
     attrs = list(),
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param value value
     #'@param codeSpace code space
     initialize = function(xml = NULL, value = NULL, codeSpace = NULL){

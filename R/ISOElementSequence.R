@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO record
-#' @return Object of \code{\link{R6Class}} for modelling an ISOElementSequence
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOElementSequence
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @note This class is used internally by geometa to deal with simple type not
 #' handled by proper class element. e.g. \code{name} property of \code{ISOParameter}
@@ -26,7 +26,7 @@ ISOElementSequence <- R6Class("ISOElementSequence",
    public = list(
       
      #'@description Initializes sequence object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param ... other args
      initialize = function(xml = NULL, ...){
        super$initialize(xml = xml)

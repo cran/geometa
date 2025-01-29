@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO imagery environmental record
-#' @return Object of \code{\link{R6Class}} for modelling an ISO imagery environmental record
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery environmental record
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' 
 #' @examples
@@ -17,7 +17,9 @@
 #'    xml <- md$encode()
 #' 
 #' @references 
-#'   ISO 19115-2:2009 - Geographic information -- Metadata Part 2: Extensions for imagery and gridded data
+#'   - 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_EnvironmentalRecord}
+#'   
+#'   - 19115-3 \url{https://schemas.isotc211.org/19115/-3/mac/2.0/mac/#element_MI_EnvironmentalRecord}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #' 
@@ -25,7 +27,10 @@ ISOImageryEnvironmentalRecord <- R6Class("ISOImageryEnvironmentalRecord",
   inherit = ISOAbstractObject,
   private = list(
     xmlElement = "MI_EnvironmentalRecord",
-    xmlNamespacePrefix = "GMI"
+    xmlNamespacePrefix = list(
+      "19139" = "GMI",
+      "19115-3" = "MAC"
+    )
   ),
   public = list(
     
@@ -37,9 +42,13 @@ ISOImageryEnvironmentalRecord <- R6Class("ISOImageryEnvironmentalRecord",
     maxAltitude = NULL,
     #'@field meterologicalConditions meterologicalConditions
     meterologicalConditions = NULL,
+    #'@field solarAzimuth solarAzimuth
+    solarAzimuth = NULL,
+    #'@field solarElevation solarElevation
+    solarElevation = NULL,
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     initialize = function(xml = NULL){
       super$initialize(xml = xml)
     },
@@ -91,6 +100,32 @@ ISOImageryEnvironmentalRecord <- R6Class("ISOImageryEnvironmentalRecord",
         conditions <- self$createLocalisedProperty(conditions, locales)
       }
       self$meterologicalConditions <- conditions
+    },
+    
+    #'@description Set solar azimuth
+    #'@param solarAzimuth object of class \link{numeric}
+    setSolarAzimuth = function(solarAzimuth){
+      sa <- solarAzimuth
+      if(!is(sa, "numeric")){
+        sa <- as.numeric(sa)
+        if(is.na(sa)){
+          stop("The argument should be an object of class or coerceable to 'numeric'")
+        }
+      }
+      self$solarAzimuth <- sa
+    },
+    
+    #'@description Set solar elevation
+    #'@param solarElevation object of class \link{numeric}
+    setSolarElevation = function(solarElevation){
+      se <- solarElevation
+      if(!is(se, "numeric")){
+        se <- as.numeric(se)
+        if(is.na(se)){
+          stop("The argument should be an object of class or coerceable to 'numeric'")
+        }
+      }
+      self$solarElevation <- se
     }
     
   )                        

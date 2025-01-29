@@ -5,10 +5,10 @@
 \alias{ISOFeatureAssociation}
 \title{ISOFeatureAssociation}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISOFeatureAssociation
+Object of \code{\link[R6]{R6Class}} for modelling an ISOFeatureAssociation
 }
 \description{
 ISOFeatureAssociation
@@ -51,6 +51,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -71,24 +72,9 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="addAlias"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-addAlias'><code>geometa::ISOFeatureType$addAlias()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="addCharacteristic"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-addCharacteristic'><code>geometa::ISOFeatureType$addCharacteristic()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="addConstraint"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-addConstraint'><code>geometa::ISOFeatureType$addConstraint()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="addInheritsFrom"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-addInheritsFrom'><code>geometa::ISOFeatureType$addInheritsFrom()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="addInheritsTo"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-addInheritsTo'><code>geometa::ISOFeatureType$addInheritsTo()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="delAlias"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-delAlias'><code>geometa::ISOFeatureType$delAlias()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="delCharacteristic"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-delCharacteristic'><code>geometa::ISOFeatureType$delCharacteristic()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="delConstraint"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-delConstraint'><code>geometa::ISOFeatureType$delConstraint()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="delInheritsFrom"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-delInheritsFrom'><code>geometa::ISOFeatureType$delInheritsFrom()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="delInheritsTo"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-delInheritsTo'><code>geometa::ISOFeatureType$delInheritsTo()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="setCode"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-setCode'><code>geometa::ISOFeatureType$setCode()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="setDefinition"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-setDefinition'><code>geometa::ISOFeatureType$setDefinition()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="setDefinitionReference"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-setDefinitionReference'><code>geometa::ISOFeatureType$setDefinitionReference()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="setFeatureCatalogue"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-setFeatureCatalogue'><code>geometa::ISOFeatureType$setFeatureCatalogue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="setIsAbstract"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-setIsAbstract'><code>geometa::ISOFeatureType$setIsAbstract()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOFeatureType" data-id="setTypeName"><a href='../../geometa/html/ISOFeatureType.html#method-ISOFeatureType-setTypeName'><code>geometa::ISOFeatureType$setTypeName()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -104,7 +90,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }

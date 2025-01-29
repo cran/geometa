@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO imagery band
-#' @return Object of \code{\link{R6Class}} for modelling an ISO imagery band
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery band
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'    #create band range dimension
@@ -38,12 +38,21 @@
 #'    xml <- md$encode()
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
+#' 
+#' @references
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_Band}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrc/1.0/mrc/#element_MI_Band}
+#' 
 #'
 ISOImageryBand <- R6Class("ISOImageryBand",
    inherit = ISOBand,
    private = list(
      xmlElement = "MI_Band",
-     xmlNamespacePrefix = "GMI"
+     xmlNamespacePrefix = list(
+       "19139" = "GMI",
+       "19115-3" = "MRC"
+     )
    ),
    public = list(
      #'@field bandBoundaryDefinition bandBoundaryDefinition [0..1]: ISOImageryBandDefinition
@@ -58,7 +67,7 @@ ISOImageryBand <- R6Class("ISOImageryBand",
      detectedPolarisation = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },

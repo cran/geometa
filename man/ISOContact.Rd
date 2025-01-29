@@ -5,10 +5,10 @@
 \alias{ISOContact}
 \title{ISOContact}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO Contact
+Object of \code{\link[R6]{R6Class}} for modelling an ISO Contact
 }
 \description{
 ISOContact
@@ -36,7 +36,9 @@ ISOContact
  
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_CI_Contact}
+ 
+ - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/cit/2.0/cit/#element_CI_Contact}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -54,6 +56,12 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item{\code{address}}{address}
 
 \item{\code{onlineResource}}{online resource}
+
+\item{\code{hoursOfService}}{hours of service}
+
+\item{\code{contactInstructions}}{contact instructions}
+
+\item{\code{contactType}}{contact type}
 }
 \if{html}{\out{</div>}}
 }
@@ -62,8 +70,18 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \itemize{
 \item \href{#method-ISOContact-new}{\code{ISOContact$new()}}
 \item \href{#method-ISOContact-setPhone}{\code{ISOContact$setPhone()}}
+\item \href{#method-ISOContact-addPhone}{\code{ISOContact$addPhone()}}
+\item \href{#method-ISOContact-delPhone}{\code{ISOContact$delPhone()}}
 \item \href{#method-ISOContact-setAddress}{\code{ISOContact$setAddress()}}
+\item \href{#method-ISOContact-addAddress}{\code{ISOContact$addAddress()}}
+\item \href{#method-ISOContact-delAddress}{\code{ISOContact$delAddress()}}
 \item \href{#method-ISOContact-setOnlineResource}{\code{ISOContact$setOnlineResource()}}
+\item \href{#method-ISOContact-addOnlineResource}{\code{ISOContact$addOnlineResource()}}
+\item \href{#method-ISOContact-delOnlineResource}{\code{ISOContact$delOnlineResource()}}
+\item \href{#method-ISOContact-addHoursOfService}{\code{ISOContact$addHoursOfService()}}
+\item \href{#method-ISOContact-delHoursOfService}{\code{ISOContact$delHoursOfService()}}
+\item \href{#method-ISOContact-setContactInstructions}{\code{ISOContact$setContactInstructions()}}
+\item \href{#method-ISOContact-setContactType}{\code{ISOContact$setContactType()}}
 \item \href{#method-ISOContact-clone}{\code{ISOContact$clone()}}
 }
 }
@@ -75,6 +93,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -95,6 +114,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -112,7 +132,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -121,7 +141,7 @@ Initializes object
 \if{html}{\out{<a id="method-ISOContact-setPhone"></a>}}
 \if{latex}{\out{\hypertarget{method-ISOContact-setPhone}{}}}
 \subsection{Method \code{setPhone()}}{
-Set phone
+Set phone (with ISO 19139)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ISOContact$setPhone(phone)}\if{html}{\out{</div>}}
 }
@@ -135,10 +155,50 @@ Set phone
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-addPhone"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-addPhone}{}}}
+\subsection{Method \code{addPhone()}}{
+Adds phone (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$addPhone(phone)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{phone}}{object tof class \link{ISOTelephone}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-delPhone"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-delPhone}{}}}
+\subsection{Method \code{delPhone()}}{
+Deletes phone (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$delPhone(phone)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{phone}}{object tof class \link{ISOTelephone}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ISOContact-setAddress"></a>}}
 \if{latex}{\out{\hypertarget{method-ISOContact-setAddress}{}}}
 \subsection{Method \code{setAddress()}}{
-Set address
+Set address (with ISO 19139)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ISOContact$setAddress(address)}\if{html}{\out{</div>}}
 }
@@ -152,10 +212,50 @@ Set address
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-addAddress"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-addAddress}{}}}
+\subsection{Method \code{addAddress()}}{
+Adds address (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$addAddress(address)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{address}}{object of class \link{ISOAddress}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-delAddress"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-delAddress}{}}}
+\subsection{Method \code{delAddress()}}{
+Deletes address (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$delAddress(address)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{address}}{object of class \link{ISOAddress}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ISOContact-setOnlineResource"></a>}}
 \if{latex}{\out{\hypertarget{method-ISOContact-setOnlineResource}{}}}
 \subsection{Method \code{setOnlineResource()}}{
-Set online resource
+Set online resource (with ISO 19139)
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ISOContact$setOnlineResource(onlineResource)}\if{html}{\out{</div>}}
 }
@@ -164,6 +264,124 @@ Set online resource
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{onlineResource}}{online resource, object of class \link{ISOOnlineResource}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-addOnlineResource"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-addOnlineResource}{}}}
+\subsection{Method \code{addOnlineResource()}}{
+Adds online resource (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$addOnlineResource(onlineResource)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{onlineResource}}{online resource, object of class \link{ISOOnlineResource}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-delOnlineResource"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-delOnlineResource}{}}}
+\subsection{Method \code{delOnlineResource()}}{
+Deletes online resource (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$delOnlineResource(onlineResource)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{onlineResource}}{online resource, object of class \link{ISOOnlineResource}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-addHoursOfService"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-addHoursOfService}{}}}
+\subsection{Method \code{addHoursOfService()}}{
+Adds hours of service (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$addHoursOfService(hoursOfService)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{hoursOfService}}{object of class \link{character}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-delHoursOfService"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-delHoursOfService}{}}}
+\subsection{Method \code{delHoursOfService()}}{
+Deletes hours of service (with ISO 19115-3)
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$delHoursOfService(hoursOfService)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{hoursOfService}}{object of class \link{character}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-setContactInstructions"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-setContactInstructions}{}}}
+\subsection{Method \code{setContactInstructions()}}{
+Set contact instructions
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$setContactInstructions(contactInstructions, locales = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{contactInstructions}}{contact instructions}
+
+\item{\code{locales}}{list of localized editions. Default is \code{NULL}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOContact-setContactType"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOContact-setContactType}{}}}
+\subsection{Method \code{setContactType()}}{
+Set contact type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOContact$setContactType(contactType, locales = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{contactType}}{contact type}
+
+\item{\code{locales}}{list of localized editions. Default is \code{NULL}}
 }
 \if{html}{\out{</div>}}
 }

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO feature operation
-#' @return Object of \code{\link{R6Class}} for modelling an ISOFeatureAttribute
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOFeatureAttribute
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   md <- ISOFeatureAttribute$new()
@@ -59,7 +59,7 @@ ISOFeatureAttribute <- R6Class("ISOFeatureAttribute",
      listedValue = list(),
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },
@@ -75,11 +75,19 @@ ISOFeatureAttribute <- R6Class("ISOFeatureAttribute",
      },
      
      #'@description Set value measurement unit
-     #'@param uom uom, object of class \link{GMLUnitDefinition}
+     #'@param uom uom, object of class \link{GMLUnitDefinition} (in ISO 19139) 
+     #'or \link{ISOUomIdentifier} / \link{character} (in ISO 19115-3)
      setValueMeasurementUnit = function(uom){
-       if(!is(uom, "GMLUnitDefinition")){
-         stop("The argument should be an object of class 'GMLUnitDefinition")
-       } 
+       switch(getMetadataStandard(),
+        "19139" = {
+          if(!is(uom, "GMLUnitDefinition")){
+            stop("The argument should be an object of class 'GMLUnitDefinition")
+          } 
+        },
+        "19115-3" = {
+          if(!is(uom, "ISOUomIdentifier")) uom = ISOUomIdentifier$new(value = uom)
+        }
+       )
        self$valueMeasurementUnit <- uom
      },
      

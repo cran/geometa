@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO citation series
-#' @return Object of \code{\link{R6Class}} for modelling an ISOCitationSeries
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOCitationSeries
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   ISO 19115:2003 - Geographic information -- Metadata 
@@ -16,7 +16,10 @@ ISOCitationSeries <- R6Class("ISOCitationSeries",
    inherit = ISOAbstractObject,
    private = list(
      xmlElement = "CI_Series",
-     xmlNamespacePrefix = "GMD"
+     xmlNamespacePrefix = list(
+       "19139" = "GMD",
+       "19115-3" = "CIT"
+     )
    ),
    public = list(
      #'@field name name [0..1]
@@ -27,7 +30,7 @@ ISOCitationSeries <- R6Class("ISOCitationSeries",
      page = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },

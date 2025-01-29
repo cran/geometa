@@ -5,10 +5,10 @@
 \alias{ISOAddress}
 \title{ISOAddress}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO Address
+Object of \code{\link[R6]{R6Class}} for modelling an ISO Address
 }
 \description{
 ISOAddress
@@ -26,7 +26,9 @@ ISOAddress
  
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_CI_Address}
+ 
+ - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/cit/2.0/cit/#element_CI_Address}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -56,10 +58,14 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \itemize{
 \item \href{#method-ISOAddress-new}{\code{ISOAddress$new()}}
 \item \href{#method-ISOAddress-setDeliveryPoint}{\code{ISOAddress$setDeliveryPoint()}}
+\item \href{#method-ISOAddress-addDeliveryPoint}{\code{ISOAddress$addDeliveryPoint()}}
+\item \href{#method-ISOAddress-delDeliveryPoint}{\code{ISOAddress$delDeliveryPoint()}}
 \item \href{#method-ISOAddress-setCity}{\code{ISOAddress$setCity()}}
 \item \href{#method-ISOAddress-setPostalCode}{\code{ISOAddress$setPostalCode()}}
 \item \href{#method-ISOAddress-setCountry}{\code{ISOAddress$setCountry()}}
 \item \href{#method-ISOAddress-setEmail}{\code{ISOAddress$setEmail()}}
+\item \href{#method-ISOAddress-addEmail}{\code{ISOAddress$addEmail()}}
+\item \href{#method-ISOAddress-delEmail}{\code{ISOAddress$delEmail()}}
 \item \href{#method-ISOAddress-clone}{\code{ISOAddress$clone()}}
 }
 }
@@ -71,6 +77,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -91,6 +98,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -108,7 +116,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -130,6 +138,50 @@ Set delivery point
 \item{\code{locales}}{list of localized names}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOAddress-addDeliveryPoint"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOAddress-addDeliveryPoint}{}}}
+\subsection{Method \code{addDeliveryPoint()}}{
+Adds delivery point
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOAddress$addDeliveryPoint(deliveryPoint, locales = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deliveryPoint}}{delivery point}
+
+\item{\code{locales}}{list of localized names}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOAddress-delDeliveryPoint"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOAddress-delDeliveryPoint}{}}}
+\subsection{Method \code{delDeliveryPoint()}}{
+Deletes delivery point
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOAddress$delDeliveryPoint(deliveryPoint, locales = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deliveryPoint}}{delivery point}
+
+\item{\code{locales}}{list of localized names}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
 }
 }
 \if{html}{\out{<hr>}}
@@ -206,6 +258,50 @@ Set email
 \item{\code{locales}}{list of localized names}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOAddress-addEmail"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOAddress-addEmail}{}}}
+\subsection{Method \code{addEmail()}}{
+Adds email
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOAddress$addEmail(email, locales = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{email}}{email}
+
+\item{\code{locales}}{list of localized names}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOAddress-delEmail"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOAddress-delEmail}{}}}
+\subsection{Method \code{delEmail()}}{
+Deletes email
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOAddress$delEmail(email, locales = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{email}}{email}
+
+\item{\code{locales}}{list of localized names}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
 }
 }
 \if{html}{\out{<hr>}}

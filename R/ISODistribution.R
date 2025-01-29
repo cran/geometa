@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO distribution
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Distribution
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO Distribution
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   md <- ISODistribution$new()
@@ -24,7 +24,9 @@
 #'   xml <- md$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_Distribution}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrd/1.0/mrd/#element_MD_Distribution}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -32,7 +34,10 @@ ISODistribution <- R6Class("ISODistribution",
    inherit = ISOAbstractObject,
    private = list(
       xmlElement = "MD_Distribution",
-      xmlNamespacePrefix = "GMD"
+      xmlNamespacePrefix = list(
+        "19139" = "GMD",
+        "19115-3" = "MRD"
+      )
    ),
    public = list(
      
@@ -44,7 +49,7 @@ ISODistribution <- R6Class("ISODistribution",
      transferOptions = list(),
     
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },

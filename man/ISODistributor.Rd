@@ -5,10 +5,10 @@
 \alias{ISODistributor}
 \title{ISODistributor}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISODistributor
+Object of \code{\link[R6]{R6Class}} for modelling an ISODistributor
 }
 \description{
 ISODistributor
@@ -53,7 +53,9 @@ ISODistributor
  
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_Distributor}
+  
+  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrd/1.0/mrd/#element_MD_Distributor}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -68,7 +70,11 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \describe{
 \item{\code{distributorContact}}{distributorContact : ISOResponsibleParty}
 
+\item{\code{distributionOrderProcess}}{distributionOrderProcess : ISOStandardOrderProcess}
+
 \item{\code{distributorFormat}}{distributorFormat : ISOFormat}
+
+\item{\code{distributorTransferOptions}}{distributorTransferOptions : ISODigitalTransferOptions}
 }
 \if{html}{\out{</div>}}
 }
@@ -77,8 +83,12 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \itemize{
 \item \href{#method-ISODistributor-new}{\code{ISODistributor$new()}}
 \item \href{#method-ISODistributor-setContact}{\code{ISODistributor$setContact()}}
+\item \href{#method-ISODistributor-addStandardOrderProcess}{\code{ISODistributor$addStandardOrderProcess()}}
+\item \href{#method-ISODistributor-delStandardOrderProcess}{\code{ISODistributor$delStandardOrderProcess()}}
 \item \href{#method-ISODistributor-addFormat}{\code{ISODistributor$addFormat()}}
 \item \href{#method-ISODistributor-delFormat}{\code{ISODistributor$delFormat()}}
+\item \href{#method-ISODistributor-addDigitalTransferOptions}{\code{ISODistributor$addDigitalTransferOptions()}}
+\item \href{#method-ISODistributor-delDigitalTransferOptions}{\code{ISODistributor$delDigitalTransferOptions()}}
 \item \href{#method-ISODistributor-clone}{\code{ISODistributor$clone()}}
 }
 }
@@ -90,6 +100,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -110,6 +121,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -127,7 +139,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -147,6 +159,46 @@ Set contact
 \item{\code{contact}}{object of class \link{ISOResponsibleParty}}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISODistributor-addStandardOrderProcess"></a>}}
+\if{latex}{\out{\hypertarget{method-ISODistributor-addStandardOrderProcess}{}}}
+\subsection{Method \code{addStandardOrderProcess()}}{
+Adds standard order process
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISODistributor$addStandardOrderProcess(standardOrderProcess)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{standardOrderProcess}}{standardOrderProcess object of class \link{ISOStandardOrderProcess}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISODistributor-delStandardOrderProcess"></a>}}
+\if{latex}{\out{\hypertarget{method-ISODistributor-delStandardOrderProcess}{}}}
+\subsection{Method \code{delStandardOrderProcess()}}{
+Deletes standard order process
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISODistributor$delStandardOrderProcess(standardOrderProcess)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{standardOrderProcess}}{standardOrderProcess object of class \link{ISOStandardOrderProcess}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
 }
 }
 \if{html}{\out{<hr>}}
@@ -182,6 +234,46 @@ Deletes format
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{format}}{format object of class \link{ISOFormat}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISODistributor-addDigitalTransferOptions"></a>}}
+\if{latex}{\out{\hypertarget{method-ISODistributor-addDigitalTransferOptions}{}}}
+\subsection{Method \code{addDigitalTransferOptions()}}{
+Adds digital transfer options
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISODistributor$addDigitalTransferOptions(digitalTransferOptions)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{digitalTransferOptions}}{object of class \link{ISODigitalTransferOptions}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISODistributor-delDigitalTransferOptions"></a>}}
+\if{latex}{\out{\hypertarget{method-ISODistributor-delDigitalTransferOptions}{}}}
+\subsection{Method \code{delDigitalTransferOptions()}}{
+Deletes digital transfer options
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISODistributor$delDigitalTransferOptions(digitalTransferOptions)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{digitalTransferOptions}}{object of class \link{ISODigitalTransferOptions}}
 }
 \if{html}{\out{</div>}}
 }

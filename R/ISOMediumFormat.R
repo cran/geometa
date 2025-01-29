@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO medium format
-#' @return Object of \code{\link{R6Class}} for modelling an ISOMediumFormat
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOMediumFormat
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'   #possible values
@@ -15,7 +15,9 @@
 #'   MediumFormat <- ISOMediumFormat$new(value = "tar")
 #' 
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_MediumFormatCode}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrd/1.0/mrd/#element_MD_MediumFormatCode} 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -23,12 +25,15 @@ ISOMediumFormat <- R6Class("ISOMediumFormat",
    inherit = ISOCodeListValue,
    private = list(
      xmlElement = "MD_MediumFormatCode",
-     xmlNamespacePrefix = "GMD"
+     xmlNamespacePrefix = list(
+       "19139" = "GMD",
+       "19115-3" = "MRD"
+     )
    ),
    public = list(
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}  
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}  
       #'@param value value
       #'@param description description
       initialize = function(xml = NULL, value, description = NULL){

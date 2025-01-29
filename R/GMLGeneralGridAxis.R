@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords OGC GML GeneralGridAxis
-#' @return Object of \code{\link{R6Class}} for modelling an GML GeneralGridAxis
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML GeneralGridAxis
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @note Experimental
 #' 
@@ -33,14 +33,14 @@ GMLGeneralGridAxis <- R6Class("GMLGeneralGridAxis",
    sequenceRule = NULL,
    
    #'@description Initializes object
-   #'@param xml object of class \link{XMLInternalNode-class}
+   #'@param xml object of class \link[XML]{XMLInternalNode-class}
    initialize = function(xml = NULL){
      super$initialize(xml, element = private$xmlElement, wrap = TRUE)
      if(!is.null(xml)) self$decode(xml)
    },
    
    #'@description Decodes XML
-   #'@param xml object of class \link{XMLInternalNode-class}
+   #'@param xml object of class \link[XML]{XMLInternalNode-class}
    decode = function(xml){
      super$decode(xml = xml)
      if(is(self$offsetVector, "GMLElement")) if(is.null(self$offsetVector$value)) self$offsetVector <- matrix(NA, 1,2)

@@ -4,11 +4,13 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality abstract logical consistency
-#' @return Object of \code{\link{R6Class}} for modelling an ISOAbstractLogicalConsistency
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOAbstractLogicalConsistency
+#' @format \code{\link[R6]{R6Class}} object.
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_AbstractDQ_LogicalConsistency}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_AbstractDQ_LogicalConsistency}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -16,7 +18,10 @@ ISOAbstractLogicalConsistency <- R6Class("ISOAbstractLogicalConsistency",
   inherit = ISODataQualityAbstractElement,
   private = list(
    xmlElement = "AbstractDQ_LogicalConsistency",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
   ),
   public = list()
 )
@@ -27,8 +32,8 @@ ISOAbstractLogicalConsistency <- R6Class("ISOAbstractLogicalConsistency",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality topological consistency
-#' @return Object of \code{\link{R6Class}} for modelling an ISOTopologicalConsistency
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOTopologicalConsistency
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -56,7 +61,9 @@ ISOAbstractLogicalConsistency <- R6Class("ISOAbstractLogicalConsistency",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_TopologicalConsistency}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_TopologicalConsistency} 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -64,7 +71,10 @@ ISOTopologicalConsistency <- R6Class("ISOTopologicalConsistency",
   inherit = ISOAbstractLogicalConsistency,
   private = list(
     xmlElement = "DQ_TopologicalConsistency",
-    xmlNamespacePrefix = "GMD"
+    xmlNamespacePrefix = list(
+      "19139" = "GMD",
+      "19115-3" = "MDQ"
+    )
   ),
   public = list()
 )
@@ -75,8 +85,8 @@ ISOTopologicalConsistency <- R6Class("ISOTopologicalConsistency",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality format consistency
-#' @return Object of \code{\link{R6Class}} for modelling an ISOFormatConsistency
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOFormatConsistency
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -104,7 +114,9 @@ ISOTopologicalConsistency <- R6Class("ISOTopologicalConsistency",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_FormatConsistency}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_FormatConsistency} 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -112,7 +124,10 @@ ISOFormatConsistency <- R6Class("ISOFormatConsistency",
   inherit = ISOAbstractLogicalConsistency,
   private = list(
    xmlElement = "DQ_FormatConsistency",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
   ),
   public = list()
 )
@@ -123,8 +138,8 @@ ISOFormatConsistency <- R6Class("ISOFormatConsistency",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality domain consistency
-#' @return Object of \code{\link{R6Class}} for modelling an ISODomainConsistency
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISODomainConsistency
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -152,7 +167,9 @@ ISOFormatConsistency <- R6Class("ISOFormatConsistency",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_DomainConsistency}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_DomainConsistency} 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -160,7 +177,10 @@ ISODomainConsistency <- R6Class("ISODomainConsistency",
   inherit = ISOAbstractLogicalConsistency,
   private = list(
     xmlElement = "DQ_DomainConsistency",
-    xmlNamespacePrefix = "GMD"
+    xmlNamespacePrefix = list(
+      "19139" = "GMD",
+      "19115-3" = "MDQ"
+    )
   ),
   public = list()
 )
@@ -171,8 +191,8 @@ ISODomainConsistency <- R6Class("ISODomainConsistency",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality conceptual consistency
-#' @return Object of \code{\link{R6Class}} for modelling an ISOConceptualConsistency
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOConceptualConsistency
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -200,7 +220,9 @@ ISODomainConsistency <- R6Class("ISODomainConsistency",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_ConceptualConsistency}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_ConceptualConsistency} 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -208,7 +230,10 @@ ISOConceptualConsistency <- R6Class("ISOConceptualConsistency",
   inherit = ISOAbstractLogicalConsistency,
   private = list(
     xmlElement = "DQ_ConceptualConsistency",
-    xmlNamespacePrefix = "GMD"
+    xmlNamespacePrefix = list(
+      "19139" = "GMD",
+      "19115-3" = "MDQ"
+    )
   ),
   public = list()
 )

@@ -5,10 +5,10 @@
 \alias{INSPIREMetadataValidator}
 \title{INSPIREMetadataValidator}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for setting an INSPIREMetadataValidator
+Object of \code{\link[R6]{R6Class}} for setting an INSPIREMetadataValidator
 }
 \description{
 INSPIREMetadataValidator
@@ -44,6 +44,8 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item{\code{url}}{url of the INSPIRE metadata validator}
 
 \item{\code{running}}{wether the service is up and running}
+
+\item{\code{status}}{status}
 }
 \if{html}{\out{</div>}}
 }
@@ -79,7 +81,7 @@ Method used to instantiate an INSPIRE Metadata validator. To check
    the INSPIRE metadata validator API key with \pkg{keyring} (Default value is 'env').
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{INSPIREMetadataValidator$new(
-  url = "https://inspire.ec.europa.eu/validator/v2",
+  url = "https://inspire.ec.europa.eu/validator-api",
   apiKey,
   keyring_backend = "env"
 )}\if{html}{\out{</div>}}
@@ -136,7 +138,7 @@ the API key as \link{character}
 \if{latex}{\out{\hypertarget{method-INSPIREMetadataValidator-getValidationReport}{}}}
 \subsection{Method \code{getValidationReport()}}{
 Get validation report for a metadata specified either as R object of class
-   \link{ISOMetadata} (from \pkg{geometa} package) or \link{XMLInternalNode-class} 
+   \link{ISOMetadata} (from \pkg{geometa} package) or \link[XML]{XMLInternalNode-class} 
    (from \pkg{XML} package), or as XML file, providing the path of the XML file
    to be sent to the INSPIRE metadata validator web-service. By default, a summary
    report is returned. To append the raw response of INSPIRE validation web-service

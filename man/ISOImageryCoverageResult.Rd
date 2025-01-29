@@ -5,10 +5,10 @@
 \alias{ISOImageryCoverageResult}
 \title{ISOImageryCoverageResult}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO imagery coverage result
+Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery coverage result
 }
 \description{
 ISOImageryCoverageResult
@@ -16,7 +16,9 @@ ISOImageryCoverageResult
 ISOImageryCoverageResult
 }
 \references{
-ISO 19115-2:2009 - Geographic information -- Metadata Part 2: Extensions for imagery and gridded data
+- 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_QE_CoverageResult}
+  
+  - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_QE_CoverageResult}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -31,6 +33,10 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{resultScope}}{resultScope [0..1]: ISOScope}
+
+\item{\code{dateTime}}{dateTime [0..1]: POSIX/date}
+
 \item{\code{spatialRepresentationType}}{spatialRepresentationType [1..1] : ISOSpatialRepresentationType}
 
 \item{\code{resultFile}}{resultFile [1..1]: ISODataFile}
@@ -47,6 +53,8 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-ISOImageryCoverageResult-new}{\code{ISOImageryCoverageResult$new()}}
+\item \href{#method-ISOImageryCoverageResult-setResultScope}{\code{ISOImageryCoverageResult$setResultScope()}}
+\item \href{#method-ISOImageryCoverageResult-setDateTime}{\code{ISOImageryCoverageResult$setDateTime()}}
 \item \href{#method-ISOImageryCoverageResult-setSpatialRepresentationType}{\code{ISOImageryCoverageResult$setSpatialRepresentationType()}}
 \item \href{#method-ISOImageryCoverageResult-setResultFile}{\code{ISOImageryCoverageResult$setResultFile()}}
 \item \href{#method-ISOImageryCoverageResult-setResultSpatialRepresentation}{\code{ISOImageryCoverageResult$setResultSpatialRepresentation()}}
@@ -63,6 +71,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -83,6 +92,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -100,7 +110,41 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOImageryCoverageResult-setResultScope"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOImageryCoverageResult-setResultScope}{}}}
+\subsection{Method \code{setResultScope()}}{
+Set result scope
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOImageryCoverageResult$setResultScope(scope)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{scope}}{object of class \link{ISOScope}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOImageryCoverageResult-setDateTime"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOImageryCoverageResult-setDateTime}{}}}
+\subsection{Method \code{setDateTime()}}{
+Set date time
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOImageryCoverageResult$setDateTime(dateTime)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dateTime}}{date time, object of class \link{POSIXct}}
 }
 \if{html}{\out{</div>}}
 }
@@ -137,7 +181,8 @@ Set result file
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{resultFile}}{object of class \link{ISODataFile}}
+\item{\code{resultFile}}{object of class \link{ISODataFile} (in ISO 19139) 
+or \link{ISOQualityResultFile} (in ISO 19115-3)}
 }
 \if{html}{\out{</div>}}
 }

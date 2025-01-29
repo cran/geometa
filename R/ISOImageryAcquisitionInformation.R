@@ -5,8 +5,8 @@
 #' @import XML
 #' @export
 #' @keywords ISO imagery AcquisitionInformation element
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Imagery AcquisitionInformation
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO Imagery AcquisitionInformation
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'     md = ISOImageryAcquisitionInformation$new()
@@ -14,19 +14,25 @@
 #'    xml <- md$encode()
 #' 
 #' @references 
-#'   ISO 19115-2:2009 - Geographic information -- AcquisitionInformation -- Part 2: Extensions for imagery and gridded data
+#'   - 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_AcquisitionInformation}
+#'   
+#'   - 19115-3 \url{https://schemas.isotc211.org/19115/-3/mac/2.0/mac/#element_MI_AcquisitionInformation}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOImageryAcquisitionInformation <- R6Class("ISOImageryAcquisitionInformation",
-    inherit = ISOAbstractObject,
+    inherit = ISOAbstractAcquisitionInformation,
     private = list(
       document = TRUE,
       xmlElement = "MI_AcquisitionInformation",
-      xmlNamespacePrefix = "GMI"
+      xmlNamespacePrefix = list(
+        "19139" = "GMI",
+        "19115-3" = "MAC"
+      )
     ),
     public = list(
-      
+      #'@field scope scope [0..1]: ISOScope
+      scope = NULL,
       #'@field instrument instrument [0..*]: ISOImageryInstrument
       instrument = list(),
       #'@field operation operation [0..*]: ISOImageryOperation
@@ -43,9 +49,18 @@ ISOImageryAcquisitionInformation <- R6Class("ISOImageryAcquisitionInformation",
       environmentalConditions = NULL,
 
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       initialize = function(xml = NULL){
         super$initialize(xml = xml)
+      },
+      
+      #'@description Set scope
+      #'@param scope object of class \link{ISOScope}
+      setScope = function(scope){
+        if(!is(scope, "ISOScope")){
+          stop("The argument should be an object of class 'ISOScope'")
+        }
+        self$scope = scope
       },
       
       #'@description Adds instrument

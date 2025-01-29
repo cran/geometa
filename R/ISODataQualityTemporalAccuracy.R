@@ -4,11 +4,13 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality abstract temporal accuracy
-#' @return Object of \code{\link{R6Class}} for modelling an ISOAbstractTemporalAccuracy
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOAbstractTemporalAccuracy
+#' @format \code{\link[R6]{R6Class}} object.
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_AbstractDQ_TemporalAccuracy}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_AbstractDQ_TemporalAccuracy}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -16,7 +18,10 @@ ISOAbstractTemporalAccuracy <- R6Class("ISOAbstractTemporalAccuracy",
   inherit = ISODataQualityAbstractElement,
   private = list(
    xmlElement = "AbstractDQ_TemporalAccuracy",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
   ),
   public = list()
 )
@@ -27,8 +32,8 @@ ISOAbstractTemporalAccuracy <- R6Class("ISOAbstractTemporalAccuracy",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality temporal validity
-#' @return Object of \code{\link{R6Class}} for modelling an ISOTemporalValidity
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOTemporalValidity
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -56,7 +61,9 @@ ISOAbstractTemporalAccuracy <- R6Class("ISOAbstractTemporalAccuracy",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_TemporalValidity}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_TemporalValidity}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -64,7 +71,10 @@ ISOTemporalValidity <- R6Class("ISOTemporalValidity",
   inherit = ISOAbstractTemporalAccuracy,
   private = list(
    xmlElement = "DQ_TemporalValidity",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
   ),
   public = list()
 )
@@ -75,8 +85,8 @@ ISOTemporalValidity <- R6Class("ISOTemporalValidity",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality temporal consistency
-#' @return Object of \code{\link{R6Class}} for modelling an ISOTemporalConsistency
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOTemporalConsistency
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -104,7 +114,9 @@ ISOTemporalValidity <- R6Class("ISOTemporalValidity",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_TemporalConsistency}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_TemporalConsistency} 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -112,7 +124,10 @@ ISOTemporalConsistency <- R6Class("ISOTemporalConsistency",
   inherit = ISOAbstractTemporalAccuracy,
   private = list(
    xmlElement = "DQ_TemporalConsistency",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
   ),
   public = list()
 )
@@ -123,8 +138,8 @@ ISOTemporalConsistency <- R6Class("ISOTemporalConsistency",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality temporal accuracy time measurement
-#' @return Object of \code{\link{R6Class}} for modelling an ISOAccuracyOfATimeMeasurement
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOAccuracyOfATimeMeasurement
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -152,7 +167,9 @@ ISOTemporalConsistency <- R6Class("ISOTemporalConsistency",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_AccuracyOfATimeMeasurement}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_AccuracyOfATimeMeasurement} 
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -160,7 +177,10 @@ ISOAccuracyOfATimeMeasurement <- R6Class("ISOAccuracyOfATimeMeasurement",
   inherit = ISOAbstractTemporalAccuracy,
   private = list(
     xmlElement = "DQ_AccuracyOfATimeMeasurement",
-    xmlNamespacePrefix = "GMD"
+    xmlNamespacePrefix = list(
+      "19139" = "GMD",
+      "19115-3" = "MDQ"
+    )
   ),
   public = list()
 )

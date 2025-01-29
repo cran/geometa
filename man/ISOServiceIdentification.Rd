@@ -5,10 +5,10 @@
 \alias{ISOServiceIdentification}
 \title{ISOServiceIdentification}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO ServiceIdentification
+Object of \code{\link[R6]{R6Class}} for modelling an ISO ServiceIdentification
 }
 \description{
 ISOServiceIdentification
@@ -114,6 +114,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -134,33 +135,9 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addAggregateInformation"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addAggregateInformation'><code>geometa::ISOIdentification$addAggregateInformation()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addCredit"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addCredit'><code>geometa::ISOIdentification$addCredit()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addFormat"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addFormat'><code>geometa::ISOIdentification$addFormat()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addGraphicOverview"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addGraphicOverview'><code>geometa::ISOIdentification$addGraphicOverview()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addKeywords"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addKeywords'><code>geometa::ISOIdentification$addKeywords()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addPointOfContact"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addPointOfContact'><code>geometa::ISOIdentification$addPointOfContact()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addResourceConstraints"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addResourceConstraints'><code>geometa::ISOIdentification$addResourceConstraints()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addResourceMaintenance"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addResourceMaintenance'><code>geometa::ISOIdentification$addResourceMaintenance()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="addStatus"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-addStatus'><code>geometa::ISOIdentification$addStatus()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delAggregateInformation"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delAggregateInformation'><code>geometa::ISOIdentification$delAggregateInformation()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delCredit"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delCredit'><code>geometa::ISOIdentification$delCredit()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delFormat"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delFormat'><code>geometa::ISOIdentification$delFormat()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delGraphicOverview"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delGraphicOverview'><code>geometa::ISOIdentification$delGraphicOverview()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delKeywords"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delKeywords'><code>geometa::ISOIdentification$delKeywords()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delPointOfContact"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delPointOfContact'><code>geometa::ISOIdentification$delPointOfContact()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delResourceConstraints"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delResourceConstraints'><code>geometa::ISOIdentification$delResourceConstraints()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delResourceMaintenance"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delResourceMaintenance'><code>geometa::ISOIdentification$delResourceMaintenance()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="delStatus"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-delStatus'><code>geometa::ISOIdentification$delStatus()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="setAbstract"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-setAbstract'><code>geometa::ISOIdentification$setAbstract()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="setCitation"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-setCitation'><code>geometa::ISOIdentification$setCitation()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="setGraphicOverview"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-setGraphicOverview'><code>geometa::ISOIdentification$setGraphicOverview()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="setKeywords"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-setKeywords'><code>geometa::ISOIdentification$setKeywords()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="setPurpose"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-setPurpose'><code>geometa::ISOIdentification$setPurpose()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="setResourceConstraints"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-setResourceConstraints'><code>geometa::ISOIdentification$setResourceConstraints()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOIdentification" data-id="setResourceMaintenance"><a href='../../geometa/html/ISOIdentification.html#method-ISOIdentification-setResourceMaintenance'><code>geometa::ISOIdentification$setResourceMaintenance()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -176,7 +153,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }

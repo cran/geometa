@@ -4,31 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO imagery gcp collection
-#' @return Object of \code{\link{R6Class}} for modelling an ISO imagery gcp collection
-#' @format \code{\link{R6Class}} object.
-#' 
-#' @section Methods:
-#' \describe{
-#'  \item{\code{new(xml)}}{
-#'    This method is used to instantiate an \code{\link{ISOImageryGCPCollection}}
-#'  }
-#'  \item{\code{setCollectionIdentification(id)}}{
-#'    Set the identifier, object of class \code{integer}
-#'  }
-#'  \item{\code{setCollectionName(name, locales)}}{
-#'    Sets a name (object of class "character"). Locale names can be 
-#'    specified as \code{list} with the \code{locales} argument.
-#'  }
-#'  \item{\code{setCoordinateReferenceSystem(crs)}}{
-#'    Sets the crs, object of class \code{\link{ISOReferenceSystem}}
-#'  }
-#'  \item{\code{addGCP(gcp)}}{
-#'    Adds a GCP, object of class \code{\link{ISOImageryGCP}}
-#'  }
-#'  \item{\code{delGCP(gcp)}}{
-#'    Deletes a GCP, object of class \code{\link{ISOImageryGCP}}
-#'  }
-#' }
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO imagery gcp collection
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'   md <- ISOImageryGCPCollection$new()
@@ -41,7 +18,9 @@
 #'   xml <- md$encode()
 #' 
 #' @references 
-#'   ISO 19115-2:2009 - Geographic information -- Metadata Part 2: Extensions for imagery and gridded data
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19115/-2/gmi/1.0/gmi/#element_MI_GCPCollection}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/msr/1.0/msr/#element_MI_GCPCollection}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -49,7 +28,10 @@ ISOImageryGCPCollection <- R6Class("ISOImageryGCPCollection",
   inherit = ISOImageryAbstractGeolocationInformation,
   private = list(
     xmlElement = "MI_GCPCollection",
-    xmlNamespacePrefix = "GMI"
+    xmlNamespacePrefix = list(
+      "19139" = "GMI",
+      "19115-3" = "MSR"
+    )
   ),
   public = list(
     
@@ -57,13 +39,13 @@ ISOImageryGCPCollection <- R6Class("ISOImageryGCPCollection",
     collectionIdentification = NULL,
     #'@field collectionName collectionName [1..1]: character|ISOLocalisedCharacterString
     collectionName = NULL,
-    #'@field coordinateReferenceSystem coordinateReferenceSystem [1..1]: ISOReferenceSystem
+    #'@field coordinateReferenceSystem coordinateReferenceSystem [1..1]: ISOAbstractReferenceSystem
     coordinateReferenceSystem = NULL,
     #'@field gcp gcp [0..*]: list of ISOImageryGCP
     gcp = list(),
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     initialize = function(xml = NULL){
       super$initialize(xml = xml)
     },
@@ -92,10 +74,10 @@ ISOImageryGCPCollection <- R6Class("ISOImageryGCPCollection",
     },
     
     #'@description Set coordinate reference system
-    #'@param crs object of class \link{ISOReferenceSystem}
+    #'@param crs object of class inheriting \link{ISOAbstractReferenceSystem}
     setCoordinateReferenceSystem = function(crs){
-      if(!is(crs, "ISOReferenceSystem")){
-        stop("The argument should be an object of class 'ISOReferenceSystem'")
+      if(!is(crs, "ISOAbstractReferenceSystem")){
+        stop("The argument should be an object inheriting class 'ISOAbstractReferenceSystem'")
       }
       self$coordinateReferenceSystem <- crs
     },

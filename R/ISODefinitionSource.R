@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO definition source
-#' @return Object of \code{\link{R6Class}} for modelling an ISODefinitionSource
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISODefinitionSource
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   ISO 19110:2005 Methodology for Feature cataloguing
@@ -23,7 +23,7 @@ ISODefinitionSource <- R6Class("ISODefinitionSource",
       source = NULL,
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       #'@param source source object of class \link{ISOCitation}
       initialize = function(xml = NULL, source = NULL){
         super$initialize(xml = xml)

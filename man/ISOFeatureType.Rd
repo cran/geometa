@@ -5,10 +5,10 @@
 \alias{ISOFeatureType}
 \title{ISOFeatureType}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO FeatureType
+Object of \code{\link[R6]{R6Class}} for modelling an ISO FeatureType
 }
 \description{
 ISOFeatureType
@@ -65,7 +65,9 @@ ISOFeatureType
  
 }
 \references{
-ISO 19110:2005 Methodology for Feature cataloguing
+- ISO 19110 - GFC 1.0 https://schemas.isotc211.org/19110/-/gfc/1.0/gfc/#element_FC_FeatureType (in ISO 19139)
+  
+  - ISO 19110 - GFC 1.1 https://schemas.isotc211.org/19110/gfc/1.1/gfc/#element_FC_FeatureType (in ISO 19115-3)
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -76,53 +78,10 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \section{Super classes}{
 \code{\link[geometa:geometaLogger]{geometa::geometaLogger}} -> \code{\link[geometa:ISOAbstractObject]{geometa::ISOAbstractObject}} -> \code{ISOFeatureType}
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{typeName}}{typeName [1..1]: ISOLocalName}
-
-\item{\code{definition}}{definition [0..1]: character}
-
-\item{\code{code}}{code [0..1]: character}
-
-\item{\code{isAbstract}}{isAbstract [1..1]: logical}
-
-\item{\code{aliases}}{aliases [0..*]: ISOLocalName}
-
-\item{\code{inheritsFrom}}{inheritsFrom [0..*]: ISOInheritanceRelation}
-
-\item{\code{inheritsTo}}{inheritsTo [0..*]: ISOInheritanceRelation}
-
-\item{\code{featureCatalogue}}{featureCatalogue: ISOFeatureCatalogue}
-
-\item{\code{constrainedBy}}{constrainedBy [0..*]: ISOConstraint}
-
-\item{\code{definitionReference}}{definitionReference [0..*]: ISODefinitionReference}
-
-\item{\code{carrierOfCharacteristics}}{carrierOfCharacteristics [0..*]: ISOCarrierOfCharacteristics}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-ISOFeatureType-new}{\code{ISOFeatureType$new()}}
-\item \href{#method-ISOFeatureType-setTypeName}{\code{ISOFeatureType$setTypeName()}}
-\item \href{#method-ISOFeatureType-setDefinition}{\code{ISOFeatureType$setDefinition()}}
-\item \href{#method-ISOFeatureType-setCode}{\code{ISOFeatureType$setCode()}}
-\item \href{#method-ISOFeatureType-setIsAbstract}{\code{ISOFeatureType$setIsAbstract()}}
-\item \href{#method-ISOFeatureType-addAlias}{\code{ISOFeatureType$addAlias()}}
-\item \href{#method-ISOFeatureType-delAlias}{\code{ISOFeatureType$delAlias()}}
-\item \href{#method-ISOFeatureType-addInheritsFrom}{\code{ISOFeatureType$addInheritsFrom()}}
-\item \href{#method-ISOFeatureType-delInheritsFrom}{\code{ISOFeatureType$delInheritsFrom()}}
-\item \href{#method-ISOFeatureType-addInheritsTo}{\code{ISOFeatureType$addInheritsTo()}}
-\item \href{#method-ISOFeatureType-delInheritsTo}{\code{ISOFeatureType$delInheritsTo()}}
-\item \href{#method-ISOFeatureType-setFeatureCatalogue}{\code{ISOFeatureType$setFeatureCatalogue()}}
-\item \href{#method-ISOFeatureType-addConstraint}{\code{ISOFeatureType$addConstraint()}}
-\item \href{#method-ISOFeatureType-delConstraint}{\code{ISOFeatureType$delConstraint()}}
-\item \href{#method-ISOFeatureType-setDefinitionReference}{\code{ISOFeatureType$setDefinitionReference()}}
-\item \href{#method-ISOFeatureType-addCharacteristic}{\code{ISOFeatureType$addCharacteristic()}}
-\item \href{#method-ISOFeatureType-delCharacteristic}{\code{ISOFeatureType$delCharacteristic()}}
 \item \href{#method-ISOFeatureType-clone}{\code{ISOFeatureType$clone()}}
 }
 }
@@ -134,6 +93,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -154,6 +114,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -171,315 +132,9 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-setTypeName"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-setTypeName}{}}}
-\subsection{Method \code{setTypeName()}}{
-Set type name
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$setTypeName(typeName)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{typeName}}{type name, object of class \link{ISOLocalName} or \link{character}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-setDefinition"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-setDefinition}{}}}
-\subsection{Method \code{setDefinition()}}{
-Set definition
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$setDefinition(definition, locales = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{definition}}{definition}
-
-\item{\code{locales}}{list of localized definitions. Default is \code{NULL}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-setCode"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-setCode}{}}}
-\subsection{Method \code{setCode()}}{
-Set code
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$setCode(code, locales = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{code}}{definition}
-
-\item{\code{locales}}{list of localized codes. Default is \code{NULL}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-setIsAbstract"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-setIsAbstract}{}}}
-\subsection{Method \code{setIsAbstract()}}{
-Set whether feature type is abstract
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$setIsAbstract(isAbstract)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{isAbstract}}{object of class \link{logical}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-addAlias"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-addAlias}{}}}
-\subsection{Method \code{addAlias()}}{
-Adds alias
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$addAlias(alias)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{alias}}{object of class \link{ISOLocalName} or \link{character}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if added, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-delAlias"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-delAlias}{}}}
-\subsection{Method \code{delAlias()}}{
-Deletes alias
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$delAlias(alias)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{alias}}{object of class \link{ISOLocalName} or \link{character}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if deleted, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-addInheritsFrom"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-addInheritsFrom}{}}}
-\subsection{Method \code{addInheritsFrom()}}{
-Adds 'inheritsFrom' relation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$addInheritsFrom(rel)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{rel}}{rel, object of class \link{ISOInheritanceRelation}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if added, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-delInheritsFrom"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-delInheritsFrom}{}}}
-\subsection{Method \code{delInheritsFrom()}}{
-Deletes 'inheritsFrom' relation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$delInheritsFrom(rel)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{rel}}{rel, object of class \link{ISOInheritanceRelation}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if deleted, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-addInheritsTo"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-addInheritsTo}{}}}
-\subsection{Method \code{addInheritsTo()}}{
-Adds 'inheritsTo' relation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$addInheritsTo(rel)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{rel}}{rel, object of class \link{ISOInheritanceRelation}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if added, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-delInheritsTo"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-delInheritsTo}{}}}
-\subsection{Method \code{delInheritsTo()}}{
-Deletes 'inheritsTo' relation
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$delInheritsTo(rel)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{rel}}{rel, object of class \link{ISOInheritanceRelation}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if deleted, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-setFeatureCatalogue"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-setFeatureCatalogue}{}}}
-\subsection{Method \code{setFeatureCatalogue()}}{
-Set feature catalogue
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$setFeatureCatalogue(fc)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{fc}}{object of class \link{ISOFeatureCatalogue}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-addConstraint"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-addConstraint}{}}}
-\subsection{Method \code{addConstraint()}}{
-Adds constraint
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$addConstraint(constraint)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{constraint}}{constraint, object of class \link{ISOConstraint}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if added, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-delConstraint"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-delConstraint}{}}}
-\subsection{Method \code{delConstraint()}}{
-Deletes constraint
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$delConstraint(constraint)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{constraint}}{constraint, object of class \link{ISOConstraint}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if deleted, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-setDefinitionReference"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-setDefinitionReference}{}}}
-\subsection{Method \code{setDefinitionReference()}}{
-Set definition reference
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$setDefinitionReference(definitionReference)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{definitionReference}}{object of class \link{ISODefinitionReference}}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-addCharacteristic"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-addCharacteristic}{}}}
-\subsection{Method \code{addCharacteristic()}}{
-Adds characteristic
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$addCharacteristic(characteristic)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{characteristic}}{characteristic, object inheriting class \link{ISOAbstractCarrierOfCharacteristics}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if added, \code{FALSE} otherwise
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ISOFeatureType-delCharacteristic"></a>}}
-\if{latex}{\out{\hypertarget{method-ISOFeatureType-delCharacteristic}{}}}
-\subsection{Method \code{delCharacteristic()}}{
-Deletes characteristic
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ISOFeatureType$delCharacteristic(characteristic)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{characteristic}}{characteristic, object inheriting class \link{ISOAbstractCarrierOfCharacteristics}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{TRUE} if deleted, \code{FALSE} otherwise
 }
 }
 \if{html}{\out{<hr>}}

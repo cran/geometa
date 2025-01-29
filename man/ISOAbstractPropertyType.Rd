@@ -5,10 +5,10 @@
 \alias{ISOAbstractPropertyType}
 \title{ISOAbstractPropertyType}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISOAbstractPropertyType
+Object of \code{\link[R6]{R6Class}} for modelling an ISOAbstractPropertyType
 }
 \description{
 ISOAbstractPropertyType
@@ -37,6 +37,8 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 
 \item{\code{cardinality}}{cardinality [1..1]: ISOMultiplicity}
 
+\item{\code{designation}}{designatio [0..1]: character (=> ISO 19115-3)}
+
 \item{\code{definitionReference}}{definitionReference [0..1]}
 
 \item{\code{featureCatalogue}}{featureCatalogue [0..1]}
@@ -50,6 +52,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \item \href{#method-ISOAbstractPropertyType-setMemberName}{\code{ISOAbstractPropertyType$setMemberName()}}
 \item \href{#method-ISOAbstractPropertyType-setDefinition}{\code{ISOAbstractPropertyType$setDefinition()}}
 \item \href{#method-ISOAbstractPropertyType-setCardinality}{\code{ISOAbstractPropertyType$setCardinality()}}
+\item \href{#method-ISOAbstractPropertyType-setDesignation}{\code{ISOAbstractPropertyType$setDesignation()}}
 \item \href{#method-ISOAbstractPropertyType-setDefinitionReference}{\code{ISOAbstractPropertyType$setDefinitionReference()}}
 \item \href{#method-ISOAbstractPropertyType-setFeatureCatalogue}{\code{ISOAbstractPropertyType$setFeatureCatalogue()}}
 \item \href{#method-ISOAbstractPropertyType-clone}{\code{ISOAbstractPropertyType$clone()}}
@@ -63,6 +66,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -83,6 +87,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractCarrierOfCharacteristics" data-id="addConstraint"><a href='../../geometa/html/ISOAbstractCarrierOfCharacteristics.html#method-ISOAbstractCarrierOfCharacteristics-addConstraint'><code>geometa::ISOAbstractCarrierOfCharacteristics$addConstraint()</code></a></span></li>
@@ -103,7 +108,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 
 \item{\code{defaults}}{default values}
 }
@@ -122,7 +127,8 @@ Set member name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{memberName}}{member name object of class \link{character} or \link{ISOLocalName}}
+\item{\code{memberName}}{member name object of class \link{character} (in ISO 19139 and 19115-3) 
+or \link{ISOLocalName} (in ISO 19139 only)}
 }
 \if{html}{\out{</div>}}
 }
@@ -161,6 +167,25 @@ Set cardinality
 \item{\code{lower}}{lower}
 
 \item{\code{upper}}{upper}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOAbstractPropertyType-setDesignation"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOAbstractPropertyType-setDesignation}{}}}
+\subsection{Method \code{setDesignation()}}{
+Set designation
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOAbstractPropertyType$setDesignation(designation, locales = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{designation}}{designation}
+
+\item{\code{locales}}{locale designations, as \link{list}}
 }
 \if{html}{\out{</div>}}
 }

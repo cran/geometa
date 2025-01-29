@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML MultiSurface
-#' @return Object of \code{\link{R6Class}} for modelling an GML multisurface
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML multisurface
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @note Experimental
 #' 
@@ -30,7 +30,7 @@ GMLMultiSurface <- R6Class("GMLMultiSurface",
     surfaceMember = list(),
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param sfg simple feature geometry resulting from \pkg{sf}
     initialize = function(xml = NULL, sfg = NULL){
       super$initialize(xml, element = private$xmlElement, wrap = TRUE)

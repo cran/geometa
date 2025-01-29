@@ -4,11 +4,13 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality abstract thematic accuracy
-#' @return Object of \code{\link{R6Class}} for modelling an ISOAbstractThematicAccuracy
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOAbstractThematicAccuracy
+#' @format \code{\link[R6]{R6Class}} object.
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_AbstractDQ_ThematicAccuracy}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_AbstractDQ_ThematicAccuracy}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -16,7 +18,10 @@ ISOAbstractThematicAccuracy <- R6Class("ISOAbstractThematicAccuracy",
  inherit = ISODataQualityAbstractElement,
  private = list(
    xmlElement = "AbstractDQ_ThematicAccuracy",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
  ),
  public = list()
 )
@@ -27,8 +32,8 @@ ISOAbstractThematicAccuracy <- R6Class("ISOAbstractThematicAccuracy",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality quantitative attribute accuracy
-#' @return Object of \code{\link{R6Class}} for modelling an ISOQuantitativeAttributeAccuracy
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOQuantitativeAttributeAccuracy
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -56,7 +61,9 @@ ISOAbstractThematicAccuracy <- R6Class("ISOAbstractThematicAccuracy",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_QuantitativeAttributeAccuracy}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_QuantitativeAttributeAccuracy}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -64,7 +71,10 @@ ISOQuantitativeAttributeAccuracy <- R6Class("ISOQuantitativeAttributeAccuracy",
  inherit = ISOAbstractThematicAccuracy,
  private = list(
    xmlElement = "DQ_QuantitativeAttributeAccuracy",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
  ),
  public = list()
 )
@@ -75,8 +85,8 @@ ISOQuantitativeAttributeAccuracy <- R6Class("ISOQuantitativeAttributeAccuracy",
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality nonquantitative attribute accuracy
-#' @return Object of \code{\link{R6Class}} for modelling an ISONonQuantitativeAttributeAccuracy
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISONonQuantitativeAttributeAccuracy
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -104,7 +114,9 @@ ISOQuantitativeAttributeAccuracy <- R6Class("ISOQuantitativeAttributeAccuracy",
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_NonQuantitativeAttributeAccuracy}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_NonQuantitativeAttributeAccuracy}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -112,7 +124,10 @@ ISONonQuantitativeAttributeAccuracy <- R6Class("ISONonQuantitativeAttributeAccur
   inherit = ISOAbstractThematicAccuracy,
   private = list(
     xmlElement = "DQ_NonQuantitativeAttributeAccuracy",
-    xmlNamespacePrefix = "GMD"
+    xmlNamespacePrefix = list(
+      "19139" = "GMD",
+      "19115-3" = "MDQ"
+    )
   ),
   public = list()
 )
@@ -123,8 +138,8 @@ ISONonQuantitativeAttributeAccuracy <- R6Class("ISONonQuantitativeAttributeAccur
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO data quality thematic accuracy classification correctness
-#' @return Object of \code{\link{R6Class}} for modelling an ISOThematicClassificationCorrectness
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOThematicClassificationCorrectness
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   #encoding
@@ -152,7 +167,9 @@ ISONonQuantitativeAttributeAccuracy <- R6Class("ISONonQuantitativeAttributeAccur
 #'   xml <- dq$encode()
 #'   
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_DQ_ThematicClassificationCorrectness}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_ThematicClassificationCorrectness}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
@@ -160,7 +177,35 @@ ISOThematicClassificationCorrectness <- R6Class("ISOThematicClassificationCorrec
   inherit = ISOAbstractTemporalAccuracy,
   private = list(
    xmlElement = "DQ_ThematicClassificationCorrectness",
-   xmlNamespacePrefix = "GMD"
+   xmlNamespacePrefix = list(
+     "19139" = "GMD",
+     "19115-3" = "MDQ"
+   )
   ),
   public = list()
+)
+
+#' ISONonQuantitativeAttributeCorrectness
+#'
+#' @docType class
+#' @importFrom R6 R6Class
+#' @export
+#' @keywords ISO data quality non-quantitative attribute correctness
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISONonQuantitativeAttributeCorrectness
+#' @format \code{\link[R6]{R6Class}} object.
+#' 
+#' @references 
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19157/-/mdq/1.2/mdq/#element_DQ_NonQuantitativeAttributeCorrectness}
+#' 
+#' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
+#'
+ISONonQuantitativeAttributeCorrectness <- R6Class("ISONonQuantitativeAttributeCorrectness",
+    inherit = ISOAbstractTemporalAccuracy,
+    private = list(
+      xmlElement = "DQ_NonQuantitativeAttributeCorrectness",
+      xmlNamespacePrefix = list(
+        "19115-3" = "MDQ"
+      )
+    ),
+    public = list()
 )

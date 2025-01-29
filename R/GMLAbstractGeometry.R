@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML Geometry
-#' @return Object of \code{\link{R6Class}} for modelling an GML abstract Geometry
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML abstract Geometry
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   ISO 19136:2007 Geographic Information -- Geographic Markup Language.
@@ -24,7 +24,7 @@ GMLAbstractGeometry <- R6Class("GMLAbstractGeometry",
   public = list(
     
     #'@description Initializes object
-    #'@param xml object of class \link{XMLInternalNode-class}
+    #'@param xml object of class \link[XML]{XMLInternalNode-class}
     #'@param element element name
     #'@param attrs list of attributes
     #'@param defaults list of default values
@@ -44,7 +44,11 @@ GMLAbstractGeometry$fromSimpleFeatureGeometry = function(sfg){
   newvalue <- switch(class(sfg)[2],
                      "POINT" = GMLPoint$new(sfg=sfg),
                      "LINESTRING" = GMLLineString$new(sfg=sfg),
-                     "POLYGON" = GMLPolygon$new(sfg=sfg)
+                     "POLYGON" = GMLPolygon$new(sfg=sfg),
+                     "MULTIPOINT" = GMLMultiPoint$new(sfg=sfg),
+                     "MULTILINESTRING" = GMLMultiCurve$new(sfg=sfg),
+                     "MULTIPOLYGON" = GMLMultiSurface$new(sfg=sfg)
+                     
   )
   return(newvalue)
 }

@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML abstract coordinate Operation
-#' @return Object of \code{\link{R6Class}} for modelling an GMLAbstractCoordinateOperation
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GMLAbstractCoordinateOperation
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @references 
 #'   ISO 19136:2007 Geographic Information -- Geographic Markup Language.
@@ -36,7 +36,7 @@ GMLAbstractCoordinateOperation <- R6Class("GMLAbstractCoordinateOperation",
      targetCRS = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param defaults list of default values
      #'@param id id
      initialize = function(xml = NULL, defaults = list(), id = NULL){

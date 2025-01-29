@@ -5,10 +5,10 @@
 \alias{ISODataQuality}
 \title{ISODataQuality}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISO DataQuality
+Object of \code{\link[R6]{R6Class}} for modelling an ISO DataQuality
 }
 \description{
 ISODataQuality
@@ -18,7 +18,7 @@ ISODataQuality
 \examples{
   #create dataQuality object with a 'dataset' scope
   dq <- ISODataQuality$new()
-  scope <- ISOScope$new()
+  scope <- ISODataQualityScope$new()
   scope$setLevel("dataset")
   dq$setScope(scope)
   
@@ -105,7 +105,9 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \describe{
 \item{\code{scope}}{scope}
 
-\item{\code{report}}{list of reports}
+\item{\code{standaloneQualityReport}}{standalone quality report (=> 19115-3)}
+
+\item{\code{report}}{list of reports (=> 19139)}
 
 \item{\code{lineage}}{lineage}
 }
@@ -116,6 +118,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \itemize{
 \item \href{#method-ISODataQuality-new}{\code{ISODataQuality$new()}}
 \item \href{#method-ISODataQuality-setScope}{\code{ISODataQuality$setScope()}}
+\item \href{#method-ISODataQuality-setStandaloneQualityReport}{\code{ISODataQuality$setStandaloneQualityReport()}}
 \item \href{#method-ISODataQuality-addReport}{\code{ISODataQuality$addReport()}}
 \item \href{#method-ISODataQuality-setLineage}{\code{ISODataQuality$setLineage()}}
 \item \href{#method-ISODataQuality-clone}{\code{ISODataQuality$clone()}}
@@ -129,6 +132,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -149,6 +153,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -166,7 +171,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -189,6 +194,23 @@ Set scope
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISODataQuality-setStandaloneQualityReport"></a>}}
+\if{latex}{\out{\hypertarget{method-ISODataQuality-setStandaloneQualityReport}{}}}
+\subsection{Method \code{setStandaloneQualityReport()}}{
+Set standalone quality report
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISODataQuality$setStandaloneQualityReport(report)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{report}}{object of class \link{ISOStandaloneQualityReportInformation}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ISODataQuality-addReport"></a>}}
 \if{latex}{\out{\hypertarget{method-ISODataQuality-addReport}{}}}
 \subsection{Method \code{addReport()}}{
@@ -200,7 +222,7 @@ Adds report
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{report}}{report, object of class \link{ISODomainConsistency}}
+\item{\code{report}}{report, object of class \link{ISODataQualityAbstractElement}}
 }
 \if{html}{\out{</div>}}
 }

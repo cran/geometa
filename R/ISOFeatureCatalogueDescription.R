@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO feature catalogue description
-#' @return Object of \code{\link{R6Class}} for modelling an ISOFeatureCatalogue
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISOFeatureCatalogue
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   md <- ISOFeatureCatalogueDescription$new()
@@ -20,19 +20,24 @@
 #'   contact$setOnlineResource(fcLink)
 #'   rp = ISOResponsibleParty$new()
 #'   rp$setContactInfo(contact)
-#'   cit$setCitedResponsibleParty(rp)
+#'   cit$addCitedResponsibleParty(rp)
 #'   md$addFeatureCatalogueCitation(cit)
 #'  
 #' @references 
-#'   ISO 19115:2003 - Geographic information -- Metadata 
+#'   - ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_FeatureCatalogueDescription}
+#'   
+#'   - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrc/1.0/mrc/#element_MD_FeatureCatalogueDescription}
 #' 
 #' @author Emmanuel Blondel <emmanuel.blondel1@@gmail.com>
 #'
 ISOFeatureCatalogueDescription <- R6Class("ISOFeatureCatalogueDescription",
-   inherit = ISOContentInformation,
+   inherit = ISOAbstractContentInformation,
    private = list(
      xmlElement = "MD_FeatureCatalogueDescription",
-     xmlNamespacePrefix = "GMD"
+     xmlNamespacePrefix = list(
+       "19139" = "GMD",
+       "19115-3" = "MRC"
+     )
    ),
    public = list(
      
@@ -40,6 +45,8 @@ ISOFeatureCatalogueDescription <- R6Class("ISOFeatureCatalogueDescription",
      complianceCode = NULL,
      #'@field language language [0..*]: character
      language = list(),
+     #'@field locale locale [0..*]: ISOLocale
+     locale = list(),
      #'@field includedWithDataset includedWithDataset: logical
      includedWithDataset = FALSE,
      #'@field featureTypes featureTypes [0..*]: GenericName #TODO?
@@ -48,7 +55,7 @@ ISOFeatureCatalogueDescription <- R6Class("ISOFeatureCatalogueDescription",
      featureCatalogueCitation = list(),
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      initialize = function(xml = NULL){
        super$initialize(xml = xml)
      },
@@ -75,6 +82,28 @@ ISOFeatureCatalogueDescription <- R6Class("ISOFeatureCatalogueDescription",
      #'@return \code{TRUE} if deleted, \code{FALSE} otherwise
      delLanguage = function(lang){
        return(self$delListElement("language", lang))
+     },
+     
+     #'@description Adds locale
+     #'@param locale object of class \link{ISOLocale}
+     #'@return \code{TRUE} if added, \code{FALSE} otherwise
+     addLocale = function(locale){
+       self$stopIfMetadataStandardIsNot("19115-3")
+       if(!is(locale,"ISOLocale")){
+         stop("The argument should be a 'ISOLocale' object")  
+       }
+       return(self$addListElement("locale", locale))
+     },
+     
+     #'@description Deletes locale
+     #'@param locale object of class \link{ISOLocale}
+     #'@return \code{TRUE} if deleted, \code{FALSE} otherwise
+     delLocale = function(locale){
+       self$stopIfMetadataStandardIsNot("19115-3")
+       if(!is(locale,"ISOLocale")){
+         stop("The argument should be a 'ISOLocale' object")  
+       }
+       return(self$delListElement("locale", locale))
      },
      
      #'@description Set included with dataset

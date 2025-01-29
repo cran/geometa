@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO GML unit definition
-#' @return Object of \code{\link{R6Class}} for modelling an GML unit definition
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an GML unit definition
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples 
 #'   gml <- GMLUnitDefinition$new()
@@ -37,7 +37,7 @@ GMLUnitDefinition <- R6Class("GMLUnitDefinition",
      catalogSymbol = NULL,
      
      #'@description Initializes object
-     #'@param xml object of class \link{XMLInternalNode-class}
+     #'@param xml object of class \link[XML]{XMLInternalNode-class}
      #'@param defaults list of default values
      #'@param id id
      initialize = function(xml = NULL, defaults = list(), id = NULL){

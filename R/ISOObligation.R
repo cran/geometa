@@ -4,8 +4,8 @@
 #' @importFrom R6 R6Class
 #' @export
 #' @keywords ISO Obligation
-#' @return Object of \code{\link{R6Class}} for modelling an ISO Obligation
-#' @format \code{\link{R6Class}} object.
+#' @return Object of \code{\link[R6]{R6Class}} for modelling an ISO Obligation
+#' @format \code{\link[R6]{R6Class}} object.
 #' 
 #' @examples
 #'   #possible values
@@ -28,7 +28,7 @@ ISOObligation <- R6Class("ISOObligation",
    public = list(
       
       #'@description Initializes object
-      #'@param xml object of class \link{XMLInternalNode-class}
+      #'@param xml object of class \link[XML]{XMLInternalNode-class}
       #'@param value value
       #'@param description description
       initialize = function(xml = NULL, value, description = NULL){

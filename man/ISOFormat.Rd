@@ -5,10 +5,10 @@
 \alias{ISOFormat}
 \title{ISOFormat}
 \format{
-\code{\link{R6Class}} object.
+\code{\link[R6]{R6Class}} object.
 }
 \value{
-Object of \code{\link{R6Class}} for modelling an ISOFormat
+Object of \code{\link[R6]{R6Class}} for modelling an ISOFormat
 }
 \description{
 ISOFormat
@@ -24,7 +24,9 @@ ISOFormat
  
 }
 \references{
-ISO 19115:2003 - Geographic information -- Metadata
+- ISO 19139 \url{https://schemas.isotc211.org/19139/-/gmd/1.0/gmd/#element_MD_Format}
+  
+  - ISO 19115-3 \url{https://schemas.isotc211.org/19115/-3/mrd/1.0/mrd/#element_MD_Format}
 }
 \author{
 Emmanuel Blondel <emmanuel.blondel1@gmail.com>
@@ -37,17 +39,21 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{name : CharacterString}
+\item{\code{name}}{name : CharacterString (ISO 19139)}
 
-\item{\code{version}}{version : CharacterString}
+\item{\code{formatSpecificationCitation}}{format specification citation [1]: ISOCitation}
+
+\item{\code{version}}{version : CharacterString (ISO 19139)}
 
 \item{\code{amendmentNumber}}{amendmentNumber [0..1] : CharacterString}
 
-\item{\code{specification}}{specification [0..1] : CharacterString}
+\item{\code{specification}}{specification [0..1] : CharacterString (ISO 19139)}
 
 \item{\code{fileDecompressionTechnique}}{fileDecompressionTechnique [0..1] : CharacterString}
 
-\item{\code{FormatDistributor}}{FormatDistributor [0..*]: ISODistributor}
+\item{\code{medium}}{medium [0..*] : ISOMedium [0..*] (ISO 19115-3)}
+
+\item{\code{formatDistributor}}{formatDistributor [0..*]: ISODistributor}
 }
 \if{html}{\out{</div>}}
 }
@@ -56,11 +62,14 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 \itemize{
 \item \href{#method-ISOFormat-new}{\code{ISOFormat$new()}}
 \item \href{#method-ISOFormat-setName}{\code{ISOFormat$setName()}}
+\item \href{#method-ISOFormat-setFormatSpecificationCitation}{\code{ISOFormat$setFormatSpecificationCitation()}}
 \item \href{#method-ISOFormat-setVersion}{\code{ISOFormat$setVersion()}}
 \item \href{#method-ISOFormat-setAmendmentNumber}{\code{ISOFormat$setAmendmentNumber()}}
 \item \href{#method-ISOFormat-setSpecification}{\code{ISOFormat$setSpecification()}}
 \item \href{#method-ISOFormat-setFileDecompressionTechnique}{\code{ISOFormat$setFileDecompressionTechnique()}}
 \item \href{#method-ISOFormat-addDistributor}{\code{ISOFormat$addDistributor()}}
+\item \href{#method-ISOFormat-addMedium}{\code{ISOFormat$addMedium()}}
+\item \href{#method-ISOFormat-delMedium}{\code{ISOFormat$delMedium()}}
 \item \href{#method-ISOFormat-delDistributor}{\code{ISOFormat$delDistributor()}}
 \item \href{#method-ISOFormat-clone}{\code{ISOFormat$clone()}}
 }
@@ -73,6 +82,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="geometaLogger" data-id="WARN"><a href='../../geometa/html/geometaLogger.html#method-geometaLogger-WARN'><code>geometa::geometaLogger$WARN()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addFieldAttrs"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addFieldAttrs'><code>geometa::ISOAbstractObject$addFieldAttrs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="addListElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-addListElement'><code>geometa::ISOAbstractObject$addListElement()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="checkMetadataStandardCompliance"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-checkMetadataStandardCompliance'><code>geometa::ISOAbstractObject$checkMetadataStandardCompliance()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="contains"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-contains'><code>geometa::ISOAbstractObject$contains()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="createLocalisedProperty"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-createLocalisedProperty'><code>geometa::ISOAbstractObject$createLocalisedProperty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="decode"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-decode'><code>geometa::ISOAbstractObject$decode()</code></a></span></li>
@@ -93,6 +103,7 @@ Emmanuel Blondel <emmanuel.blondel1@gmail.com>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setId"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setId'><code>geometa::ISOAbstractObject$setId()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setIsNull"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setIsNull'><code>geometa::ISOAbstractObject$setIsNull()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="setValue"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-setValue'><code>geometa::ISOAbstractObject$setValue()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="stopIfMetadataStandardIsNot"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-stopIfMetadataStandardIsNot'><code>geometa::ISOAbstractObject$stopIfMetadataStandardIsNot()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="validate"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-validate'><code>geometa::ISOAbstractObject$validate()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="geometa" data-topic="ISOAbstractObject" data-id="wrapBaseElement"><a href='../../geometa/html/ISOAbstractObject.html#method-ISOAbstractObject-wrapBaseElement'><code>geometa::ISOAbstractObject$wrapBaseElement()</code></a></span></li>
 </ul>
@@ -110,7 +121,7 @@ Initializes object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{xml}}{object of class \link{XMLInternalNode-class}}
+\item{\code{xml}}{object of class \link[XML]{XMLInternalNode-class}}
 }
 \if{html}{\out{</div>}}
 }
@@ -130,6 +141,23 @@ Set name
 \item{\code{name}}{name}
 
 \item{\code{locales}}{list of localized names. Default is \code{NULL}}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOFormat-setFormatSpecificationCitation"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOFormat-setFormatSpecificationCitation}{}}}
+\subsection{Method \code{setFormatSpecificationCitation()}}{
+Set format specification citation
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOFormat$setFormatSpecificationCitation(citation)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{citation}}{citation}
 }
 \if{html}{\out{</div>}}
 }
@@ -222,6 +250,46 @@ Adds distributor
 }
 \subsection{Returns}{
 \code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOFormat-addMedium"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOFormat-addMedium}{}}}
+\subsection{Method \code{addMedium()}}{
+Adds medium
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOFormat$addMedium(medium)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{medium}}{object of class \link{ISOMedium}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if added, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ISOFormat-delMedium"></a>}}
+\if{latex}{\out{\hypertarget{method-ISOFormat-delMedium}{}}}
+\subsection{Method \code{delMedium()}}{
+Deletes medium
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ISOFormat$delMedium(medium)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{medium}}{object of class \link{ISOMedium}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if deleted, \code{FALSE} otherwise
 }
 }
 \if{html}{\out{<hr>}}

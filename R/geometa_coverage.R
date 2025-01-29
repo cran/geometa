@@ -226,33 +226,40 @@ get_schema_elements <- function(url, verbose = FALSE, schemaCollector = new.env(
 #' @note This function is used as Quality Assurance indicator to assess the percentage of completeness
 #' of ISO/OGC standards in \pkg{geometa}.
 #'
-#' @usage geometa_coverage()
+#' @usage geometa_coverage(version)
 #' 
+#' @param version main metadata standard version
 #' @return an object of class \code{data.frame}
 #' 
 #' @examples
 #' \donttest{
-#'   cov <- geometa_coverage()
+#'   cov <- geometa_coverage(version = "19115-3")
 #' }
 #' 
 #' @author Emmanuel Blondel, \email{emmanuel.blondel1@@gmail.com}
 #'
-geometa_coverage <- function(){
-  url = system.file("extdata/schemas/gmd/gmd.xsd",package = "geometa")
-  elements <- get_schema_elements(url)
+geometa_coverage <- function(version = "19139"){
+  setMetadataStandard(version = version)
+  xsd_filepath = getISOMetadataSchemaFile(version = version)
+  elements <- get_schema_elements(xsd_filepath)
+  elements <- elements[elements$namespace %in% sapply(getISOMetadataNamespaces(), function(x){x$id}),]
+  elements$namespace <- toupper(elements$namespace)
+  classes <- ISOAbstractObject$getISOClasses(pretty = TRUE)
+  colnames(classes)[colnames(classes)=="ns_prefix"] <- "namespace"
   elements <- merge(
-    x = elements, y = ISOAbstractObject$getISOClasses(pretty = TRUE),
-    by = "element", all.x = TRUE, all.y = FALSE
+    x = elements, y = classes,
+    by = c("element", "namespace"), all.x = TRUE, all.y = FALSE
   )
   elements$in_geometa <- !sapply(elements$geometa_class, is.na)
-  elements[is.na(elements$ns_prefix),]$ns_prefix <- toupper(elements[is.na(elements$ns_prefix),"namespace"])
-  elements <- elements[!(elements$ns_prefix %in% c("XS","XLINK")),]
-  std <- do.call("rbind",lapply(elements$ns_prefix, ISOAbstractObject$getStandardByPrefix))
+  elements[is.na(elements$refactored),]$refactored = FALSE
+  elements[is.na(elements$namespace),]$namespace <- toupper(elements[is.na(elements$namespace),"namespace"])
+  elements <- elements[!(elements$namespace %in% c("XS","XLINK")),]
+  std <- do.call("rbind",lapply(elements$namespace, ISOAbstractObject$getStandardByPrefix))
   elements$specification <- std$specification
+  elements$schema <- std$schema
   elements$title <- std$title
-  elements$namespace <- NULL
   elements$ns_uri <- NULL
-  elements <- elements[with(elements,order(specification, ns_prefix, element)),c("specification", "title", "ns_prefix", "element", "geometa_class", "in_geometa")]
+  elements <- elements[with(elements,order(specification, schema, namespace, element)),c("specification", "schema", "title", "namespace", "element", "geometa_class", "in_geometa", "refactored")]
   elements <- rbind(
     elements[startsWith(elements$specification, "ISO"),],
     elements[startsWith(elements$specification, "GML"),],
@@ -260,4 +267,14 @@ geometa_coverage <- function(){
   )
   elements <- elements[!is.na(elements$specification),]
   return(elements)
+}
+
+geometa_namespace_exports = function(){
+  if(is.null(.geometa.iso$exports)){
+    f <- base::system.file("NAMESPACE", package="geometa")
+    objs <- readLines(f)
+    exps <- objs[grepl("export", objs)]
+    .geometa.iso$exports = sub("^export[^\\(]*\\(([^\\)]+)\\)", "\\1", exps)
+  }
+  return(.geometa.iso$exports)
 }
