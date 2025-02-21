@@ -1,4 +1,4 @@
-83892097ca49ade7a0e5580f8aebaa9e *DESCRIPTION
+8b9feb114c36089fe0f0aa7fee0c8e7d *DESCRIPTION
 0d818a9e4338629436672391b7e48f1c *LICENSE
 41fad744702e1111ea4827dc14ed4802 *NAMESPACE
 ae6278288577615ef25aa50c79eb6dd1 *R/GMLAbstractCRS.R
@@ -103,7 +103,7 @@ f6a365b5637320bf6c2f858bf5a0306d *R/ISOAbstractFeatureCatalogue.R
 b081de52b3b46fc6cc2546cdd424c190 *R/ISOAbstractMetadata.R
 99a48dc057eb9533c4b4d9c3274f9080 *R/ISOAbstractMetadataExtension.R
 096ab27a9ea88c43d1f57a5d897003fa *R/ISOAbstractMetaquality.R
-8fffd0e51af80caec534e44ec6308c2a *R/ISOAbstractObject.R
+b4d6ed36488921f8a07b3477dd24b037 *R/ISOAbstractObject.R
 42c541c27c9e81e7f793572150de2a36 *R/ISOAbstractOnlineResource.R
 8fe12e05d15c890ed0d1a57a6bb37d34 *R/ISOAbstractParameter.R
 7ce5b31351f3b0a841b63f80fa84dda2 *R/ISOAbstractParty.R
@@ -400,7 +400,7 @@ e7d754238a05730056bac1bd3e8da74d *R/geometa_logger.R
 6d20645df33dfaa5f7e43800438841a7 *R/geometa_options.R
 9d0fa7caa63edaa44695f0fbd6376fcb *R/profile.R
 b45dcc23ff218ad05f74a5d3e0df943c *R/readISO.R
-8b66f87e506bdee707b67db6ef0d7edb *README.md
+4b246b7ee83906514225bf8be402fb00 *README.md
 ea883ff2df26e8fdc4110e7d56e0da01 *inst/extdata/codelists/ISO-639-2_utf-8.txt
 f093e096959b05a5e3e64f739d97adc8 *inst/extdata/codelists/ML_gmxCodelists.xml
 cb44e685b9b5e83e936d70a9e3997eff *inst/extdata/codelists/gmxCodelists.xml

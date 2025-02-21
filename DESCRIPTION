@@ -1,8 +1,8 @@
 Package: geometa
 Type: Package
 Title: Tools for Reading and Writing ISO/OGC Geographic Metadata
-Version: 0.9
-Date: 2025-01-29
+Version: 0.9.1
+Date: 2025-02-20
 Authors@R: c(
   person("Emmanuel", "Blondel", role = c("aut", "cre"), email = "emmanuel.blondel1@gmail.com", comment = c(ORCID = "0000-0002-5870-5762")),
   person("R Consortium", role = "fnd"))
@@ -24,8 +24,8 @@ LazyLoad: yes
 Encoding: UTF-8
 RoxygenNote: 7.3.1
 NeedsCompilation: no
-Packaged: 2025-01-29 13:15:53 UTC; emman
+Packaged: 2025-02-20 18:27:04 UTC; emman
 Author: Emmanuel Blondel [aut, cre] (<https://orcid.org/0000-0002-5870-5762>),
   R Consortium [fnd]
 Repository: CRAN
-Date/Publication: 2025-01-29 15:30:28 UTC
+Date/Publication: 2025-02-21 12:00:03 UTC
