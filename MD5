@@ -1,4 +1,4 @@
-8b9feb114c36089fe0f0aa7fee0c8e7d *DESCRIPTION
+07e1b739c8fabd937204d4995583c966 *DESCRIPTION
 0d818a9e4338629436672391b7e48f1c *LICENSE
 41fad744702e1111ea4827dc14ed4802 *NAMESPACE
 ae6278288577615ef25aa50c79eb6dd1 *R/GMLAbstractCRS.R
@@ -74,8 +74,8 @@ f43f2b00bbc8fafaf55eb642b521dbd8 *R/GMLReferenceableGridByArray.R
 4a62e46a513fcd1265fede5798fe6b67 *R/GMLTemporalCRS.R
 2a2c47f88b969cc5e9eba06bfb338166 *R/GMLTemporalCS.R
 c3eccf27937d00d66fa31cca8e672962 *R/GMLTimeCS.R
-6d49efc34824ae0fda0a441c9564df12 *R/GMLTimeInstant.R
-6b2309d208d3cfff838f5f77a80f0c4b *R/GMLTimePeriod.R
+f0765c5c69353bd38d16ab2377640944 *R/GMLTimeInstant.R
+7e196eb149a0e58c44eb12b17e8ff86e *R/GMLTimePeriod.R
 667b33050cd01fcd93412029e1afb957 *R/GMLUnitDefinition.R
 29c49f4ffb53407da7a3ddf3e298ae24 *R/GMLUserDefinedCS.R
 219eeb756cce56514e2f0276d065b9ae *R/GMLVerticalCRS.R
@@ -155,7 +155,7 @@ abb4c411c3984d7aa5aae551b6a0a32c *R/ISOCitation.R
 2899645362ec80570a755f3453ff0997 *R/ISOClassification.R
 2270c53fed48be64f766bac288032d43 *R/ISOCodeDefinition.R
 287f991461be758c2d966a51c19ab960 *R/ISOCodeListDictionary.R
-e3ff21d0286c4b4731f4d2567b204c4b *R/ISOCodeListValue.R
+a36496a126c4e6671b739a9db8d55d71 *R/ISOCodeListValue.R
 54f53f109ee6338553932e7098a9d3c3 *R/ISOCodelist.R
 42a38b92958204b03521938e673d57fa *R/ISOCodelistCatalogue.R
 c55fc3d6620e9035408f21764184fb07 *R/ISOConformanceResult.R
@@ -286,7 +286,7 @@ effc82f40581058d8558b5883968f8ab *R/ISOLocalName.R
 c4c5d48a7367825e7d4279f2b4801b64 *R/ISOLocale.R
 0eb9b6135c39b17c933a2cd85ee81226 *R/ISOLocaleContainer.R
 3b9f8e443dfa750542cca1608b330525 *R/ISOLocalisedCharacterString.R
-acabeee352646156413b6dc6b819dbeb *R/ISOMDFeatureCatalogue.R
+6ea15875c4efa7a8273f212d76f0b5c4 *R/ISOMDFeatureCatalogue.R
 5973c07e548258d30f439d15e8cfbc49 *R/ISOMLCodeDefinition.R
 7ee7145be62c80ae1c69667f4778a7e8 *R/ISOMLCodeListDictionary.R
 6190e89d6acd7b1d7e70349fc03b2ae1 *R/ISOMaintenanceFrequency.R
@@ -298,7 +298,7 @@ b054d179cd354ebd7879e552ac956a06 *R/ISOMaintenanceInformation.R
 1846c756944f99e23266392b66fab8d4 *R/ISOMediumName.R
 6a39132963f2028e91ea9e226258fb3c *R/ISOMemberName.R
 407614ea7b73c29308a41663a346d371 *R/ISOMetaIdentifier.R
-59fafab7f803084db620c1bb23cd28c9 *R/ISOMetadata.R
+a05f9e86fd015c7b832757e87b801079 *R/ISOMetadata.R
 21287a2f52cd2c98af6a87a5bdbaa94d *R/ISOMetadataExtensionInformation.R
 c1e42ceceef9cce1b66a2e90422ea39f *R/ISOMetadataNamespace.R
 1dec720cb0a596990dd1cbe7bcec4e3a *R/ISOMetadataSchemas.R
@@ -398,9 +398,9 @@ ae73e9d2284be2879954049497f71a26 *R/SWETime.R
 e7d754238a05730056bac1bd3e8da74d *R/geometa_logger.R
 36d0652ccf059b9a545f882b2d77e032 *R/geometa_mapping.R
 6d20645df33dfaa5f7e43800438841a7 *R/geometa_options.R
-9d0fa7caa63edaa44695f0fbd6376fcb *R/profile.R
-b45dcc23ff218ad05f74a5d3e0df943c *R/readISO.R
-4b246b7ee83906514225bf8be402fb00 *README.md
+5555b05eb76ee788576dd9871061b740 *R/profile.R
+d4f8ab3c4bfec4f21631f0242553f868 *R/readISO.R
+9373440a8e3e03fcd62ceeb77dc35f18 *README.md
 ea883ff2df26e8fdc4110e7d56e0da01 *inst/extdata/codelists/ISO-639-2_utf-8.txt
 f093e096959b05a5e3e64f739d97adc8 *inst/extdata/codelists/ML_gmxCodelists.xml
 cb44e685b9b5e83e936d70a9e3997eff *inst/extdata/codelists/gmxCodelists.xml
@@ -411,11 +411,14 @@ aacd9cc1bda8238a1d9271bf33661cbe *inst/extdata/coverage/geometa_coverage_summary
 1d65f037c392f11aaa1ae78a4ed2cae2 *inst/extdata/coverage/geometa_coverage_summary.md
 34232aaa511eca5540f599b476f844d2 *inst/extdata/examples/metadata.R
 f85bcb2fd2420e3b48558b7740bdaee6 *inst/extdata/examples/metadata.xml
+3b583e9f573273c9ea9d881b1cd71bff *inst/extdata/examples/metadata_19115-3.R
 8ca9d15a7d21d01bda382f5f01c3e6a0 *inst/extdata/examples/metadata_19115-3.xml
 ff5340630629202e889edd6543e3478b *inst/extdata/examples/metadata_i18n.R
 a51181cee526e84a1049f06cdf86274a *inst/extdata/examples/metadata_i18n.xml
 1337ce2b735cb4a9e358b3ada4c2022f *inst/extdata/mappings/geometa_mapping.csv
 a3978929da02bd297835e4d2ad48e161 *inst/extdata/mimetypes/media-types.xml
+1f301f10941ce043558aa662128940f3 *inst/extdata/resources/geometa.png
+162f84f6bc8b6920d178044b88a83f6c *inst/extdata/resources/geometa.svg
 d2e4a47c6ad54e013dc67e145183ac10 *inst/extdata/schemas/19110/fcc/1.0/abstract.xsd
 04f44321dc301abe50975c5d014c65c3 *inst/extdata/schemas/19110/fcc/1.0/fcc.xsd
 5e69792a983d76840e68bd8d7d7542ac *inst/extdata/schemas/19110/gfc/1.1/featureCatalogue.xsd
@@ -872,8 +875,8 @@ ca5a275b3f3be3e2daab07798b4e84bb *man/GMLSphericalCS.Rd
 272b827881d4def9b3d59d4a45f35c40 *man/GMLTemporalCRS.Rd
 b4f6552fd80e3fad1b93fcefa011d4e2 *man/GMLTemporalCS.Rd
 8fd880e615ad023c753d51ce3eb6bf00 *man/GMLTimeCS.Rd
-0dc5529cbfcd7c3564c3ca4faa4ea3ab *man/GMLTimeInstant.Rd
-3c357004833610f774c5a1bc9e9d1907 *man/GMLTimePeriod.Rd
+6da11616c8373f2b528b76d55abbdf8a *man/GMLTimeInstant.Rd
+9c2a5792b2c2d8c994e4dce7b491f747 *man/GMLTimePeriod.Rd
 b3110456420011a5fea1a18038a14c87 *man/GMLUnitDefinition.Rd
 c13923aa7795b7fc5ab4434dc5acfaf2 *man/GMLUserDefinedCS.Rd
 987d83960cdb5772673b874b8b63e13e *man/GMLVerticalCRS.Rd
@@ -904,7 +907,7 @@ f4bc43183832f816f7132db64160b94c *man/ISOAbstractLogicalConsistency.Rd
 eb7832f2faad9211fef2b9659f932f7f *man/ISOAbstractMetadata.Rd
 97913d26cd864eef3fcb04cea89cda78 *man/ISOAbstractMetadataExtension.Rd
 fc27e83418b073a6fa65ae5ec73d7374 *man/ISOAbstractMetaquality.Rd
-efe023d613ac2eacc1e37621d4012b68 *man/ISOAbstractObject.Rd
+61b0efc6d79d89678f68212de48033fe *man/ISOAbstractObject.Rd
 2bc1641d5c0aaa8cffca485e295b5b3f *man/ISOAbstractOnlineResource.Rd
 8b72f1e239a922afc57478e874f9e5dc *man/ISOAbstractParameter.Rd
 4a6abcef8c777578ac58c2bb7c4dc130 *man/ISOAbstractParty.Rd
